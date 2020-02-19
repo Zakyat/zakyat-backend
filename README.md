@@ -10,4 +10,4 @@ Using tools: Django Framework, DB: PostgeSQL
 
 [Russian documentation](https://docs.google.com/document/d/1z1xyGixq2cfKc5W9Oyifu96NMFANsg9mGpXQVyeBtjg/edit#heading=h.6w263tjhlg79)
 
-[Payment system](https://www.payonline.ru/cms-sdk)
+[Payment system](https://github.com/trilan/django-payonline?fbclid=IwAR2JbwceoeDb57pSOYfYJ6hkjBmjslK4a2R5VQptiUyA6nMh5ijO6W93nnk)
