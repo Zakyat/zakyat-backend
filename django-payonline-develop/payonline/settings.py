@@ -1,4 +1,8 @@
 from django.conf import settings
+INSTALLED_APPS = (
+
+    'payonline',
+)
 
 
 CONFIG = {
