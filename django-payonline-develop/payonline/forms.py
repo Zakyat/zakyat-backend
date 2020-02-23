@@ -41,9 +41,3 @@ class PaymentDataForm(forms.ModelForm):
         if self.data.get('SecurityKey') != self.get_security_key():
             raise forms.ValidationError('Wrong security key')
         return self.cleaned_data
-
-
-
-
-
-
