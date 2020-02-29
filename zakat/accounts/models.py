@@ -1,4 +1,41 @@
 from django.db import models
+from django.contrib.auth.models import User as DjangoUser
 
-# Create your models here.
+from django_countries.fields import CountryField
+
+
+MARITAL_STATUS = (
+    ("married", "Married"),
+    ("divorced", "Divorced"),
+    ("single", "Single"),
+    ("widowed", "Widowed"),
+    ("other", "Other"),
+)
+
+RELIGIONS = (
+    ("muslim", "Muslim"),
+    ("christian", "Christian"),
+    ("jew", "Jewish"),
+    ("atheist", "Atheist"),
+    ("other", "Others"),
+)
+
+class Work(models.Model):
+    place = models.CharField(max_length=128)
+    position = models.CharField(max_length=64)
+
+class User(models.Model):
+    user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=16)
+    citizenship = CountryField()
+    religion = models.CharField(max_length=10, choices=RELIGIONS)
+    birthdate = models.DateField()
+    education = models.CharField(max_length=128)    # TODO: Why??
+    work = models.OneToOneField(Work, on_delete=models.DO_NOTHING)
+    marital_status = models.CharField(max_length=10, choices=MARITAL_STATUS)
+    address = models.CharField(max_length=128)
+
+    def delete(self, *args, **kwargs):
+        self.work.delete()
+        return super(self.__class__, self).delete(*args, **kwargs)
 
