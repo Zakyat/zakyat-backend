@@ -1,4 +1,4 @@
-from django.db import models
+from djongo import models
 from django.contrib.auth.models import User as DjangoUser
 
 from django_countries.fields import CountryField
@@ -24,6 +24,9 @@ class Work(models.Model):
     place = models.CharField(max_length=128)
     position = models.CharField(max_length=64)
 
+    class Meta:
+        abstract = True
+
 class User(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=16)
@@ -31,11 +34,6 @@ class User(models.Model):
     religion = models.CharField(max_length=10, choices=RELIGIONS)
     birthdate = models.DateField()
     education = models.CharField(max_length=128)    # TODO: Why??
-    work = models.OneToOneField(Work, on_delete=models.DO_NOTHING)
+    work = models.EmbeddedField(model_container=Work)
     marital_status = models.CharField(max_length=10, choices=MARITAL_STATUS)
     address = models.CharField(max_length=128)
-
-    def delete(self, *args, **kwargs):
-        self.work.delete()
-        return super(self.__class__, self).delete(*args, **kwargs)
-
