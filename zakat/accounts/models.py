@@ -50,6 +50,29 @@ class CashFlow(models.Model):
     class Meta:
         abstract = True
 
+DOCUMENT_TYPES = (
+    ('pass_main', 'Passport main page'),
+    ('pass_registration', 'Passport registration page'),
+    ('birth', 'Birth certificate'),
+    ('death', 'Death certificate'),
+    ('marriage', 'Marriage certificate'),
+    ('divorce', 'Divorce'),
+    ('income', 'Income certificate'),
+    ('unemployment', 'Unemployment office certificate'),
+    ('medical', 'Disability/diagnosis'),
+    ('study', 'Place of study'),
+    ('loan', 'Loan'),
+    ('rent', 'House book extract'),
+    ('invoice', 'Invoice'),
+)
+
+class Document(models.Model):
+    type = models.CharField(choices=DOCUMENT_TYPES, max_length=10)
+    title = models.CharField(max_length=128)
+    file = models.FileField(upload_to='uploads/')
+
+    class Meta:
+        abstract = True
 
 class User(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
@@ -62,3 +85,5 @@ class User(models.Model):
     marital_status = models.CharField(max_length=10, choices=MARITAL_STATUS)
     address = models.CharField(max_length=128)
     cash_flow = models.ArrayField(model_container=CashFlow, default=[])
+    # docs = models.EmbeddedField(model_container=Document)
+    related_documents2 = models.ArrayField(model_container=Document, default=[])
