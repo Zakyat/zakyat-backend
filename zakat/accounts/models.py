@@ -91,7 +91,7 @@ class FamilyMember(models.Model):
     name = models.CharField(max_length=64)
     phone_number = models.CharField(max_length=16)
     relation = models.CharField(max_length=16, choices=RELATIONS)
-    identification = models.OneToOneField(Document, on_delete=models.CASCADE)
+    identification = models.EmbeddedField(model_container=Document)
 
     class Meta:
         abstract = True
