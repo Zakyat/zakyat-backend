@@ -17,7 +17,7 @@ class Request(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=128)    # TODO: i18n
     description = models.TextField()    # TODO: i18n
-    status = models.CharField(max_length=16, choices=STATUSES)
+    status = models.CharField(max_length=16, choices=STATUSES, default='new')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -30,7 +30,7 @@ class Campaign(models.Model):
     # current should be aggregated from payments
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    closed_at = models.DateTimeField(null=True)
+    closed_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         abstract = True
