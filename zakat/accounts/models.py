@@ -118,4 +118,4 @@ class Employee(models.Model):
     photo = models.ImageField()
     bio = models.TextField()
     position = models.CharField(max_length=32)
-    updated_at = models.DateField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True)
