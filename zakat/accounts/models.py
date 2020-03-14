@@ -51,6 +51,16 @@ DOCUMENT_TYPES = (
     ('invoice', 'Invoice'),
 )
 
+RELATIONS = (
+    ('father',   'Father'),
+    ('mother',   'Mother'),
+    ('son',      'Son'),
+    ('daughter', 'Daughter'),
+    ('brother',  'Brother'),
+    ('sister',   'Sister'),
+    ('other',    'Other'),
+)
+
 # ---- Models ----
 
 class Work(models.Model):
@@ -77,6 +87,16 @@ class Document(models.Model):
     class Meta:
         abstract = True
 
+class FamilyMember(models.Model):
+    name = models.CharField(max_length=64)
+    phone_number = models.CharField(max_length=16)
+    relation = models.CharField(max_length=16, choices=RELATIONS)
+    identification = models.OneToOneField(Document, on_delete=models.CASCADE)
+
+    class Meta:
+        abstract = True
+
+
 class User(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=16)
@@ -89,3 +109,5 @@ class User(models.Model):
     address = models.CharField(max_length=128)
     cash_flow = models.ArrayField(model_container=CashFlow, default=[])
     related_documents = models.ArrayField(model_container=Document, default=[])
+    contact_person = models.EmbeddedField(model_container=FamilyMember)
+    family_members = models.ArrayField(model_container=FamilyMember, default=[]) # ArrayField with nested FileField causes a problem
