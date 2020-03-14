@@ -85,5 +85,4 @@ class User(models.Model):
     marital_status = models.CharField(max_length=10, choices=MARITAL_STATUS)
     address = models.CharField(max_length=128)
     cash_flow = models.ArrayField(model_container=CashFlow, default=[])
-    # docs = models.EmbeddedField(model_container=Document)
-    related_documents2 = models.ArrayField(model_container=Document, default=[])
+    related_documents = models.ArrayField(model_container=Document, default=[])
