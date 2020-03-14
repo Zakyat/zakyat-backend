@@ -111,3 +111,11 @@ class User(models.Model):
     related_documents = models.ArrayField(model_container=Document, default=[])
     contact_person = models.EmbeddedField(model_container=FamilyMember)
     family_members = models.ArrayField(model_container=FamilyMember, default=[]) # ArrayField with nested FileField causes a problem
+
+class Employee(models.Model):
+    user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=16)
+    photo = models.ImageField()
+    bio = models.TextField()
+    position = models.CharField(max_length=32)
+    updated_at = models.DateField(auto_now=True)
