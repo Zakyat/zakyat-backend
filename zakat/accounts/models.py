@@ -3,6 +3,7 @@ from django.contrib.auth.models import User as DjangoUser
 
 from django_countries.fields import CountryField
 
+# ---- Choice enums ----
 
 MARITAL_STATUS = (
     ("married", "Married"),
@@ -20,13 +21,6 @@ RELIGIONS = (
     ("other", "Others"),
 )
 
-class Work(models.Model):
-    place = models.CharField(max_length=128)
-    position = models.CharField(max_length=64)
-
-    class Meta:
-        abstract = True
-
 CASH_FLOW_TYPES = (
     ('salary', 'salary'),
     ('pension', 'pension'),
@@ -40,15 +34,6 @@ CURRENCIES = (
     ('RUB', 'Russian Ruble'),
     ('USD', 'US. Dollar'),
 )
-
-class CashFlow(models.Model):
-    type = models.CharField(choices=CASH_FLOW_TYPES, max_length=10)
-    amount = models.IntegerField()
-    description = models.TextField()
-    currency = models.CharField(max_length=3, choices=CURRENCIES)
-
-    class Meta:
-        abstract = True
 
 DOCUMENT_TYPES = (
     ('pass_main', 'Passport main page'),
@@ -65,6 +50,24 @@ DOCUMENT_TYPES = (
     ('rent', 'House book extract'),
     ('invoice', 'Invoice'),
 )
+
+# ---- Models ----
+
+class Work(models.Model):
+    place = models.CharField(max_length=128)
+    position = models.CharField(max_length=64)
+
+    class Meta:
+        abstract = True
+
+class CashFlow(models.Model):
+    type = models.CharField(choices=CASH_FLOW_TYPES, max_length=10)
+    amount = models.IntegerField()
+    description = models.TextField()
+    currency = models.CharField(max_length=3, choices=CURRENCIES)
+
+    class Meta:
+        abstract = True
 
 class Document(models.Model):
     type = models.CharField(choices=DOCUMENT_TYPES, max_length=10)
