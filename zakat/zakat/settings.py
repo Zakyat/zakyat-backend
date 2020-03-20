@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 3rd-party
     'django_countries',
+    'graphene_django',
     # our apps
     'accounts',
     'projects',
