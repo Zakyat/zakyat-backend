@@ -33,10 +33,9 @@ class UserSchema(DjangoObjectType):
     contact_person = graphene.Field(FamilyMemberSchema)
     family_members = graphene.List(FamilyMemberSchema)
 
-# class EmployeeSchema(DjangoObjectType):
-#     class Meta:
-#         model = Employee
-#         # Allow for some more advanced filtering here
+class EmployeeSchema(DjangoObjectType):
+    class Meta:
+        model = Employee
 
 class Query(object):
     user = graphene.Field(UserSchema)
