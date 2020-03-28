@@ -1,6 +1,5 @@
 import graphene
-# from graphene_django.filter import DjangoFilterConnectionField
-from graphene_django.types import DjangoObjectType, ObjectType
+from graphene_django.types import DjangoObjectType
 from .models import Work, CashFlow, Document, FamilyMember, User, Employee, DjangoUser
 
 class WorkSchema(DjangoObjectType):
