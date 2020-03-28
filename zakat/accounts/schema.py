@@ -1,25 +1,46 @@
-from graphene import Node
-from graphene_django.filter import DjangoFilterConnectionField
-from graphene_django.types import DjangoObjectType
+import graphene
+# from graphene_django.filter import DjangoFilterConnectionField
+from graphene_django.types import DjangoObjectType, ObjectType
+from .models import Work, CashFlow, Document, FamilyMember, User, Employee, DjangoUser
 
-from .models import User, Employee
+class WorkSchema(DjangoObjectType):
+    class Meta:
+        model = Work
 
+class CashFlowSchema(DjangoObjectType):
+    class Meta:
+        model = CashFlow
 
-class UserNode(DjangoObjectType):
+class DocumentSchema(DjangoObjectType):
+    class Meta:
+        model = Document
+
+class FamilyMemberSchema(DjangoObjectType):
+    class Meta:
+        model = FamilyMember
+    identification = graphene.Field(DocumentSchema)
+
+class DjangoUserSchema(DjangoObjectType):
+    class Meta:
+        model = DjangoUser
+
+class UserSchema(DjangoObjectType):
     class Meta:
         model = User
-        interfaces = (Node,)
-        filter_fields = ["user__first_name", "phone_number"]
-    # work = graphene.Field()
+    work = graphene.Field(WorkSchema)
+    cash_flow = graphene.List(CashFlowSchema)
+    related_documents = graphene.List(DocumentSchema)
+    contact_person = graphene.Field(FamilyMemberSchema)
+    family_members = graphene.List(FamilyMemberSchema)
 
-
-# class EmployeeNode(DjangoObjectType):
+# class EmployeeSchema(DjangoObjectType):
 #     class Meta:
 #         model = Employee
 #         # Allow for some more advanced filtering here
-#         interfaces = (Node,)
-
 
 class Query(object):
-    user = Node.Field(UserNode)
-    all_users = DjangoFilterConnectionField(UserNode)
+    user = graphene.Field(UserSchema)
+    all_users = graphene.List(UserSchema)
+
+    def resolve_all_users(self, info, **kwargs):
+        return User.objects.all()
