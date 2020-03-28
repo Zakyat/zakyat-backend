@@ -94,6 +94,18 @@ GRAPHENE = {
     'SCHEMA': 'zakat.schema.schema'
 }
 
+# Register conversion rules from Djongo-specific fields
+from graphene_django.converter import convert_django_field
+from djongo.models import EmbeddedField, ArrayField
+
+@convert_django_field.register(EmbeddedField)
+def convert_embedded_field(field, registry=None):
+    return field
+
+@convert_django_field.register(ArrayField)
+def convert_embedded_field(field, registry=None):
+    return field
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
