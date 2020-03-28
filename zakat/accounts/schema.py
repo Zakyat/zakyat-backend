@@ -38,8 +38,18 @@ class EmployeeSchema(DjangoObjectType):
         model = Employee
 
 class Query(object):
-    user = graphene.Field(UserSchema)
-    all_users = graphene.List(UserSchema)
+    user = graphene.Field(UserSchema, id=graphene.Int())
+    users = graphene.List(UserSchema)
 
-    def resolve_all_users(self, info, **kwargs):
+    employee = graphene.Field(EmployeeSchema, id=graphene.Int())
+    employees = graphene.List(EmployeeSchema)
+
+    def resolve_user(self, info, **kwargs):
+        return User.objects.get(**kwargs)
+    def resolve_users(self, info, **kwargs):
         return User.objects.all()
+    
+    def resolve_employee(self, info, **kwargs):
+        return Employee.objects.get(**kwargs)
+    def resolve_employees(self, info, **kwargs):
+        return Employee.objects.all()
