@@ -35,5 +35,5 @@ class Query(object):
 
     def resolve_campaigns(self, info, **kwargs):
         return Campaign.objects.all()
-    def resolve_Campaign(self, info, **kwargs):
+    def resolve_campaign(self, info, **kwargs):
         return Campaign.objects.get(**kwargs)
