@@ -3,8 +3,6 @@ from graphene_django.types import DjangoObjectType
 from .models import Post
 
 
-
-
 class PostSchema(DjangoObjectType):
 	class Meta:
 		model = Post
