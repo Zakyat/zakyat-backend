@@ -1,13 +1,24 @@
-#### Links
+# Zakyat backend
 
-Using tools: Django Framework, DB: PostgeSQL
+The backend consists of a [Django](https://docs.djangoproject.com/en/2.2/) project with GraphQL for the API. The database used is MongoDB with the [Djongo](https://nesdis.github.io/djongo/) connector for minimal ORM changes.
 
-[dbdiagram](https://dbdiagram.io/d/5e3536af9e76504e0ef0e7d2) 
 
-[API](https://docs.google.com/document/d/10c9oDOpZy17Aiyg63LqBs770bAtm4qjZxiWy0cjfy38)
+## Configration
 
-[Figma](https://www.figma.com/file/Uawx1aTAf6LJjjG2xgoV6v/Web-Zakyat?node-id=0%3A1)
+Create a ".env" file in the root directory with the following contents:
+```bash
+DB_HOST=db
+DB_USERNAME= # Same username set in the mongo container
+DB_PASSWORD= # And same password
+```
+After building the image and running the container, make sure to `docker exec` into the container to create a superuser.
 
-[Russian documentation](https://docs.google.com/document/d/1z1xyGixq2cfKc5W9Oyifu96NMFANsg9mGpXQVyeBtjg/edit#heading=h.6w263tjhlg79)
+## Running
 
-[Payment system](https://github.com/trilan/django-payonline?fbclid=IwAR2JbwceoeDb57pSOYfYJ6hkjBmjslK4a2R5VQptiUyA6nMh5ijO6W93nnk)
+Running `docker-compose up` in the parent directory should automatically build the image and run the container.
+
+## Useful links
+
+[Entity Relationship Diagram](https://dbdiagram.io/d/5e3536af9e76504e0ef0e7d2)
+
+[Suggested payment library](https://github.com/trilan/django-payonline)
