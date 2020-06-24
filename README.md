@@ -21,5 +21,6 @@ Running `docker-compose up` in the parent directory should automatically build t
 
 [Entity Relationship Diagram](https://dbdiagram.io/d/5e3536af9e76504e0ef0e7d2)
 
-[Sberbank acquring (payment) system](https://developer.sberbank.ru/doc/v1/acquiring/rest-requests-about)
-[Code example for connecting acquring](https://github.com/madprogrammer/django-sberbank)
+[Sberbank acquring (payment) system documentation](https://developer.sberbank.ru/doc/v1/acquiring/rest-requests-about)
+
+[Code example for connecting acquring system for Django](https://github.com/madprogrammer/django-sberbank)
