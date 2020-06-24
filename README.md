@@ -21,4 +21,4 @@ Running `docker-compose up` in the parent directory should automatically build t
 
 [Entity Relationship Diagram](https://dbdiagram.io/d/5e3536af9e76504e0ef0e7d2)
 
-[Suggested payment library](https://github.com/trilan/django-payonline)
+[Sberbank acquring (payment) system](https://developer.sberbank.ru/doc/v1/acquiring/rest-requests-about)
