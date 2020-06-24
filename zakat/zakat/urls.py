@@ -13,11 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from graphene_django.views import GraphQLView
+
+from zakat import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('graphql', GraphQLView.as_view(graphiql=True)),
-]
+    path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('news/', include('news.urls', namespace='news'))
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

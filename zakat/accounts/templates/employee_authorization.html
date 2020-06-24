@@ -2,9 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Employee Login</title>
 </head>
 <body>
-$END$
+    <h1>Employee Login</h1>
+    <form action="{% url 'accounts:employee_login' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Login">
+    </form>
+    {% if error %}
+        <div style="color: red">
+            {{ error }}
+        </div>
+    {% endif %}
+    <div>
+        Or <a href="{% url 'accounts:employee_register' %}">register</a>
+    </div>
 </body>
 </html>

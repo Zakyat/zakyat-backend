@@ -2,9 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Dashboard</title>
 </head>
 <body>
-$END$
+    <h1>News Dashboard</h1>
+    <form action="{% url 'news:dashboard' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ post_form.as_p }}
+        <input type="submit" value="Create">
+    </form>
+    <hr>
+    {% for post in object_list %}
+        <div><b>{{ post.title }}</b></div>
+        <div>Created by: {{ post.created_by }}</div>
+        <div>{{ post.description }}</div>
+        <div>Project: <a href="">{{ post.project.title }}</a></div>
+        <div>
+            {% for image in post.images %}
+                <span><img src="/media/uploads/{{ image }}"></span>
+            {% endfor %}
+        </div>
+        <div>
+            <ul>
+                {% for tag in post.tags %}
+                    <li>{{ tag }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <hr>
+    {% empty %}
+        There are no posts yet
+    {% endfor %}
+    {% if is_paginated %}
+        <div>
+            <span>
+                {% if page_obj.has_previous %}
+                    <a href="{% url 'site:feed' %}?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+                <span>
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{% url 'site:feed' %}?page={{ page_obj.next_page_number }}">Next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
 </body>
 </html>
