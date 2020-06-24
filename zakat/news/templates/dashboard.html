@@ -1,3 +1,4 @@
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +15,7 @@
     <hr>
     {% for post in object_list %}
         <div><b>{{ post.title }}</b></div>
-        <div>Created by: {{ post.created_by }}</div>
+        <div>Created by {{ post.created_by }} {{ post.created_at|naturaltime }}</div>
         <div>{{ post.description }}</div>
         <div>Project: <a href="">{{ post.project.title }}</a></div>
         <div>

@@ -26,6 +26,7 @@ class TagModelForm(forms.ModelForm):
 
 
 class Post(models.Model):
+	created_at = models.DateTimeField(auto_now_add=True)
 	title = models.TextField()    # TODO: i18n
 	description = models.TextField()    # TODO: i18n
 	project = models.OneToOneField(Project, null=True, on_delete=models.SET_NULL)
