@@ -8,6 +8,7 @@ from . import forms
 
 
 class DashboardView(LoginRequiredMixin, mixins.EmployeePermissionMixin, ListView):
+    login_url = 'accounts:employee_login'
     model = models.Post
     template_name = 'dashboard.html'
     paginate_by = 10
