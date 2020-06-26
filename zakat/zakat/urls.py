@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('graphql', GraphQLView.as_view(graphiql=True)),
     path('dashboard/partners/', include('partners.urls'))
+    path('dashboard/', include('dashboard.urls'))
 ]
