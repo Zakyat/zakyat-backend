@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Partners</title>
+</head>
+<body>
+    {% for partner in object_list %}
+        <li><a href="{{ partner.get_absolute_url }}">{{ partner.title }}</a></li>
+    {% empty %}
+        <li>No partners yet.</li>
+    {% endfor %}
+</body>
+</html>
