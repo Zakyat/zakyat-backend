@@ -1,8 +1,19 @@
 from accounts.models import Employee
 from django.views.generic.list import ListView
 from django.views.generic import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+
 
 # Create your views here.
+# class CustomMixin(object):
+#
+#     def get_context_data(self, **kwargs):
+#         # Call class's get_context_data method to retrieve context
+#         context = super().get_context_data(**kwargs)
+#
+#         context['page_title'] = 'My page title'
+#         return context
+
 
 class StaffListView(ListView):
     model = Employee
@@ -25,4 +36,5 @@ class EmployeeEdit(UpdateView):
 
 class EmployeeDelete(DeleteView):
     model = Employee
+    success_url = reverse_lazy('staff_list')
     fields = '__all__'
