@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def gatherings(request):
+    return render(request, 'gatherings.html', {})
