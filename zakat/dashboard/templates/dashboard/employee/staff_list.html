@@ -1,5 +1,11 @@
 {% extends 'dashboard/base.html' %}
 {% block content %}
+    <div>
+        <a href="{% url 'dashboard:employee_create_form' %}">Add new staff</a>
+    </div>
+    <div>
+    All staffs:
+    </div>
     {% for employee in employee_list %}
         <div>
             Id: {{ employee.id }}<br>
