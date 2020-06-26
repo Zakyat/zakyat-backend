@@ -9,16 +9,19 @@ class StaffListView(ListView):
     paginate_by = 20
     template_name = 'dashboard/employee/staff_list.html'
 
-
 class EmployeeCreate(CreateView):
     model = Employee
     template_name = 'dashboard/employee/employee_create_edit_form.html'
     success_url = '/dashboard/staffs/' #HttpResponseRedirect(reverse('staff_list'))
     fields = '__all__'
 
-class EmployeeUpdate(UpdateView):
+class EmployeeEdit(UpdateView):
     model = Employee
     fields = '__all__'
+    template_name = 'dashboard/employee/employee_create_edit_form.html'
+    success_url = '/dashboard/staffs/' #HttpResponseRedirect(reverse('staff_list'))
+
+
 
 class EmployeeDelete(DeleteView):
     model = Employee

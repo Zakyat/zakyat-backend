@@ -3,7 +3,7 @@
         Id: {{ employee.id }}<br>
         Name: {{ employee.name }}<br>
         Phone number: {{ employee.phone_number }}<br>
-        <a href="#">Edit</a>
+        <a href="{% url 'dashboard:employee_edit_form' employee.id %}">Edit</a>
     <br><br><br>
     </div>
 {% endfor %}
