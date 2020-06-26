@@ -7,4 +7,4 @@ class Partner(models.Model):
     logo = models.ImageField(upload_to='uploads/')
 
     def get_absolute_url(self):
-        return reverse('partners_dashboard:partner_detail', args=[self.id])
+        return reverse('dashboard:partner_detail', args=[self.id])
