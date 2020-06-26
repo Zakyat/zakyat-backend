@@ -5,3 +5,4 @@ Pillow==7.0.0
 graphene-django==2.9.0
 django-filter==2.2.0
 sqlparse==0.2.4
+django-avatar==5.0.0
