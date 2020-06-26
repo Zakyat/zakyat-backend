@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.shortcuts import render
 
+from dashboard.auth_hepler import check_is_employee
 from dashboard.forms import LoginForm
 
 
@@ -19,10 +20,15 @@ def login(request):
             cd = form.cleaned_data
             user = authenticate(username=cd['username'], password=cd['password'])
             if user is not None:
-                auth_login(request, user)
-                messages.info(request, 'Auth-ed successfully.')
+                if not check_is_employee(user):
+                    messages.info(request, f'User {user.username} is not an employee!')
+                else:
+                    auth_login(request, user)
+                    messages.info(request, 'Authenticated successfully!')
             else:
                 messages.error(request, 'User credits are wrong!')
+        else:
+            messages.error(request, 'Given data is not valid!')
     else:
         form = LoginForm()
 
