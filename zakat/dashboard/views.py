@@ -9,16 +9,18 @@ from dashboard.forms import LoginForm
 # Create your views here.
 
 
-# TODO redirect to the correct view
+# TODO redirect to the 'Gatherings' page in the future
 # @user_passes_test(lambda user: user.is_anonymous,
 #                   login_url='http://127.0.0.1:8000',
 #                   redirect_field_name=None)
 def login(request):
+    """Simple login page for employees only"""
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
-            user = authenticate(username=cd['username'], password=cd['password'])
+            cleaned_data = form.cleaned_data
+            user = authenticate(username=cleaned_data['username'],
+                                password=cleaned_data['password'])
             if user is not None:
                 if not check_is_employee(user):
                     messages.info(request, f'User {user.username} is not an employee!')
