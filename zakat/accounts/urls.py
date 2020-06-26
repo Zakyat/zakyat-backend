@@ -19,6 +19,4 @@ from . import views
 app_name = 'accounts'
 
 urlpatterns = [
-    path('employee/login/', views.EmployeeAuthorizationView.as_view(), name='employee_login'),
-    path('employee/register/', views.EmployeeRegistrationView.as_view(), name='employee_register'),
 ]
