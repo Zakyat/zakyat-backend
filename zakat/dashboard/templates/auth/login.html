@@ -19,10 +19,11 @@
 {% endif %}
 
 
-    <form action="../../../accounts/templates/accounts" method="post">
+    <form action="." method="post">
         {{ form.as_p }}
         {% csrf_token %}
-        <p><input type="submit" value="Log-in"></p>
+        <input type="submit" value="Log-in"><br>
+        <a href="#"><input type="button" value="Forget password"></a>
     </form>
 
 </body>
