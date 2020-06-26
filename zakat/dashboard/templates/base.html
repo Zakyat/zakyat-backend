@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load avatar_tags %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,6 +14,10 @@
 </head>
 <body>
 <div>
+    <div>
+        {% avatar user 80 style='border-radius: 50%;' %}
+        <a href="{% url 'avatar_change' %}">Change your avatar</a>
+    </div>
     <navbar>
         <ul>
             <li><a href='#'>Employees</a></li>
