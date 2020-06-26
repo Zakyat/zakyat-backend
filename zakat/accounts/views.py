@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login as auth_login
 from django.shortcuts import render, redirect, reverse
 from .forms import LoginForm
+from django.contrib import messages
+
 
 # Create your views here.
 
@@ -13,13 +15,13 @@ def login(request):
             cd = form.cleaned_data
             user = authenticate(username=cd['username'], password=cd['password'])
             if user is not None:
-                if user.is_active:
-                    auth_login(request, user)
-                    return HttpResponse('Authenticated successfully')
-                else:
-                    return HttpResponse('Disabled account')
+                auth_login(request, user)
+                messages.info(request, 'Auth-ed successfully.')
             else:
-                return HttpResponse('Invalid login')
+                messages.error(request, 'User credits are wrong!')
+            return render(request, 'accounts/login.html', {'form': form})            
+                # request.messages
+                # return HttpResponse('Invalid login')
     else:
         form = LoginForm()
 
