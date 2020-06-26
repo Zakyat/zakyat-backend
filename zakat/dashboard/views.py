@@ -1,22 +1,24 @@
 from accounts.models import Employee
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import Permission
 from django.views.generic.list import ListView
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 
 
-class StaffListView(ListView):
+class StaffListView(LoginRequiredMixin, ListView):
     model = Employee
     paginate_by = 20
     template_name = 'dashboard/employee/staff_list.html'
 
-class EmployeeCreate(CreateView):
+class EmployeeCreate(LoginRequiredMixin, CreateView):
     model = Employee
     template_name = 'dashboard/employee/employee_create_form.html'
     success_url = '/dashboard/staffs/' #HttpResponseRedirect(reverse('staff_list'))
     fields = '__all__'
 
-class EmployeeEdit(UpdateView):
+class EmployeeEdit(LoginRequiredMixin, UpdateView):
     model = Employee
     fields = '__all__'
     template_name = 'dashboard/employee/employee_edit_form.html'
@@ -27,7 +29,7 @@ class EmployeeEdit(UpdateView):
         context['employee'] = get_object_or_404(Employee, pk=self.kwargs['pk'])
         return context
 
-class EmployeeDelete(DeleteView):
+class EmployeeDelete(LoginRequiredMixin, DeleteView):
     model = Employee
     success_url = reverse_lazy('dashboard:staff_list')
     template_name = 'dashboard/employee/employee_delete_confirm.html'
