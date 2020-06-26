@@ -2,17 +2,7 @@ from accounts.models import Employee
 from django.views.generic.list import ListView
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-
-
-# Create your views here.
-# class CustomMixin(object):
-#
-#     def get_context_data(self, **kwargs):
-#         # Call class's get_context_data method to retrieve context
-#         context = super().get_context_data(**kwargs)
-#
-#         context['page_title'] = 'My page title'
-#         return context
+from django.shortcuts import get_object_or_404
 
 
 class StaffListView(ListView):
@@ -22,19 +12,23 @@ class StaffListView(ListView):
 
 class EmployeeCreate(CreateView):
     model = Employee
-    template_name = 'dashboard/employee/employee_create_edit_form.html'
+    template_name = 'dashboard/employee/employee_create_form.html'
     success_url = '/dashboard/staffs/' #HttpResponseRedirect(reverse('staff_list'))
     fields = '__all__'
 
 class EmployeeEdit(UpdateView):
     model = Employee
     fields = '__all__'
-    template_name = 'dashboard/employee/employee_create_edit_form.html'
+    template_name = 'dashboard/employee/employee_edit_form.html'
     success_url = '/dashboard/staffs/' #HttpResponseRedirect(reverse('staff_list'))
 
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['employee'] = get_object_or_404(Employee, pk=self.kwargs['pk'])
+        return context
 
 class EmployeeDelete(DeleteView):
     model = Employee
-    success_url = reverse_lazy('staff_list')
-    fields = '__all__'
+    success_url = reverse_lazy('dashboard:staff_list')
+    template_name = 'dashboard/employee/employee_delete_confirm.html'
+
