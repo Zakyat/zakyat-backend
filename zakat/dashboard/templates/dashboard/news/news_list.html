@@ -11,7 +11,7 @@
     <button><a href="{% url 'dashboard:post_create' %}">Create a new post</a></button>
     <hr>
     {% for post in object_list %}
-        <div class="post-block">
+        <div>
             <div><b><a href="{% url 'dashboard:post_detail' pk=post.id %}">{{ post.title }}</a></b></div>
             <div>Created by {{ post.created_by }} {{ post.created_at|naturaltime }}</div>
             <div>{{ post.description }}</div>
@@ -29,10 +29,10 @@
                 </ul>
             </div>
             <a href="{% url 'dashboard:post_edit' pk=post.id %}"><button>Edit this post</button></a>
-            <a class="delete-post-button">
-                <input class="post-id" type="hidden" value="{{ post.id }}">
-                <button>Delete this post</button>
-            </a>
+            <form action="" method="post">
+                <input name="post_id" type="hidden" value="{{ post.id }}">
+                <input type="submit" value="Delete this post">
+            </form>
         </div>
         <hr>
     {% empty %}
@@ -53,26 +53,5 @@
             </span>
         </div>
     {% endif %}
-<script>
-    $('.delete-post-button').click(function () {
-        let post_id = $(this).children('input.post-id').val();
-        $.ajax({
-            type: 'POST',
-            url: {% url 'dashboard:news_list' %},
-            headers: {'X-CSRFToken': '{{ csrf_token }}'},
-            dataType: 'json',
-            data: {
-                'post_id': post_id
-            },
-            success: function () {
-                alert('success')
-            },
-            error: function () {
-                alert('error')
-            }
-        });
-        $(this).parent('div.post-block').attr('hidden', true)
-    });
-</script>
 </body>
 </html>

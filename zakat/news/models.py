@@ -8,8 +8,8 @@ class Post(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	title = models.TextField()    # TODO: i18n
 	description = models.TextField()    # TODO: i18n
-	project = models.OneToOneField(Project, null=True, on_delete=models.SET_NULL)
-	created_by = models.OneToOneField(Employee, null=True, on_delete=models.SET_NULL)
+	project = models.ForeignKey(Project, null=True, on_delete=models.SET_NULL)
+	created_by = models.ForeignKey(Employee, null=True, on_delete=models.SET_NULL)
 	# TODO: Decide whether social links are needed to be stored here
 
 

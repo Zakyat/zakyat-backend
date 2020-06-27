@@ -8,10 +8,10 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from dashboard.auth_hepler import check_is_employee
-from dashboard.forms import LoginForm
+from dashboard.forms import LoginForm, PostCreateForm, PostEditForm
 from partners.models import Partner
 from accounts.models import Employee
-from news.models import Post
+from news.models import Post, PostImage, PostTag
 
 
 class StaffListView(LoginRequiredMixin,PermissionRequiredMixin, ListView):
@@ -122,23 +122,23 @@ class NewsList(LoginRequiredMixin, ListView):
     def post(self, request, *args, **kwargs):
         post_id = request.POST.get('post_id')
         Post.objects.get(id=post_id).delete()
-        return http.HttpResponse(status=200)
+        return redirect('dashboard:news_list')
 
 
 class PostCreate(LoginRequiredMixin, CreateView):
     login_url = 'dashboard:login'
     model = Post
-    fields = '__all__'
     template_name = 'dashboard/news/post_create.html'
-    success_url = 'dashboard:news_list'
+    success_url = reverse_lazy('dashboard:news_list')
+    form_class = PostCreateForm
 
 
 class PostEdit(LoginRequiredMixin, UpdateView):
     login_url = 'dashboard:login'
     model = Post
-    fields = ('title', 'description', 'project',)
+    form_class = PostEditForm
     template_name = 'dashboard/news/post_edit.html'
-    success_url = 'dashboard:news_list'
+    success_url = reverse_lazy('dashboard:news_list')
 
 
 class PostDetail(LoginRequiredMixin, DetailView):
