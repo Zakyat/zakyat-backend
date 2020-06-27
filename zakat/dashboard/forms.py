@@ -16,3 +16,7 @@ class EmployeeCreateForm(forms.ModelForm):
         if commit:
          employee.save()
 
+
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
