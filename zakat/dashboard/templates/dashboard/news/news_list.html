@@ -1,0 +1,78 @@
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>News Dashboard</h1>
+    <button><a href="{% url 'dashboard:post_create' %}">Create a new post</a></button>
+    <hr>
+    {% for post in object_list %}
+        <div class="post-block">
+            <div><b><a href="{% url 'dashboard:post_detail' pk=post.id %}">{{ post.title }}</a></b></div>
+            <div>Created by {{ post.created_by }} {{ post.created_at|naturaltime }}</div>
+            <div>{{ post.description }}</div>
+            <div>Project: <a href="">{{ post.project.title }}</a></div>
+            <div>
+                {% for image in post.images.all %}
+                    <span><img src="{{ image.image.url }}"></span>
+                {% endfor %}
+            </div>
+            <div>Tags:
+                <ul>
+                    {% for tag in post.tags.all %}
+                        <li>{{ tag.tag }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <a href="{% url 'dashboard:post_edit' pk=post.id %}"><button>Edit this post</button></a>
+            <a class="delete-post-button">
+                <input class="post-id" type="hidden" value="{{ post.id }}">
+                <button>Delete this post</button>
+            </a>
+        </div>
+        <hr>
+    {% empty %}
+        There are no posts yet
+    {% endfor %}
+    {% if is_paginated %}
+        <div>
+            <span>
+                {% if page_obj.has_previous %}
+                    <a href="{% url 'site:feed' %}?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+                <span>
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{% url 'site:feed' %}?page={{ page_obj.next_page_number }}">Next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+<script>
+    $('.delete-post-button').click(function () {
+        let post_id = $(this).children('input.post-id').val();
+        $.ajax({
+            type: 'POST',
+            url: {% url 'dashboard:news_list' %},
+            headers: {'X-CSRFToken': '{{ csrf_token }}'},
+            dataType: 'json',
+            data: {
+                'post_id': post_id
+            },
+            success: function () {
+                alert('success')
+            },
+            error: function () {
+                alert('error')
+            }
+        });
+        $(this).parent('div.post-block').attr('hidden', true)
+    });
+</script>
+</body>
+</html>

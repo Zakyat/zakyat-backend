@@ -19,6 +19,5 @@ from . import views
 app_name = 'news'
 
 urlpatterns = [
-    path('dashboard/', views.DashboardView.as_view(), name='dashboard'),
     path('', views.NewsView.as_view(), name='news')
 ]

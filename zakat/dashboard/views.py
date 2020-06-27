@@ -1,15 +1,17 @@
+from django import http
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import Permission
 from django.views.generic.list import ListView
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404,render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from dashboard.auth_hepler import check_is_employee
 from dashboard.forms import LoginForm
 from partners.models import Partner
 from accounts.models import Employee
+from news.models import Post
 
 
 class StaffListView(LoginRequiredMixin,PermissionRequiredMixin, ListView):
@@ -18,12 +20,14 @@ class StaffListView(LoginRequiredMixin,PermissionRequiredMixin, ListView):
     paginate_by = 20
     template_name = 'dashboard/employee/staff_list.html'
 
+
 class EmployeeCreate(LoginRequiredMixin,PermissionRequiredMixin, CreateView):
     permission_required = 'accounts.add_employee'
     model = Employee
     template_name = 'dashboard/employee/employee_create_form.html'
     success_url = '/dashboard/staffs/' #HttpResponseRedirect(reverse('staff_list'))
     fields = '__all__'
+
 
 class EmployeeEdit(LoginRequiredMixin,PermissionRequiredMixin, UpdateView):
     permission_required = 'accounts.change_employee'
@@ -36,6 +40,7 @@ class EmployeeEdit(LoginRequiredMixin,PermissionRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['employee'] = get_object_or_404(Employee, pk=self.kwargs['pk'])
         return context
+
 
 class EmployeeDelete(LoginRequiredMixin,PermissionRequiredMixin, DeleteView):
     permission_required = 'accounts.delete_employee'
@@ -72,7 +77,8 @@ def login(request):
         form = LoginForm()
 
     return render(request, 'dashboard/auth/login.html', {'form': form})
- 
+
+
 class PartnerList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'partners.view_partner'
     model = Partner
@@ -104,3 +110,44 @@ class PartnerUpdate(UpdateView):
     model = Partner
     fields = "__all__"
     template_name = 'dashboard/partners/partners_form.html'
+
+
+class NewsList(LoginRequiredMixin, ListView):
+    login_url = 'dashboard:login'
+    model = Post
+    template_name = 'dashboard/news/news_list.html'
+    paginate_by = 10
+    ordering = 'created_at'
+
+    def post(self, request, *args, **kwargs):
+        post_id = request.POST.get('post_id')
+        Post.objects.get(id=post_id).delete()
+        return http.HttpResponse(status=200)
+
+
+class PostCreate(LoginRequiredMixin, CreateView):
+    login_url = 'dashboard:login'
+    model = Post
+    fields = '__all__'
+    template_name = 'dashboard/news/post_create.html'
+    success_url = 'dashboard:news_list'
+
+
+class PostEdit(LoginRequiredMixin, UpdateView):
+    login_url = 'dashboard:login'
+    model = Post
+    fields = ('title', 'description', 'project',)
+    template_name = 'dashboard/news/post_edit.html'
+    success_url = 'dashboard:news_list'
+
+
+class PostDetail(LoginRequiredMixin, DetailView):
+    login_url = 'dashboard:login'
+    model = Post
+    template_name = 'dashboard/news/post_detail.html'
+
+    def post(self, request, *args, **kwargs):
+        post_id = request.POST.get('post_id')
+        Post.objects.get(id=post_id).delete()
+        return redirect('dashboard:news_list')
+
