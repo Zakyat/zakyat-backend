@@ -1,3 +1,5 @@
+Russian explanation of why we need such changes you can see here https://docs.google.com/document/d/1z1xyGixq2cfKc5W9Oyifu96NMFANsg9mGpXQVyeBtjg/edit#heading=h.tkgfsxl73kn0
+
 ```sql 
 Table user_info{
   id int [pk, increment]
@@ -6,7 +8,6 @@ Table user_info{
   religion religion [not null]
   birthdate varchar [not null]
   address varchar [note: 'Nullable']
-  category_of_needy categories_of_needy [note: 'Nullable']
   }
 ```
 ```sql   
