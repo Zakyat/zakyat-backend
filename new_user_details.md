@@ -8,7 +8,6 @@ Table user_info{
   religion religion [not null]
   birthdate varchar [not null]
   address varchar [note: 'Nullable']
-  category_of_needy categories_of_needy [note: 'Nullable']
   }
 ```
 ```sql   
