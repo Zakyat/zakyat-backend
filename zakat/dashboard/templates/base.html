@@ -1,5 +1,6 @@
-<!DOCTYPE html>
 {% load avatar_tags %}
+{% load i18n %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,21 +17,40 @@
 <div>
     <div>
         {% avatar user 80 style='border-radius: 50%;' %}
-        <a href="{% url 'avatar_change' %}">Change your avatar</a>
+        <a href="{% url 'avatar_change' %}">{% trans "Change your avatar" %}</a>
     </div>
     <navbar>
         <ul>
-            <li><a href='#'>Employees</a></li>
-            <li><a href='#'>Users</a></li>
-            <li><a href='#'>Gatherings</a></li>
-            <li><a href='#'>Sadaka and Zakat</a></li>
-            <li><a href='#'>News</a></li>
-            <li><a href='#'>Reports</a></li>
-            <li><a href='#'>Banners</a></li>
-            <li><a href='#'>Partners</a></li>
-            <li><a href='#'>Other</a></li>
-            <li><a href='{% url "dashboard:logout" %}'>Logout</a></li>
-            <li><a href='#'>Change language (English/Русский)</a></li>
+            <li><a href='#'>{% trans "Employees" %}</a></li>
+            <li><a href='#'>{% trans "Users" %}</a></li>
+            <li><a href='#'>{% trans "Gatherings" %}</a></li>
+            <li><a href='#'>{% trans "Sadaka and Zakat" %}</a></li>
+            <li><a href='#'>{% trans "News" %}</a></li>
+            <li><a href='#'>{% trans "Reports" %}</a></li>
+            <li><a href='#'>{% trans "Banners" %}</a></li>
+            <li><a href='#'>{% trans "Partners" %}</a></li>
+            <li><a href='#'>{% trans "Other" %}</a></li>
+            <li><a href="{% url "dashboard:logout" %}">{% trans "Logout" %}</a></li>
+            <li>{% trans "Change language" %}:</li>
+
+            {% get_current_language as LANGUAGE_CODE %}
+
+            <form action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ redirect_to }}">
+                <select name="language" id="">
+                    {% get_available_languages as LANGUAGES%}
+                    {% get_language_info_list for LANGUAGES as languages%}
+
+                    {% for language in languages %}
+                        <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE%} selected {% endif %}>
+                            {{ language.name_local }} ({{ language.code }})
+                        </option>
+                    {% endfor %}
+
+                    <input type="submit" value={% if LANGUAGE_CODE == 'ru' %}"Изменить"{% else %}"Change"{% endif %}/>
+                </select>
+            </from>
         </ul>
     </navbar>
 </div>
