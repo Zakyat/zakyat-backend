@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import Permission
 from django.views.generic.list import ListView
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404,render
 from django.contrib import messages
@@ -72,7 +72,7 @@ def login(request):
         form = LoginForm()
 
     return render(request, 'dashboard/auth/login.html', {'form': form})
- 
+
 class PartnerList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'partners.view_partner'
     model = Partner
