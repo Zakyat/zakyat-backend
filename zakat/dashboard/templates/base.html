@@ -18,6 +18,9 @@
     <div>
         {% avatar user 80 style='border-radius: 50%;' %}
         <a href="{% url 'avatar_change' %}">{% trans "Change your avatar" %}</a>
+        <h2>
+            {{request.user.username}}
+        </h2>
     </div>
     <navbar>
         <ul>
