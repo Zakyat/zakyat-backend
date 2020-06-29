@@ -153,3 +153,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CELERY_BROKER_URL = 'redis://h:p6f48cc47ce16dd4f79a53b92b24f5ba9da298bbd9bad3ea31a89deb338ff8dd0@ec2-52-215-68-53.eu-west-1.compute.amazonaws.com:23739'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'zakat.development@gmail.com'
+EMAIL_HOST_PASSWORD = 'ihpbyxfnaqvgyqdu'
