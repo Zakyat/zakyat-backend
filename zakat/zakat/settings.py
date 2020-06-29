@@ -41,15 +41,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 3rd-party
+    'channels',
     'django_countries',
     'graphene_django',
+    'avatar',
     # our apps
     'accounts',
     'projects',
     'news',
     'payment',
     'dashboard',
-    'avatar',
 ]
 
 MIDDLEWARE = [
@@ -187,3 +188,16 @@ AVATAR_HASH_FILENAMES = False
 AVATAR_THUMB_FORMAT = "png"
 AVATAR_THUMB_QUALITY = 80
 AVATAR_RESIZE_METHOD = Image.ANTIALIAS
+
+
+# Конфигурация Channels
+ASGI_APPLICATION = "zakat.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [("127.0.0.1", 6379)],
+            "symmetric_encryption_keys": [SECRET_KEY],
+        },
+    },
+}
