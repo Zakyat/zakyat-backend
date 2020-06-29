@@ -53,7 +53,7 @@
 
                     <input type="submit" value={% if LANGUAGE_CODE == 'ru' %}"Изменить"{% else %}"Change"{% endif %}/>
                 </select>
-            </from>
+            </form>
         </ul>
     </navbar>
 </div>
@@ -62,3 +62,17 @@
 
 </body>
 </html>
+
+<script>
+    lo = new WebSocket("ws://localhost:8000/ws/notification/");
+    lo.onmessage = (event) => {
+        console.log(event);
+        let data = JSON.parse(event.data)
+        let score = data.notification.gathering
+        console.log(score)
+    }
+    lo.onopen = () => {
+        console.log("sending city");
+        lo.send(JSON.stringify({"game_city": 1}));
+    }
+</script>

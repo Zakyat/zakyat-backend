@@ -9,40 +9,29 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from django.core.exceptions import ObjectDoesNotExist
 
 
-class LiveScoreConsumer(AsyncWebsocketConsumer):
+class NotificationConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-       self.room_name = self.scope['url_route']['kwargs']['game_id']
-       self.room_group_name = f'Game_{self.room_name}'
-
        await self.channel_layer.group_add(
-           self.room_group_name,
+           'notification',
            self.channel_name
        )
-
        await self.accept()
 
     async def receive(self, text_data):
-       game_city = json.loads(text_data).get('game_city')
-
        await self.channel_layer.group_send(
-            self.room_group_name,
+            'notification',
             {
-                'type': 'live_score',
-                'game_id': self.room_name,
-                'game_city': game_city
+                'type': 'notify',
             }
         )
 
-    async def live_score(self, event):
-        city = event['game_city']
-        # Вспомогательная функция, получающая счет игры из БД.
+    async def notify(self, context):
         await self.send(text_data=json.dumps({
-                'score': 12 #get_live_score_for_game(self.game, city)
+                'notification': context
             }))
 
     async def websocket_disconnect(self, message):
-        # Покинуть комнату группы
         await self.channel_layer.group_discard(
-            self.room_group_name,
+            'notification',
             self.channel_name
         )
