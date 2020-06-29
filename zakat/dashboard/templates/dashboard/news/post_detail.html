@@ -1,0 +1,34 @@
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Details</title>
+</head>
+<body>
+    <h1>Post Details</h1>
+    <div>
+        <div><b><a href="{% url 'dashboard:post_detail' pk=post.id %}">{{ post.title }}</a></b></div>
+        <div>Created by {{ post.created_by }} {{ post.created_at|naturaltime }}</div>
+        <div>{{ post.description }}</div>
+        <div>Project: <a href="">{{ post.project.title }}</a></div>
+        <div>
+            {% for image in post.images.all %}
+                <span><img src="{{ image.image.url }}"></span>
+            {% endfor %}
+        </div>
+        <div>Tags:
+            <ul>
+                {% for tag in post.tags.all %}
+                    <li>{{ tag.tag }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <button><a href="{% url 'dashboard:post_edit' pk=post.id %}">Edit this post</a></button>
+        <form action="" method="post">
+            <input name="post_id" type="hidden" value="{{ post.id }}">
+            <input type="submit" value="Delete this post">
+        </form>
+    </div>
+</body>
+</html>

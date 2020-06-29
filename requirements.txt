@@ -8,3 +8,4 @@ sqlparse==0.2.4
 django-avatar==5.0.0
 channels==2.4.0
 channels-redis==2.4.2
+django-multiupload==0.5.2
