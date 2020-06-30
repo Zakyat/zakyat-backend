@@ -25,15 +25,15 @@ class Query(object):
 
     def resolve_requests(self, info, **kwargs):
         return Request.objects.all()
-    def resolve_request(self, info, **kwargs):
-        return Request.objects.get(**kwargs)
+    def resolve_request(self, info, id=graphene.Int()):
+        return Request.objects.get(id=id)
 
     def resolve_projects(self, info, **kwargs):
         return Project.objects.all()
-    def resolve_project(self, info, **kwargs):
-        return Project.objects.get(**kwargs)
+    def resolve_project(self, info, id=graphene.Int()):
+        return Project.objects.get(id=id)
 
     def resolve_campaigns(self, info, **kwargs):
         return Campaign.objects.all()
-    def resolve_campaign(self, info, **kwargs):
-        return Campaign.objects.get(**kwargs)
+    def resolve_campaign(self, info, id=graphene.Int()):
+        return Campaign.objects.get(id=id)
