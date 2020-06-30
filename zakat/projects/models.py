@@ -57,3 +57,10 @@ class Payment(models.Model):
 	subscription_days = models.IntegerField(choices=subscr_days)
 	payment_type = models.CharField(max_length=10, choices=payment_types)
 
+
+class CardPaymentInfo(models.Model):
+    payment_option = None
+    payment = models.ForeignKey(Payment, on_delete=models.CASCADE, related_name='card_payment_infos')
+    payer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='card_payment_infos')
+    rrn = models.CharField(max_length=20, unique=True)
+
