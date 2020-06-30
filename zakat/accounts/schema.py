@@ -43,12 +43,12 @@ class Query(object):
     employee = graphene.Field(EmployeeSchema, id=graphene.Int())
     employees = graphene.List(EmployeeSchema)
 
-    def resolve_user(self, info, **kwargs):
-        return User.objects.get(**kwargs)
+    def resolve_user(self, info, id=graphene.Int()):
+        return User.objects.get(id=id)
     def resolve_users(self, info, **kwargs):
         return User.objects.all()
     
-    def resolve_employee(self, info, **kwargs):
-        return Employee.objects.get(**kwargs)
+    def resolve_employee(self, info, id=graphene.Int()):
+        return Employee.objects.get(id=id)
     def resolve_employees(self, info, **kwargs):
         return Employee.objects.all()
