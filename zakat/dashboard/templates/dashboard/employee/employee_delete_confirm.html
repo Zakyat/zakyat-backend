@@ -1,0 +1,13 @@
+{% extends 'dashboard/base.html' %}
+{% load get_previous_url %}
+{% block content %}
+    <form action="." method="post">
+            {% csrf_token %}
+    <div>
+        Do you want to delete the product?
+    </div>
+    <div>
+        <input type="submit" value="Yes"/> <a href="{% get_previous_url request %}">Cancel</a>
+    </div>
+    </form>
+{% endblock %}

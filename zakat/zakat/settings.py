@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     # 3rd-party
     'django_countries',
     'graphene_django',
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'projects',
     'news',
     'payment',
+    'partners',
     'dashboard',
 ]
 

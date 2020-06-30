@@ -138,4 +138,6 @@ dmypy.json
 **/media/uploads
 envpy/
 
+# PyCharm
 .idea/
+zakat/.idea/
