@@ -41,26 +41,3 @@ class Campaign(models.Model):
     closed_at = models.DateTimeField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='campaigns')
     # property `transactions` created with a backref
-
-class Payment(models.Model):
-	subscr_days = (
-        (None, 'Null'), 
-        (1, 'everyday'), 
-        (30, 'everymonth')
-    )
-	payment_types = (
-        ('s', 'sadaka'), 
-        ('z', 'zakat'), 
-        ('d', 'direct')
-    )
-	sum = models.DecimalField(max_digits=6, decimal_places=2)
-	subscription_days = models.IntegerField(choices=subscr_days)
-	payment_type = models.CharField(max_length=10, choices=payment_types)
-
-
-class CardPaymentInfo(models.Model):
-    payment_option = None
-    payment = models.ForeignKey(Payment, on_delete=models.CASCADE, related_name='card_payment_infos')
-    payer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='card_payment_infos')
-    rrn = models.CharField(max_length=20, unique=True)
-
