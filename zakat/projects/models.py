@@ -62,9 +62,3 @@ class Campaign(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='campaigns')
     # property `transactions` created with a backref
 
-class PaymentOptions(models.Model):
-    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name='payment_options')
-    title = models.CharField(max_length=128)
-    description = models.CharField(max_length=256)
-    # True means payment was made through credit card, False - with cash money, bull - by other way
-    payment_type = models.BooleanField(null=True, blank=True)

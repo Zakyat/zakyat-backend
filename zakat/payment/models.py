@@ -17,3 +17,10 @@ class Transaction(models.Model):
 	campaign = models.ForeignKey(Campaign, on_delete=models.DO_NOTHING, related_name='transactions')
 	type = models.CharField(max_length=16, choices=TRANSACTION_TYPES)
 	description = models.TextField()
+
+class PaymentOptions(models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name='payment_options')
+    title = models.CharField(max_length=128)
+    description = models.CharField(max_length=256)
+    # True means payment was made through credit card, False - with cash money, bull - by other way
+    payment_type = models.BooleanField(null=True, blank=True)
