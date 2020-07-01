@@ -5,10 +5,11 @@ from django.views.generic.list import ListView
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib import messages
+from django.contrib import messages, auth
 from django.contrib.auth import authenticate, login as auth_login
 from dashboard.auth_hepler import check_is_employee
 from dashboard.forms import LoginForm, PostCreateForm, PostEditForm
+from dashboard.mixins import EmployeePermissionMixin
 from partners.models import Partner
 from accounts.models import Employee
 from news.models import Post, PostImage, PostTag
@@ -79,6 +80,11 @@ def login(request):
     return render(request, 'dashboard/auth/login.html', {'form': form})
 
 
+def logout(request):
+    auth.logout(request)
+    return redirect('dashboard:login')
+
+
 class PartnerList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'partners.view_partner'
     model = Partner
@@ -112,7 +118,7 @@ class PartnerUpdate(UpdateView):
     template_name = 'dashboard/partners/partners_form.html'
 
 
-class NewsList(LoginRequiredMixin, ListView):
+class NewsList(LoginRequiredMixin, EmployeePermissionMixin, ListView):
     login_url = 'dashboard:login'
     model = Post
     template_name = 'dashboard/news/news_list.html'
@@ -125,7 +131,7 @@ class NewsList(LoginRequiredMixin, ListView):
         return redirect('dashboard:news_list')
 
 
-class PostCreate(LoginRequiredMixin, CreateView):
+class PostCreate(LoginRequiredMixin, EmployeePermissionMixin, CreateView):
     login_url = 'dashboard:login'
     model = Post
     template_name = 'dashboard/news/post_create.html'
@@ -133,7 +139,7 @@ class PostCreate(LoginRequiredMixin, CreateView):
     form_class = PostCreateForm
 
 
-class PostEdit(LoginRequiredMixin, UpdateView):
+class PostEdit(LoginRequiredMixin, EmployeePermissionMixin, UpdateView):
     login_url = 'dashboard:login'
     model = Post
     form_class = PostEditForm
@@ -141,7 +147,7 @@ class PostEdit(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('dashboard:news_list')
 
 
-class PostDetail(LoginRequiredMixin, DetailView):
+class PostDetail(LoginRequiredMixin, EmployeePermissionMixin, DetailView):
     login_url = 'dashboard:login'
     model = Post
     template_name = 'dashboard/news/post_detail.html'
