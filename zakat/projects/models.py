@@ -3,7 +3,7 @@ from accounts.models import User, Employee
 
 
 # ---- Field enums ----
-
+# TODO change statuses
 STATUSES = (
     ('new',        'New'),
     ('processing', 'In process'),
@@ -12,6 +12,8 @@ STATUSES = (
 )
 
 # ---- Models ----
+
+# TODO add fields + o2o --> FK + list of docs from accnts + add methods
 
 class Request(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -29,6 +31,8 @@ class Project(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
+# TODO add fields
 class Campaign(models.Model):
     request = models.OneToOneField(Request, on_delete=models.SET_NULL, null=True, blank=True)
     created_by = models.OneToOneField(Employee, on_delete=models.PROTECT)
@@ -41,3 +45,7 @@ class Campaign(models.Model):
     closed_at = models.DateTimeField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='campaigns')
     # property `transactions` created with a backref
+
+# TODO create table options
+
+# TODO ? я не нашел все типы доков
