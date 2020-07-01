@@ -1,6 +1,5 @@
 from djongo import models
-from accounts.models import User, Employee
-
+from accounts.models import User, Employee, Document
 
 # ---- Field enums ----
 STATUSES = (
@@ -32,12 +31,16 @@ NEEDY_CATEGORIES = (
 # TODO add fields + o2o --> FK + list of docs from accnts + add methods
 
 class Request(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=128)    # TODO: i18n
-    description = models.TextField()    # TODO: i18n
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='requests', null=True, blank=True)
+    title = models.CharField(max_length=128)  # TODO: i18n
+    description = models.TextField()  # TODO: i18n
     status = models.CharField(max_length=16, choices=STATUSES, default='processing')
+    needy_category = models.CharField(max_length=70, choices=NEEDY_CATEGORIES, null=True, blank=True)
+    documents = models.ArrayField(model_container=Document, default=[])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    denying_reason = models.CharField(max_length=256, null=True, blank=True)  # TODO: i18n
+
 
 class Project(models.Model):
     created_by = models.OneToOneField(Employee, on_delete=models.PROTECT)
