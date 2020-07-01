@@ -1,7 +1,7 @@
 from djongo import models
 from django.contrib.auth.models import User as DjangoUser
 
-from projects.models import Campaign
+from projects.models import Campaign, PaymentOptions
 
 # ---- Field enums ----
 
@@ -26,19 +26,6 @@ DONATION_STATUS = (
         ('mny_trnsf', 'money_transferred'),
     )
 
-TRANSACTION_TYPES = (
-	('card',     'Card'),
-	('cash',     'Cash'),
-	('transfer', 'Transfer'),
-	('withdraw', 'Withdraw'),
-)
-
-SUBSCRIPTION_DAYS = (
-        (None, 'Null'), 
-        (1, 'everyday'), 
-        (30, 'everymonth')
-    )
-
 # ---- Models ----
 
 class Transaction(models.Model):
@@ -51,21 +38,21 @@ class Transaction(models.Model):
 
 
 class CardPaymentInfo(models.Model):
-    payment_option = None
-    payment = models.ForeignKey(Transaction, on_delete=models.CASCADE, related_name='card_payment_infos')
+    payment_option = models.ForeignKey(PaymentOptions, on_delete=models.CASCADE, related_name='card_payment_infos')
+    transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE, related_name='card_payment_infos')
     payer = models.ForeignKey(DjangoUser, on_delete=models.CASCADE, related_name='card_payment_infos', null=False)
     rrn = models.CharField(max_length=20, unique=True)
     
 
 class CashPaymentInfo(models.Model):
-    payment_option = None
-    payment = models.ForeignKey(Transaction, on_delete=models.CASCADE, related_name='cash_payment_infos')
+    payment_option = models.ForeignKey(PaymentOptions, on_delete=models.CASCADE, related_name='cash_payment_infos')
+    transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE, related_name='cash_payment_infos')
     payer = models.ForeignKey(DjangoUser, on_delete=models.CASCADE, related_name='cash_payment_infos', null=True)
     payer_name = models.CharField(max_length=30)
 
 
 class CampaignTransaction(models.Model):
-    gathering = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name='camping_transaction')
-    payment = models.ForeignKey(Transaction, on_delete=models.CASCADE, related_name='camping_transaction')
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name='camping_transaction')
+    transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE, related_name='camping_transaction')
     status = models.CharField(max_length=40, choices=DONATION_STATUS)
 
