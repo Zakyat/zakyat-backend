@@ -3,7 +3,6 @@ from accounts.models import User, Employee
 
 
 # ---- Field enums ----
-# TODO change statuses
 STATUSES = (
     ('processing', 'In process'),
     ('denied', 'Denied'),
@@ -11,6 +10,22 @@ STATUSES = (
     ('opened', 'Opened'),
     ('closed', 'Closed'),
 )
+
+# TODO normal description of NEEDY_CATEGORIES
+NEEDY_CATEGORIES = (
+    ('large_families', 'Large Families'),
+    ('low_income_families', 'Low Income Families'),
+    ('retired_person', 'Retired Person'),
+    ('single_parent_families', 'Single Parent Families'),
+    ('orphan', 'Orphan'),
+    ('refuge', 'Refuge'),
+    ('person_without_a_fixed_residence_or_traveler_for_russians', 'Person without a fixed residence or traveler for russians'),
+    ('person_without_a_fixed_residence_or_traveler_for_foreign', 'Person without a fixed residence or traveler for foreign'),
+    ('debtor', 'debtor'),
+    ('people_who_have_devoted_themselves_to_islam_or_for_study_of_the_Quran', 'People who have devoted themselves to islam or for study of the Quran'),
+    ('children_or_adults_with_disabilities_or_people_with_severe_diseases', 'Children or adults with disabilities or people with severe diseases'),
+)
+
 
 # ---- Models ----
 
