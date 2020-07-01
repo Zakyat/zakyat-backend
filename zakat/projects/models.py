@@ -33,6 +33,7 @@ class Request(models.Model):
     description = models.TextField()  # TODO: i18n
     status = models.CharField(max_length=16, choices=STATUSES, default='processing')
     needy_category = models.CharField(max_length=70, choices=NEEDY_CATEGORIES, null=True, blank=True)
+    goal = models.IntegerField(default=0)
     documents = models.ArrayField(model_container=Document, default=[])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -61,8 +62,8 @@ class Campaign(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='campaigns')
     # property `transactions` created with a backref
 
-# TODO create table options
 class PaymentOptions(models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name='payment_options')
     title = models.CharField(max_length=128)
     description = models.CharField(max_length=256)
     # True means payment was made through credit card, False - with cash money, bull - by other way
