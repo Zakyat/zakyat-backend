@@ -5,10 +5,11 @@ from accounts.models import User, Employee
 # ---- Field enums ----
 # TODO change statuses
 STATUSES = (
-    ('new',        'New'),
     ('processing', 'In process'),
-    ('approved',   'Approved'),
-    ('rejected',   'Rejected'),
+    ('denied', 'Denied'),
+    ('negotiation', 'Negotiation'),
+    ('opened', 'Opened'),
+    ('closed', 'Closed'),
 )
 
 # ---- Models ----
@@ -19,7 +20,7 @@ class Request(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=128)    # TODO: i18n
     description = models.TextField()    # TODO: i18n
-    status = models.CharField(max_length=16, choices=STATUSES, default='new')
+    status = models.CharField(max_length=16, choices=STATUSES, default='processing')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
