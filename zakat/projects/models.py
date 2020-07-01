@@ -10,7 +10,6 @@ STATUSES = (
     ('closed', 'Closed'),
 )
 
-# TODO normal description of NEEDY_CATEGORIES
 NEEDY_CATEGORIES = (
     ('large_families', 'Large Families'),
     ('low_income_families', 'Low Income Families'),
@@ -28,8 +27,6 @@ NEEDY_CATEGORIES = (
 
 # ---- Models ----
 
-# TODO add fields + o2o --> FK + list of docs from accnts + add methods
-
 class Request(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='requests', null=True, blank=True)
     title = models.CharField(max_length=128)  # TODO: i18n
@@ -40,7 +37,6 @@ class Request(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     denying_reason = models.CharField(max_length=256, null=True, blank=True)  # TODO: i18n
-
 
 class Project(models.Model):
     created_by = models.OneToOneField(Employee, on_delete=models.PROTECT)
@@ -66,5 +62,8 @@ class Campaign(models.Model):
     # property `transactions` created with a backref
 
 # TODO create table options
-
-# TODO ? я не нашел все типы доков
+class PaymentOptions(models.Model):
+    title = models.CharField(max_length=128)
+    description = models.CharField(max_length=256)
+    # True means payment was made through credit card, False - with cash money, bull - by other way
+    payment_type = models.BooleanField(null=True, blank=True)
