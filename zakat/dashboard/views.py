@@ -1,47 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.views.generic.list import ListView
-from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404, redirect
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic.list import ListView
+
 from dashboard.forms import PostCreateForm, PostEditForm
-from partners.models import Partner
-from accounts.models import Employee
 from news.models import Post
-
-
-class StaffListView(LoginRequiredMixin,PermissionRequiredMixin, ListView):
-    permission_required = 'accounts.view_employee'
-    model = Employee
-    paginate_by = 20
-    template_name = 'dashboard/employee/staff_list.html'
-
-
-class EmployeeCreate(LoginRequiredMixin,PermissionRequiredMixin, CreateView):
-    permission_required = 'accounts.add_employee'
-    model = Employee
-    template_name = 'dashboard/employee/employee_create_form.html'
-    success_url = '/dashboard/staffs/' #HttpResponseRedirect(reverse('staff_list'))
-    fields = '__all__'
-
-
-class EmployeeEdit(LoginRequiredMixin,PermissionRequiredMixin, UpdateView):
-    permission_required = 'accounts.change_employee'
-    model = Employee
-    fields = '__all__'
-    template_name = 'dashboard/employee/employee_edit_form.html'
-    success_url = '/dashboard/staffs/' #HttpResponseRedirect(reverse('staff_list'))
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['employee'] = get_object_or_404(Employee, pk=self.kwargs['pk'])
-        return context
-
-
-class EmployeeDelete(LoginRequiredMixin,PermissionRequiredMixin, DeleteView):
-    permission_required = 'accounts.delete_employee'
-    model = Employee
-    success_url = reverse_lazy('dashboard:staff_list')
-    template_name = 'dashboard/employee/employee_delete_confirm.html'
+from partners.models import Partner
 
 
 class PartnerList(LoginRequiredMixin, PermissionRequiredMixin, ListView):

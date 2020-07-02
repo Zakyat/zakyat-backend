@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'payment',
     'partners',
     'dashboard',
-    'dashboard.auth',
+    # 'dashboard.auth',
+    'dashboard.employee',
 ]
 
 MIDDLEWARE = [
