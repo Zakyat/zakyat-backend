@@ -93,10 +93,9 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'zakat',
         'CLIENT': {
-            'host': os.getenv('DB_HOST', 'localhost'),
-            'port': int(os.getenv('DB_PORT', 27017)),
-            'username': os.getenv('DB_USERNAME', ''),
-            'password': os.getenv('DB_PASSWORD', ''),
+            'host': os.getenv('DB_HOST', 'mongodb+srv://zakat_dev:ZakatDev2020@zakat-main-cluster.bd6np.mongodb.net/test'),
+            'username': os.getenv('DB_USERNAME', 'zakat_dev'),
+            'password': os.getenv('DB_PASSWORD', 'ZakatDev2020'),
             'authSource': 'admin',
         }
     }
@@ -156,9 +155,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticfiles'),
-]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 CELERY_BROKER_URL = 'redis://h:p6f48cc47ce16dd4f79a53b92b24f5ba9da298bbd9bad3ea31a89deb338ff8dd0@ec2-52-215-68-53.eu-west-1.compute.amazonaws.com:23739'
