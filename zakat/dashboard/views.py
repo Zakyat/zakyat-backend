@@ -1,17 +1,12 @@
-from django import http
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.auth.models import Permission
 from django.views.generic.list import ListView
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib import messages
-from django.contrib.auth import authenticate, login as auth_login
-from dashboard.auth_hepler import check_is_employee
-from dashboard.forms import LoginForm, PostCreateForm, PostEditForm
+from django.shortcuts import get_object_or_404, redirect
+from dashboard.forms import PostCreateForm, PostEditForm
 from partners.models import Partner
 from accounts.models import Employee
-from news.models import Post, PostImage, PostTag
+from news.models import Post
 
 
 class StaffListView(LoginRequiredMixin,PermissionRequiredMixin, ListView):
@@ -47,36 +42,6 @@ class EmployeeDelete(LoginRequiredMixin,PermissionRequiredMixin, DeleteView):
     model = Employee
     success_url = reverse_lazy('dashboard:staff_list')
     template_name = 'dashboard/employee/employee_delete_confirm.html'
-
-# Create your views here.
-
-
-# TODO redirect to the 'Gatherings' page in the future
-# @user_passes_test(lambda user: user.is_anonymous,
-#                   login_url='http://127.0.0.1:8000',
-#                   redirect_field_name=None)
-def login(request):
-    """Simple login page for employees only"""
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            cleaned_data = form.cleaned_data
-            user = authenticate(username=cleaned_data['username'],
-                                password=cleaned_data['password'])
-            if user is not None:
-                if not check_is_employee(user):
-                    messages.info(request, f'User {user.username} is not an employee!')
-                else:
-                    auth_login(request, user)
-                    messages.info(request, 'Authenticated successfully!')
-            else:
-                messages.error(request, 'User credits are wrong!')
-        else:
-            messages.error(request, 'Given data is not valid!')
-    else:
-        form = LoginForm()
-
-    return render(request, 'dashboard/auth/login.html', {'form': form})
 
 
 class PartnerList(LoginRequiredMixin, PermissionRequiredMixin, ListView):

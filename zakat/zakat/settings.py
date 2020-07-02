@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'news',
     'payment',
     'partners',
-    'dashboard',
+    'dashboard.auth',
 ]
 
 MIDDLEWARE = [
