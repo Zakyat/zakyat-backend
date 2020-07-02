@@ -33,4 +33,4 @@ def login(request):
     else:
         form = LoginForm()
 
-    return render(request, 'dashboard/auth/login.html', {'form': form})
+    return render(request, '', {'form': form})

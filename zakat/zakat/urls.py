@@ -23,11 +23,6 @@ from zakat import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('graphql', GraphQLView.as_view(graphiql=True)),
+    path('dashboard/', include('dashboard.urls')),
     path('news/', include('news.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-dashboard_urlpatterns = [
-    path('dashboard/', include('dashboard.auth.urls')),
-
-]

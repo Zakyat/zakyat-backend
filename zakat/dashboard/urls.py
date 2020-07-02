@@ -3,6 +3,7 @@ from .views import *
 app_name = 'dashboard'
 
 urlpatterns = [
+    path('', include('dashboard.auth.urls')),
     #Here you write all your paths
     #For example 'staffs/', 'staffs/create'
     path('staffs/', StaffListView.as_view(), name='staff_list'),
