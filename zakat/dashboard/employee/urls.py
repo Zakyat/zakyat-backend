@@ -1,6 +1,5 @@
 from django.urls import path, include
 from .views import *
-from dashboard.views import login
 
 app_name = 'employee'
 
