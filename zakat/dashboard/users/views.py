@@ -8,8 +8,8 @@ from django.contrib.auth import authenticate, login as auth_login
 # @user_passes_test(lambda user: user.is_anonymous,
 #                   login_url='http://127.0.0.1:8000',
 #                   redirect_field_name=None)
-from dashboard.auth.forms import LoginForm
-from dashboard.auth.helper import check_is_employee
+from .forms import LoginForm
+from .helper import check_is_employee
 
 
 def login(request):
@@ -33,4 +33,4 @@ def login(request):
     else:
         form = LoginForm()
 
-    return render(request, '', {'form': form})
+    return render(request, 'dashboard/users/login.html', {'form': form})
