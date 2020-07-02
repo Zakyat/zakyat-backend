@@ -13,9 +13,9 @@ TRANSACTION_TYPES = (
 )
 
 SUBSCRIPTION_DAYS = (
-        (None, 'Null'), 
-        (1, 'everyday'), 
-        (30, 'everymonth')
+        ('null', 'NULL'), 
+        ('1', 'everyday'), 
+        ('30', 'everymonth')
     )
 
 DONATION_STATUS = (
@@ -30,8 +30,8 @@ DONATION_STATUS = (
 
 class Transaction(models.Model):
 	amount = models.IntegerField()
-	currency = models.CharField(max_length=20)
-	subscription_days = models.IntegerField(choices=SUBSCRIPTION_DAYS)
+	currency = models.CharField(max_length=20, null=True)
+	subscription_days = models.IntegerField(choices=SUBSCRIPTION_DAYS, default="NULL")
 	campaign = models.ForeignKey(Campaign, on_delete=models.DO_NOTHING, related_name='transactions')
 	type = models.CharField(max_length=16, choices=TRANSACTION_TYPES)
 	description = models.TextField()
@@ -55,4 +55,3 @@ class CampaignTransaction(models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name='camping_transaction')
     transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE, related_name='camping_transaction')
     status = models.CharField(max_length=40, choices=DONATION_STATUS)
-
