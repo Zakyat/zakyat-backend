@@ -1,4 +1,4 @@
-{% load avatar_tags %}
+{% comment %} {% load avatar_tags %}
 {% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
@@ -79,4 +79,91 @@
         console.log("sending city");
         lo.send(JSON.stringify({"game_city": 1}));
     }
-</script>
+</script> {% endcomment %}
+
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Title</title>#}
+{#    {% block title %}#}
+{#    {% endblock title %}#}
+{##}
+{##}
+{#    <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">#}
+{#    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">#}
+{#    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">#}
+{#    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">#}
+{#    <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0" href="/dashboard/static/css/shards-dashboards.1.1.0.min.css">#}
+{#    <link rel="stylesheet" href="/dashboard/static/css/extras.1.1.0.min.css">#}
+{#    <script async defer src="https://buttons.github.io/buttons.js"></script>#}
+{##}
+{#    {% block css %}#}
+{#    {% endblock css %}#}
+{#    {% block js %}#}
+{#    {% endblock js %}#}
+{#</head>#}
+{#<body>#}
+{#{% block content %}#}
+{#{% endblock content %}#}
+{##}
+{#</body>#}
+{#</html>#}
+{% load static %}
+<!doctype html>
+<html class="no-js h-100" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="shortcut icon" href="/dashboard/static/img/favicon.png" />
+
+    <title>
+      Django Dashboard Shards - {% block title %}{% endblock %} | AppSeed
+    </title>
+
+    <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0" href="/static/css/shards-dashboards.1.1.0.min.css">
+    <link rel="stylesheet" href="/static/css/extras.1.1.0.min.css">
+    <script async defer href="https://buttons.github.io/buttons.js"></script>
+
+  </head>
+  <body class="h-100">
+
+    {% include 'dashboard/includes/color-switcher.html' %}
+
+    <div class="color-switcher-toggle animated pulse infinite">
+      <i class="material-icons">settings</i>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+
+        {% include 'dashboard/includes/sidebar.html' %}
+
+        <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+
+          {% include 'dashboard/includes/navigation.html' %}
+
+          {% block content %}{% endblock content %}
+
+          {% include 'dashboard/includes/footer.html' %}
+
+        </main>
+      </div>
+    </div>
+
+    {% include 'dashboard/includes/footer-popup.html' %}
+
+    {% include 'dashboard/includes/scripts.html' %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}{% endblock javascripts %}
+
+  </body>
+</html>

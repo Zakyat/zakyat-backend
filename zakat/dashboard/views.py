@@ -1,17 +1,18 @@
-from django import http
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.auth.models import Permission
-from django.views.generic.list import ListView
-from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
-from dashboard.auth_hepler import check_is_employee
-from dashboard.forms import LoginForm, PostCreateForm, PostEditForm
+from dashboard.users.helper import check_is_employee
+from dashboard.users.forms import LoginForm
 from partners.models import Partner
 from accounts.models import Employee
 from news.models import Post, PostImage, PostTag
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic.list import ListView
+from dashboard.forms import PostCreateForm, PostEditForm
+from news.models import Post
 
 
 class StaffListView(LoginRequiredMixin,PermissionRequiredMixin, ListView):
@@ -106,13 +107,6 @@ class PartnerDelete(DeleteView):
     permission_required = 'partners.delete_partner'
     model = Partner
     success_url = reverse_lazy('dashboard:partners_list')
-
-
-class PartnerUpdate(UpdateView):
-    permission_required = 'partners.change_partner'
-    model = Partner
-    fields = "__all__"
-    template_name = 'dashboard/partners/partners_form.html'
 
 
 class NewsList(LoginRequiredMixin, ListView):
