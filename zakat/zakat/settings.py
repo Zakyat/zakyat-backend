@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # 3rd-party
     'django_countries',
     'graphene_django',
+    'django_filters',
     # our apps
     'accounts',
     'projects',

@@ -4,6 +4,7 @@ app_name = 'dashboard'
 
 urlpatterns = [
     path('', include('dashboard.users.urls')),
+    path('', include('dashboard.projs.urls')),
     #Here you write all your paths
     #For example 'staffs/', 'staffs/create'
     path('staffs/', include('dashboard.employee.urls', namespace='employee'),),
