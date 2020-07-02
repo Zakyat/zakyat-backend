@@ -1,7 +1,6 @@
 from djongo import models
 from django.contrib.auth.models import User as DjangoUser
-
-from projects.models import Campaign, PaymentOptions
+from projects.models import Campaign
 
 # ---- Field enums ----
 
@@ -28,6 +27,14 @@ DONATION_STATUS = (
 
 # ---- Models ----
 
+class PaymentOptions(models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name='payment_options')
+    title = models.CharField(max_length=128)
+    description = models.CharField(max_length=256)
+    # True means payment was made through credit card, False - with cash money, bull - by other way
+    payment_type = models.BooleanField(null=True, blank=True)
+
+
 class Transaction(models.Model):
 	amount = models.IntegerField()
 	currency = models.CharField(max_length=20, null=True)
@@ -35,7 +42,6 @@ class Transaction(models.Model):
 	campaign = models.ForeignKey(Campaign, on_delete=models.DO_NOTHING, related_name='transactions')
 	type = models.CharField(max_length=16, choices=TRANSACTION_TYPES)
 	description = models.TextField()
-
 
 class CardPaymentInfo(models.Model):
     payment_option = models.ForeignKey(PaymentOptions, on_delete=models.CASCADE, related_name='card_payment_infos')

@@ -1,29 +1,7 @@
 from django import forms
-from multiupload.fields import MultiImageField, MultiFileField
+from multiupload.fields import MultiFileField
 
-from accounts.models import Employee
 from news.models import Post, PostTag, PostImage
-
-
-class EmployeeCreateForm(forms.ModelForm):
-    class Meta:
-        model = Employee
-        fields = "__all__"
-
-    def save(self, commit=True):
-        employee = Employee()
-        employee.user = self.cleaned_data['user']
-        employee.phone_number = self.cleaned_data['phone_number']
-        employee.photo = self.cleaned_data['photo']
-        position = self.cleaned_data['position']
-
-        if commit:
-            employee.save()
-
-
-class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
 
 
 class PostCreateForm(forms.ModelForm):
