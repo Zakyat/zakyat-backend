@@ -1,5 +1,5 @@
 """
-Module with support logic for auth
+Module with support logic for users
 """
 from accounts.models import Employee
 

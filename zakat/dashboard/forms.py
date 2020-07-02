@@ -1,13 +1,7 @@
 from django import forms
-from multiupload.fields import MultiImageField, MultiFileField
+from multiupload.fields import MultiFileField
 
-from accounts.models import Employee
 from news.models import Post, PostTag, PostImage
-
-
-class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
 
 
 class PostCreateForm(forms.ModelForm):
