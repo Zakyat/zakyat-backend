@@ -28,7 +28,7 @@ SECRET_KEY = 'dwhkv)h1i)yx@p2t4a=vhh33jv1*vi7577exxwdv(tf*(1yzw9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['zakatkazan.herokuapp.com']
 
 
 # Application definition
