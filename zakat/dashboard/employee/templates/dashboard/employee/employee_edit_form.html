@@ -1,0 +1,22 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        {{ form.as_p }}
+        <div>
+            Erros:
+            {{ form.errors }}
+        </div>
+        <div>
+            <input type="submit" value="Save">
+        </div>
+        <div>
+            <input type="submit" value="Save and continue editing">
+        </div>
+        <div>
+            <input type="submit" value="Save and add another">
+        </div>
+        <div>
+            <a href="{% url 'dashboard:employee:employee_delete' employee.id %} ">Delete</a>
+        </div>
+    </form>
+{% endblock %}
