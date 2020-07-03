@@ -93,7 +93,7 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'zakat',
         'CLIENT': {
-            'host': os.getenv('DB_HOST', 'localhost:27017'),
+            'host': os.getenv('DB_HOST', ''),
             'username': os.getenv('DB_USERNAME', ''),
             'password': os.getenv('DB_PASSWORD', ''),
             'authSource': 'admin',
