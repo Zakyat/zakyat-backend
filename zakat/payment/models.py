@@ -29,7 +29,7 @@ class Transaction(models.Model):
 			'notification',
 			{
 				'type': 'notify',
-				'gathering': Transaction.objects.filyer().count()
+				'transaction': Transaction.objects.count()
 			})
 
 

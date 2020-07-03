@@ -55,6 +55,7 @@
                     <a class="nav-link " href="#">
                         <i class="material-icons">attach_money</i>
                         <span>{% trans "Sadaka and Zakat" %}</span>
+                        <span id="transaction" class="badge badge-pill badge-danger"></span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -141,11 +142,20 @@
         console.log(event);
         let data = JSON.parse(event.data);
         let gathering = data.notification.gathering;
+        let transaction = data.notification.transaction;
+
         if (gathering) {
             document.getElementById('gatherings').innerHTML = gathering;
         }
         else{
            document.getElementById('gatherings').innerHTML = '';
+        }
+
+        if(transaction){
+           document.getElementById('transaction').innerHTML = transaction;
+        }
+        else{
+           document.getElementById('transaction').innerHTML = '';
         }
     }
 
