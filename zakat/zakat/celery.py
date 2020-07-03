@@ -3,12 +3,13 @@ from __future__ import absolute_import, unicode_literals
 import os
 
 from celery import Celery
+from . import settings
 
 # set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'zakat.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'zakat.zakat.settings')
 os.environ.setdefault('FORKED_BY_MULTIPROCESSING', '1')
 
-app = Celery('zakat')
+app = Celery('zakat.zakat')
 
 # Using a string here means the worker doesn't have to serialize
 # the configuration object to child processes.
@@ -17,7 +18,7 @@ app = Celery('zakat')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
 # Load task modules from all registered Django app configs.
-app.autodiscover_tasks()
+app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 
 @app.task(bind=True)
