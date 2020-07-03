@@ -49,13 +49,15 @@ class Project(models.Model):
 
 
 # TODO add fields
-class   Campaign(models.Model):
+class Campaign(models.Model):
     request = models.OneToOneField(Request, on_delete=models.SET_NULL, null=True, blank=True)
     created_by = models.OneToOneField(Employee, on_delete=models.PROTECT)
     title = models.CharField(max_length=128)    # TODO: i18n
     description = models.TextField()    # TODO: i18n
     goal = models.IntegerField()        # in rubles
     # current should be aggregated from payments
+    # TODO add closing_reason
+    closing_reason = models.CharField(max_length=128, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     closed_at = models.DateTimeField(null=True, blank=True)
