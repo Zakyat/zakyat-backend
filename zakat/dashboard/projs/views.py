@@ -10,7 +10,7 @@ def index(request):
     return render(request, 'dashboard/projs/campaign_list.html', {'page_obj': Campaign.objects.all()})
 
 
-
+# TODO pagination
 class C(FilterView):
     template_name = 'dashboard/projs/campaign_list.html'
     filterset_class = CampaignFilter
