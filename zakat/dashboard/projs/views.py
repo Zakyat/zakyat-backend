@@ -17,11 +17,7 @@ class C(FilterView):
     context_object_name = 'campaigns'
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        c = super(C, self).get_context_data(object_list=object_list, **kwargs)
-        return c
+        context = super(C, self).get_context_data(object_list=object_list, **kwargs)
+        context['count'] = len(object_list)
+        return context
 
-    def get_queryset(self):
-        status = self.request.GET.get('status', None)
-        if status:
-            pass
-        super(C, self).get_queryset()

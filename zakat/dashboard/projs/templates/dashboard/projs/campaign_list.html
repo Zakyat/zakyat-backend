@@ -11,7 +11,7 @@
     {{ filter.form.as_p }}
     <button type="submit">Search</button>
   </form>
-
+<h3>Count: {{ count }}</h3>
 {% for page in campaigns %}
     <h3>{{ page.title }}</h3>
     <h3>{{ page.description }}</h3>
