@@ -1,17 +1,22 @@
 {% extends 'dashboard/base.html' %}
-
+{% load get_previous_url %}
 {% block content %}
-    <body>
+
     <div class="main-content-container container-fluid px-4">
         <div class="main-content-container container-fluid px-4">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item p-3">
                     <div class="row">
                         <div class="col">
-                            <form method="post" enctype="multipart/form-data">
+                            <form action="." method="post">
                                 {% csrf_token %}
-                                {{ form.as_p }}
-                                <input class="btn btn-accent" type="submit" value="Сохранить">
+                                <div>
+                                    Вы точно хотите удалить данного партнера?
+                                </div>
+                                <div>
+                                    <input class="btn btn-accent" type="submit" value="Да"/> <a
+                                        href="{% get_previous_url request %}">Отмена</a>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -19,5 +24,4 @@
             </ul>
         </div>
     </div>
-    </body>
 {% endblock %}
