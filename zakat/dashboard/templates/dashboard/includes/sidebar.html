@@ -48,6 +48,7 @@
                     <a class="nav-link " href="#">
                         <i class="material-icons">move_to_inbox</i>
                         <span>{% trans "Gatherings" %}</span>
+                        <span id="gatherings" class="badge badge-pill badge-danger"></span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -133,5 +134,23 @@
         let form = document.getElementById('language_form');
         form.innerHTML += '<select name="language"><option value="en"></option></select>';
         form.submit();
+    }
+
+    lo = new WebSocket("ws://localhost:8000/ws/notification/");
+    lo.onmessage = (event) => {
+        console.log(event);
+        let data = JSON.parse(event.data);
+        let gathering = data.notification.gathering;
+        if (gathering) {
+            document.getElementById('gatherings').innerHTML = gathering;
+        }
+        else{
+           document.getElementById('gatherings').innerHTML = '';
+        }
+    }
+
+    lo.onopen = () => {
+        console.log("sending request");
+        lo.send(JSON.stringify({"key": 1}));
     }
 </script>

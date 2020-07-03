@@ -1,6 +1,6 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
-from .models import Gatherings
+from projects.models import Campaign
 
 
 class NotificationConsumer(AsyncWebsocketConsumer):
@@ -12,7 +12,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
     async def receive(self, text_data):
-        unread_gatherings_count = Gatherings.objects.count()
+        unread_gatherings_count = Campaign.objects.filter(closed_at=None).count()
         await self.channel_layer.group_send(
             'notification',
             {

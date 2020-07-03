@@ -1,5 +1,7 @@
 from djongo import models
 from accounts.models import User, Employee, Document
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 # ---- Field enums ----
 STATUSES = (
@@ -62,3 +64,14 @@ class Campaign(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='campaigns')
     # property `transactions` created with a backref
 
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super(Campaign, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
+
+        layer = get_channel_layer()
+        async_to_sync(layer.group_send)(
+            'notification',
+            {
+                'type': 'notify',
+                'gathering': Campaign.objects.filter(closed_at=None).count()
+            })
