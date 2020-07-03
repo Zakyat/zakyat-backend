@@ -12,26 +12,27 @@ class PartnerList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     template_name = 'dashboard/partner/partners_list.html'
 
 
-class PartnerDetail(DetailView):
+class PartnerDetail(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     permission_required = 'partners.view_partner'
     model = Partner
     template_name = 'dashboard/partner/partner_detail.html'
 
 
-class PartnerCreate(CreateView):
+class PartnerCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = 'partners.create_partner'
     template_name = 'dashboard/partner/partners_form.html'
     model = Partner
     fields = "__all__"
 
 
-class PartnerDelete(DeleteView):
+class PartnerDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     permission_required = 'partners.delete_partner'
     model = Partner
     success_url = reverse_lazy('dashboard:partner:partners_list')
+    template_name = 'dashboard/partner/partner_delete_confirm.html'
 
 
-class PartnerUpdate(UpdateView):
+class PartnerUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = 'partners.change_partner'
     model = Partner
     fields = "__all__"
