@@ -76,7 +76,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " href="{% url 'dashboard:partner:partners_list' %}">
-                        <i class="material-icons">face</i>
+                        <i class="material-icons">people</i>
                         <span>{% trans "Partners" %}</span>
                     </a>
                 </li>
@@ -90,6 +90,13 @@
                     <a class="nav-link " href="{% url "dashboard:logout" %}">
                         <i class="material-icons">power_settings_new</i>
                         <span>{% trans "Logout" %}</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link " href="{% url 'avatar_change' %}">
+                        <i class="material-icons">face</i>
+                        <span>{% trans "Change your avatar" %}</span>
                     </a>
                 </li>
 
