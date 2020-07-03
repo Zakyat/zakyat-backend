@@ -29,6 +29,7 @@ class PartnerDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     permission_required = 'partners.delete_partner'
     model = Partner
     success_url = reverse_lazy('dashboard:partner:partners_list')
+    template_name = 'dashboard/partner/partner_delete_confirm.html'
 
 
 class PartnerUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):

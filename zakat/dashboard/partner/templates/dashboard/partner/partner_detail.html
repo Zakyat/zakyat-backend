@@ -24,11 +24,7 @@
                 <button type="submit" class="btn btn-accent"><a style="color: white" href="{% url 'dashboard:partner:partner_update' pk=partner.id %}">Изменить информацию о партнере</a></button>
                 <br>
                 <br>
-                <form method="post" action="{% url 'dashboard:partner:partner_delete' pk=partner.id %}">
-                    {% csrf_token %}
-                    <input type="submit" class="btn btn-accent" value="Удалить">
-                </form>
-{#                <button type="submit" class="btn btn-accent"><a style="color: white" href="{% url 'dashboard:partner:partner_delete' pk=partner.id %}">Удалить партнера</a></button>#}
+                    <a style="color: white" href="{% url 'dashboard:partner:partner_delete' pk=partner.id %} "><button type="submit" class="btn btn-accent">Удалить</button></a>
             </div>
         </div>
         <a style="color: white" href="{% url 'dashboard:partner:partners_list' %}"><button type="submit" class="btn btn-accent">Вернуться ко всем партнерам</button></a>

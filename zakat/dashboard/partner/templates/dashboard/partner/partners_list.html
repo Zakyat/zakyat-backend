@@ -33,27 +33,49 @@
             <!-- End Page Header -->
             <div class="row">
                 {% if object_list %}
-                {% for partner in object_list %}
-                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                        <div class="card card-small card-post h-100">
-                            <div class="card-post__image"
-                                 style="background-image: url('{{ partner.logo.url }}');"></div>
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <a class="text-fiord-blue"
-                                       href="{{ partner.get_absolute_url }}">{{ partner.title }}</a>
-                                </h5>
+                    {% for partner in page_obj %}
+                        <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                            <div class="card card-small card-post h-100">
+                                <div class="card-post__image"
+                                     style="background-image: url('{{ partner.logo.url }}');"></div>
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <a class="text-fiord-blue"
+                                           href="{{ partner.get_absolute_url }}">{{ partner.title }}</a>
+                                    </h5>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
                 {% else %}
-                    На данный момент партнеров нет.
+                    <h3>На данный момент партнеров нет.</h3><br><br><br>
                 {% endif %}
             </div>
-            <a style="color: white" href="{% url 'dashboard:partner:partner_create' %}"><button type="submit" class="btn btn-accent">Создать партнера</button></a>
+            <a style="color: white" href="{% url 'dashboard:partner:partner_create' %}">
+                <button type="submit" class="btn btn-accent">Создать партнера</button>
+            </a>
+        </div>
+        <br>
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+{#                    <input type="image" src="" href="?page=1">#}
+                    <a href="?page=1">Первая</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+                {% endif %}
+
+                <span class="current">
+                    Страница {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">Последняя</a>
+                {% endif %}
+            </span>
         </div>
     </div>
+
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
