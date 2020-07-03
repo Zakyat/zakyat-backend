@@ -93,9 +93,9 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'zakat',
         'CLIENT': {
-            'host': os.getenv('DB_HOST', 'mongodb+srv://zakat_dev:ZakatDev2020@zakat-main-cluster.bd6np.mongodb.net/test'),
-            'username': os.getenv('DB_USERNAME', 'zakat_dev'),
-            'password': os.getenv('DB_PASSWORD', 'ZakatDev2020'),
+            'host': os.getenv('DB_HOST', 'localhost:27017'),
+            'username': os.getenv('DB_USERNAME', ''),
+            'password': os.getenv('DB_PASSWORD', ''),
             'authSource': 'admin',
         }
     }
@@ -157,7 +157,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-CELERY_BROKER_URL = 'redis://h:p6f48cc47ce16dd4f79a53b92b24f5ba9da298bbd9bad3ea31a89deb338ff8dd0@ec2-52-215-68-53.eu-west-1.compute.amazonaws.com:23739'
+CELERY_BROKER_URL = os.getenv('BROKER_URL', '')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 
@@ -165,8 +165,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'zakat.development@gmail.com'
-EMAIL_HOST_PASSWORD = 'beoqsghzbcccxiaj'
+EMAIL_HOST_USER = os.getenv('EMAIL_USER', '')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD', '')
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
