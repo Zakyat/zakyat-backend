@@ -1,8 +1,6 @@
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, \
     PasswordResetCompleteView
-from django.urls import path, include
-from .views import *
-from dashboard.views import login
+from django.urls import path, include, reverse_lazy
 from .forms import PasswordResetForm
 
 app_name = 'dashboard'
@@ -15,10 +13,7 @@ urlpatterns = [
     path('partners/', include('dashboard.partner.urls', namespace='partner'),),
     # Here you write all your paths
     # For example 'staffs/', 'staffs/create'
-    path('news/', NewsList.as_view(), name='news_list'),
-    path('news/create/', PostCreate.as_view(), name='post_create'),
-    path('news/<int:pk>/', PostDetail.as_view(), name='post_detail'),
-    path('news/<int:pk>/edit/', PostEdit.as_view(), name='post_edit'),
+    path('news/', include('dashboard.news_posts.urls', namespace='news_posts'),),
     path('password-reset/',
          PasswordResetView.as_view(template_name='dashboard/password_reset/password_reset.html',
                                    form_class=PasswordResetForm,
