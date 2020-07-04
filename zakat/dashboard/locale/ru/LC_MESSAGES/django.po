@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-28 20:43+0300\n"
+"POT-Creation-Date: 2020-07-04 12:51+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,50 +20,50 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: templates/base.html:20
-msgid "Change your avatar"
-msgstr "Изменить картинку"
-
-#: templates/base.html:24
+#: dashboard/templates/dashboard/includes/sidebar.html:38
 msgid "Employees"
 msgstr "Работники"
 
-#: templates/base.html:25
+#: dashboard/templates/dashboard/includes/sidebar.html:44
 msgid "Users"
 msgstr "Пользователи"
 
-#: templates/base.html:26
-msgid "Gatherings"
+#: dashboard/templates/dashboard/includes/sidebar.html:50
+msgid "Camping"
 msgstr "Сборы"
 
-#: templates/base.html:27
+#: dashboard/templates/dashboard/includes/sidebar.html:57
 msgid "Sadaka and Zakat"
 msgstr "Садака и Закят"
 
-#: templates/base.html:28
+#: dashboard/templates/dashboard/includes/sidebar.html:64
 msgid "News"
 msgstr "Новости"
 
-#: templates/base.html:29
+#: dashboard/templates/dashboard/includes/sidebar.html:70
 msgid "Reports"
 msgstr "Доклады"
 
-#: templates/base.html:30
+#: dashboard/templates/dashboard/includes/sidebar.html:76
 msgid "Banners"
 msgstr "Баннеры"
 
-#: templates/base.html:31
+#: dashboard/templates/dashboard/includes/sidebar.html:82
 msgid "Partners"
 msgstr "Партнеры"
 
-#: templates/base.html:32
+#: dashboard/templates/dashboard/includes/sidebar.html:88
 msgid "Other"
 msgstr "Другое"
 
-#: templates/base.html:33
+#: dashboard/templates/dashboard/includes/sidebar.html:94
 msgid "Logout"
 msgstr "Выйти"
 
-#: templates/base.html:34
+#: dashboard/templates/dashboard/includes/sidebar.html:101
+msgid "Change your avatar"
+msgstr "Изменить картинку"
+
+#: dashboard/templates/dashboard/includes/sidebar.html:109
 msgid "Change language"
 msgstr "Сменить язык"
