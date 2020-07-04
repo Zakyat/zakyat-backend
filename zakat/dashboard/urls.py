@@ -7,7 +7,6 @@ app_name = 'dashboard'
 
 
 urlpatterns = [
-    path('gathering/', gatherings, name='gatherings'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('', include('dashboard.users.urls')),
     #Here you write all your paths

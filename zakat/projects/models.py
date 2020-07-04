@@ -19,11 +19,15 @@ NEEDY_CATEGORIES = (
     ('single_parent_families', 'Single Parent Families'),
     ('orphan', 'Orphan'),
     ('refuge', 'Refuge'),
-    ('person_without_a_fixed_residence_or_traveler_for_russians', 'Person without a fixed residence or traveler for russians'),
-    ('person_without_a_fixed_residence_or_traveler_for_foreign', 'Person without a fixed residence or traveler for foreign'),
+    ('person_without_a_fixed_residence_or_traveler_for_russians',
+     'Person without a fixed residence or traveler for russians'),
+    ('person_without_a_fixed_residence_or_traveler_for_foreign',
+     'Person without a fixed residence or traveler for foreign'),
     ('debtor', 'debtor'),
-    ('people_who_have_devoted_themselves_to_islam_or_for_study_of_the_Quran', 'People who have devoted themselves to islam or for study of the Quran'),
-    ('children_or_adults_with_disabilities_or_people_with_severe_diseases', 'Children or adults with disabilities or people with severe diseases'),
+    ('people_who_have_devoted_themselves_to_islam_or_for_study_of_the_Quran',
+     'People who have devoted themselves to islam or for study of the Quran'),
+    ('children_or_adults_with_disabilities_or_people_with_severe_diseases',
+     'Children or adults with disabilities or people with severe diseases'),
 )
 
 
@@ -41,37 +45,46 @@ class Request(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     denying_reason = models.CharField(max_length=256, null=True, blank=True)  # TODO: i18n
 
+
 class Project(models.Model):
     created_by = models.OneToOneField(Employee, on_delete=models.PROTECT)
-    title = models.CharField(max_length=128)    # TODO: i18n
-    description = models.TextField()    # TODO: i18n
+    title = models.CharField(max_length=128)  # TODO: i18n
+    description = models.TextField()  # TODO: i18n
     # property `campaigns` created with a backref
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 
 # TODO add fields
+def send_camping_notification():
+    layer = get_channel_layer()
+    async_to_sync(layer.group_send)(
+        'notification',
+        {
+            'type': 'notify',
+            'camping': Campaign.objects.filter(closed_at=None).count()
+        })
+
+
 class Campaign(models.Model):
     request = models.OneToOneField(Request, on_delete=models.SET_NULL, null=True, blank=True)
     created_by = models.OneToOneField(Employee, on_delete=models.PROTECT)
-    title = models.CharField(max_length=128)    # TODO: i18n
-    description = models.TextField()    # TODO: i18n
-    goal = models.IntegerField()        # in rubles
+    title = models.CharField(max_length=128)  # TODO: i18n
+    description = models.TextField()  # TODO: i18n
+    goal = models.IntegerField()  # in rubles
     # current should be aggregated from payments
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     closed_at = models.DateTimeField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='campaigns')
+
     # property `transactions` created with a backref
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         super(Campaign, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
+        send_camping_notification()
 
-        layer = get_channel_layer()
-        async_to_sync(layer.group_send)(
-            'notification',
-            {
-                'type': 'notify',
-                'gathering': Campaign.objects.filter(closed_at=None).count()
-            })
+    def delete(self, using=None, keep_parents=False):
+        super(Campaign, self).delete(using=None, keep_parents=False)
+        send_camping_notification()

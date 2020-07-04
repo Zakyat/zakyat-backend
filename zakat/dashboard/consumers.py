@@ -13,13 +13,13 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
     async def receive(self, text_data):
-        unread_gatherings_count = Campaign.objects.filter(closed_at=None).count()
+        unread_camping_count = Campaign.objects.filter(closed_at=None).count()
         unread_transaction_count = Transaction.objects.count()
         await self.channel_layer.group_send(
             'notification',
             {
                 'type': 'notify',
-                'gathering': unread_gatherings_count,
+                'camping': unread_camping_count,
                 'transaction': unread_transaction_count
             }
         )

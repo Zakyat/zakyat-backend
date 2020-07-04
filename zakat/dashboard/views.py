@@ -50,8 +50,6 @@ class EmployeeDelete(LoginRequiredMixin,PermissionRequiredMixin, DeleteView):
     template_name = 'dashboard/employee/employee_delete_confirm.html'
 
 
-def gatherings(request):
-    return render(request, 'gatherings.html', {})
 # Create your views here.
 
 

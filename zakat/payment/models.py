@@ -4,33 +4,39 @@ from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from projects.models import Campaign
 
-
 TRANSACTION_TYPES = (
-	('card',     'Card'),
-	('cash',     'Cash'),
-	('transfer', 'Transfer'),
-	('withdraw', 'Withdraw'),
+    ('card', 'Card'),
+    ('cash', 'Cash'),
+    ('transfer', 'Transfer'),
+    ('withdraw', 'Withdraw'),
 )
 
 
+def send_transaction_notification():
+    layer = get_channel_layer()
+    async_to_sync(layer.group_send)(
+        'notification',
+        {
+            'type': 'notify',
+            'transaction': Transaction.objects.count()
+        })
+
+
 class Transaction(models.Model):
-	amount = models.IntegerField()
-	user = models.ForeignKey(DjangoUser, on_delete=models.DO_NOTHING, related_name='transactions')
-	campaign = models.ForeignKey(Campaign, on_delete=models.DO_NOTHING, related_name='transactions')
-	type = models.CharField(max_length=16, choices=TRANSACTION_TYPES)
-	description = models.TextField()
+    amount = models.IntegerField()
+    user = models.ForeignKey(DjangoUser, on_delete=models.DO_NOTHING, related_name='transactions')
+    campaign = models.ForeignKey(Campaign, on_delete=models.DO_NOTHING, related_name='transactions')
+    type = models.CharField(max_length=16, choices=TRANSACTION_TYPES)
+    description = models.TextField()
 
-	def save(self, force_insert=False, force_update=False, using=None,
-			 update_fields=None):
-		super(Transaction, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super(Transaction, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
+        send_transaction_notification()
 
-		layer = get_channel_layer()
-		async_to_sync(layer.group_send)(
-			'notification',
-			{
-				'type': 'notify',
-				'transaction': Transaction.objects.count()
-			})
+    def delete(self, using=None, keep_parents=False):
+        super(Transaction, self).delete(using=None, keep_parents=False)
+        send_transaction_notification()
 
 
 class PaymentOptions(models.Model):
