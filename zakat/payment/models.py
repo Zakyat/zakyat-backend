@@ -18,7 +18,7 @@ def send_transaction_notification():
         'notification',
         {
             'type': 'notify',
-            'transaction': Transaction.objects.count()
+            'transaction': Transaction.objects.filter(campaign=None).count()
         })
 
 

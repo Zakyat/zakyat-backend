@@ -33,6 +33,18 @@ NEEDY_CATEGORIES = (
 
 # ---- Models ----
 
+def send_request_notification():
+    unread_requests = Request.objects.filter(status='processing').count() + Request.objects.filter(
+        status='negotiation').count()
+    layer = get_channel_layer()
+    async_to_sync(layer.group_send)(
+        'notification',
+        {
+            'type': 'notify',
+            'requests': unread_requests
+        })
+
+
 class Request(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='requests', null=True, blank=True)
     title = models.CharField(max_length=128)  # TODO: i18n
@@ -45,6 +57,15 @@ class Request(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     denying_reason = models.CharField(max_length=256, null=True, blank=True)  # TODO: i18n
 
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super(Request, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
+        send_request_notification()
+
+    def delete(self, using=None, keep_parents=False):
+        super(Request, self).delete(using=None, keep_parents=False)
+        send_request_notification()
+
 
 class Project(models.Model):
     created_by = models.OneToOneField(Employee, on_delete=models.PROTECT)
@@ -56,15 +77,6 @@ class Project(models.Model):
 
 
 # TODO add fields
-def send_camping_notification():
-    layer = get_channel_layer()
-    async_to_sync(layer.group_send)(
-        'notification',
-        {
-            'type': 'notify',
-            'camping': Campaign.objects.filter(closed_at=None).count()
-        })
-
 
 class Campaign(models.Model):
     request = models.OneToOneField(Request, on_delete=models.SET_NULL, null=True, blank=True)
@@ -79,12 +91,3 @@ class Campaign(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='campaigns')
 
     # property `transactions` created with a backref
-
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
-        super(Campaign, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
-        send_camping_notification()
-
-    def delete(self, using=None, keep_parents=False):
-        super(Campaign, self).delete(using=None, keep_parents=False)
-        send_camping_notification()

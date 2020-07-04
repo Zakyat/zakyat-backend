@@ -48,7 +48,7 @@
                     <a class="nav-link " href="#">
                         <i class="material-icons">move_to_inbox</i>
                         <span>{% trans "Camping" %}</span>
-                        <span id="camping" class="badge badge-pill badge-danger"></span>
+                        <span id="requests" class="badge badge-pill badge-danger"></span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -141,14 +141,14 @@
     lo.onmessage = (event) => {
         console.log(event);
         let data = JSON.parse(event.data);
-        let camping = data.notification.camping;
+        let camping = data.notification.requests;
         let transaction = data.notification.transaction;
 
         if (camping) {
-            document.getElementById('camping').innerHTML = camping;
+            document.getElementById('requests').innerHTML = camping;
         }
         else if(camping === 0){
-           document.getElementById('camping').innerHTML = '';
+           document.getElementById('requests').innerHTML = '';
         }
 
         if(transaction){

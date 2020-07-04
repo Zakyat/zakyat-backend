@@ -1,6 +1,6 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
-from projects.models import Campaign
+from projects.models import Request
 from payment.models import Transaction
 
 
@@ -13,13 +13,14 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
     async def receive(self, text_data):
-        unread_camping_count = Campaign.objects.filter(closed_at=None).count()
+        unread_requests = Request.objects.filter(status='processing').count() + Request.objects.filter(
+            status='negotiation').count()
         unread_transaction_count = Transaction.objects.count()
         await self.channel_layer.group_send(
             'notification',
             {
                 'type': 'notify',
-                'camping': unread_camping_count,
+                'requests': unread_requests,
                 'transaction': unread_transaction_count
             }
         )
