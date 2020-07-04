@@ -61,11 +61,12 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-small" id="dropdown-ava">
-                        <a class="dropdown-item" href="/dashboard/user-profile.html">
-                            <i class="material-icons">&#xE7FD;</i> Profile</a>
+                        <a class="dropdown-item" href="{% url 'avatar_change' %}">
+                            <i class="material-icons">&#xE7FD;</i>
+                            <span>{% trans "Change your avatar" %}</span></a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-danger" href="">
-                            <i class="material-icons text-danger">&#xE879;</i> Logout </a>
+                        <a class="dropdown-item text-danger" href="{% url "dashboard:logout" %}">
+                            <i class="material-icons text-danger">&#xE879;</i> <span>{% trans "Logout" %}</span> </a>
                     </div>
                 </li>
             </ul>
