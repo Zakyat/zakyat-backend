@@ -16,7 +16,6 @@ class CampaignFilter(django_filters.FilterSet):
 
     search = django_filters.CharFilter(method='filter_search')
 
-
     class Meta:
         model = Campaign
         fields = ['search', 'status', ]
@@ -30,7 +29,7 @@ class CampaignFilter(django_filters.FilterSet):
                 queryset = queryset.filter(closed_at__isnull=True)
         return queryset
 
-    # TODO add all fields
+    # TODO add all fields (payment_opt, date??)
     @staticmethod
     def make_search1(value):
         return Q(title__icontains=value) \
@@ -47,7 +46,6 @@ class CampaignFilter(django_filters.FilterSet):
                | Q(request__user__user__first_name__icontains=value) \
                | Q(request__user__user__username__icontains=value) \
                | Q(request__title__icontains=value)
-
 
     # TODO solve problem with searching through request's fields
     def filter_search(self, queryset, name, value):

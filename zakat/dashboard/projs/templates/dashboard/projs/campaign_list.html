@@ -17,12 +17,21 @@
                 <div class="card card-small mb-2">
                     <div class="card-body">
                         <form class="add-new-post">
-{#                            TODO add count title #}
+                            {#                            TODO add count title #}
                             <input class="form-control form-control-lg mb-3"
                                    type="text" name="search" id="id_search"
                                    placeholder="Search"
-                                    value="{{ filter.form.data.search }}">
-{#                            TODO add from right side select field #}
+                                   value="{{ filter.form.data.search }}">
+
+                            <select class="form-control form-control-lg mb-3" name="status" id="id_status">
+                                {% for choice in filter.form.fields.status.choices %}
+                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                {% endfor %}
+
+                            </select>
+
+
+                            {#                            TODO add from right side select field #}
                             <button type="submit" class="form-control form-control-lg btn btn-outline-accent">
                                 <i class="material-icons">search</i>Search Campaigns
                             </button>
