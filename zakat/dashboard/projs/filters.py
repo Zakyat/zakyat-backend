@@ -30,12 +30,30 @@ class CampaignFilter(django_filters.FilterSet):
                 queryset = queryset.filter(closed_at__isnull=True)
         return queryset
 
+    # TODO add all fields
     @staticmethod
-    def make_serach(value):
+    def make_search1(value):
         return Q(title__icontains=value) \
-               | Q(description__icontains=value)
+               | Q(description__icontains=value) \
+               | Q(created_by__user__username__icontains=value) \
+               | Q(created_by__user__first_name__icontains=value) \
+               | Q(created_by__user__last_name__icontains=value) \
+               | Q(request__description__icontains=value) \
+               | Q(closing_reason__icontains=value)
 
+    @staticmethod
+    def make_search2(value):
+        return Q(request__user__user__last_name__icontains=value) \
+               | Q(request__user__user__first_name__icontains=value) \
+               | Q(request__user__user__username__icontains=value) \
+               | Q(request__title__icontains=value)
+
+
+    # TODO solve problem with searching through request's fields
     def filter_search(self, queryset, name, value):
         # construct the full lookup expression.
-        queryset = queryset.filter(CampaignFilter.make_serach(value))
+        queryset1 = queryset.filter(CampaignFilter.make_search1(value))
+        # queryset2 = queryset.filter(CampaignFilter.make_search2(value))
+        # queryset = queryset1.union(queryset2)
+        queryset = queryset1
         return queryset
