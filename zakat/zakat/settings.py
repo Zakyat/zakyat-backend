@@ -43,8 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     # 3rd-party
+    'channels',
     'django_countries',
     'graphene_django',
+    'avatar',
     # our apps
     'accounts',
     'projects',
@@ -62,6 +64,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -152,11 +155,59 @@ USE_L10N = True
 
 USE_TZ = True
 
+LANGUAGES = [
+    ('en', 'English'),
+    ('ru', 'Russian'),
+]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+from PIL import Image
+
+AVATAR_CACHE_ENABLED = False
+AVATAR_DEFAULT_URL = '/dashboard/defaultAvatar.jpg'
+AVATAR_DEFAULT_SIZE = 80
+AVATAR_AUTO_GENERATE_SIZES = (80, )
+AVATAR_MAX_AVATARS_PER_USER = 1
+AVATAR_PROVIDERS = (
+    'avatar.providers.PrimaryAvatarProvider',
+    # 'avatar.providers.GravatarAvatarProvider',
+    'avatar.providers.DefaultAvatarProvider',
+)
+AVATAR_GRAVATAR_DEFAULT = '/dashboard/defaultAvatar.jpg'
+AVATAR_GRAVATAR_FORCEDEFAULT = False
+AVATAR_GRAVATAR_FIELD = 'email'
+AVATAR_GRAVATAR_BASE_URL ='/dashboard/defaultAvatar.jpg'
+AVATAR_CHANGE_TEMPLATE = 'avatar/change.html'
+AVATAR_ALLOWED_FILE_EXTS = ('.jpg', '.jpeg', '.png')
+AVATAR_ADD_TEMPLATE = 'avatar/add.html'
+AVATAR_MAX_SIZE = 1024 * 1024 * 2
+AVATAR_STORAGE_DIR = 'avatars'
+AVATAR_HASH_USERDIRNAMES = False
+AVATAR_EXPOSE_USERNAMES = False
+AVATAR_HASH_FILENAMES = False
+AVATAR_THUMB_FORMAT = "png"
+AVATAR_THUMB_QUALITY = 80
+AVATAR_RESIZE_METHOD = Image.ANTIALIAS
+
+
+# Конфигурация Channels
+ASGI_APPLICATION = "zakat.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [("127.0.0.1", 6379)],
+            "symmetric_encryption_keys": [SECRET_KEY],
+        },
+    },
+}
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

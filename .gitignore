@@ -143,3 +143,4 @@ envpy/
 # PyCharm
 .idea/
 zakat/.idea/
+dump.rdb

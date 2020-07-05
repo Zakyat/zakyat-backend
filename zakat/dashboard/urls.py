@@ -1,3 +1,5 @@
+from django.contrib.auth.views import LogoutView
+from .views import *
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, \
     PasswordResetCompleteView
 from django.urls import path, include, reverse_lazy
@@ -5,7 +7,9 @@ from .forms import PasswordResetForm
 
 app_name = 'dashboard'
 
+
 urlpatterns = [
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('', include('dashboard.users.urls')),
     #Here you write all your paths
     #For example 'staffs/', 'staffs/create'
