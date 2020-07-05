@@ -5,7 +5,6 @@ from dashboard.projs.views import index, СampaignListView
 app_name = 'projs'
 
 urlpatterns = [
-    # TODO change url path
-    path('c/', СampaignListView.as_view(), name='c'),
+    path('campaigns/', СampaignListView.as_view(), name='campaign-list'),
 
 ]
