@@ -1,4 +1,5 @@
 import django_filters
+from django.db.models import Q
 
 from projects.models import Campaign
 
@@ -10,9 +11,11 @@ class CampaignFilter(django_filters.FilterSet):
         ('closed', 'Closed'),
         ('open', 'Open'),
     )
+
     status = django_filters.ChoiceFilter(choices=STATUS_CHOICES, field_name='Status', method='filter_status')
 
     search = django_filters.CharFilter(method='filter_search')
+
 
     class Meta:
         model = Campaign
@@ -27,7 +30,12 @@ class CampaignFilter(django_filters.FilterSet):
                 queryset = queryset.filter(closed_at__isnull=True)
         return queryset
 
+    @staticmethod
+    def make_serach(value):
+        return Q(title__icontains=value) \
+               | Q(description__icontains=value)
+
     def filter_search(self, queryset, name, value):
         # construct the full lookup expression.
-        a=42
+        queryset = queryset.filter(CampaignFilter.make_serach(value))
         return queryset
