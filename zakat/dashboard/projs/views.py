@@ -11,13 +11,12 @@ def index(request):
 
 
 # TODO pagination
-class C(FilterView):
+class СampaignListView(FilterView):
     template_name = 'dashboard/projs/campaign_list.html'
     filterset_class = CampaignFilter
     context_object_name = 'campaigns'
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(C, self).get_context_data(object_list=object_list, **kwargs)
+        context = super(СampaignListView, self).get_context_data(object_list=object_list, **kwargs)
         context['count'] = len(object_list)
         return context
-
