@@ -12,12 +12,11 @@ class CampaignFilter(django_filters.FilterSet):
     )
     status = django_filters.ChoiceFilter(choices=STATUS_CHOICES, field_name='Status', method='filter_status')
 
-    title = django_filters.CharFilter(lookup_expr='icontains')
-    description = django_filters.CharFilter(lookup_expr='icontains')
+    search = django_filters.CharFilter(method='filter_search')
 
     class Meta:
         model = Campaign
-        fields = ['title', 'description', 'status', ]
+        fields = ['search', 'status', ]
 
     def filter_status(self, queryset, name, value):
         # construct the full lookup expression.
@@ -26,4 +25,9 @@ class CampaignFilter(django_filters.FilterSet):
                 queryset = queryset.filter(closed_at__isnull=False)
             elif value == 'open':
                 queryset = queryset.filter(closed_at__isnull=True)
+        return queryset
+
+    def filter_search(self, queryset, name, value):
+        # construct the full lookup expression.
+        a=42
         return queryset

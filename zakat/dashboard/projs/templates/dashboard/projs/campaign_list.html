@@ -18,10 +18,10 @@
                     <div class="card-body">
                         <form class="add-new-post">
                             <input class="form-control form-control-lg mb-3"
-                                   type="text" name="title" id="id_title"
-                                   placeholder="Your Post Title"
-                                    value="agsdhfjhg"><input type="text">
-                            {{ filter.form.as_p }}
+                                   type="text" name="search" id="id_search"
+                                   placeholder="Search"
+                                    value="{{ filter.form.data.search }}">
+{#                            TODO add from right side select field #}
                             <button type="submit" class="form-control form-control-lg btn btn-outline-accent">
                                 <i class="material-icons">search</i>Search Campaigns
                             </button>
