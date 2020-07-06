@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load avatar_tags %}
 
-{% block title %} Blog Posts {% endblock %}
+{% block title %} {% trans "User Prolife" %} {% endblock %}
 
 {% block content %}
 
@@ -11,7 +11,7 @@
             <!-- Page Header -->
             <div class="page-header row no-gutters py-4">
                 <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-                    <h3 class="page-title">{% trans "Users" %}</h3>
+                    <h3 class="page-title">{% trans "Users" %}: {{ page_obj.paginator.count }}</h3>
                 </div>
             </div>
             <!-- End Page Header -->
