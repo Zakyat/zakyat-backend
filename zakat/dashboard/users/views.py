@@ -61,18 +61,13 @@ class UserCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     fields = "__all__"
 
 
-# class UserDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
-#     permission_required = 'users.delete_user'
-#     model = User
-#     success_url = reverse_lazy('dashboard:partner:partners_list')
-#     template_name = 'dashboard/partner/partner_delete_confirm.html'
-#
-#
-# class UserUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
-#     permission_required = 'users.change_user'
-#     model = User
-#     fields = "__all__"
-#     template_name = 'dashboard/partner/partners_form.html'
+class UserDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    permission_required = 'users.delete_user'
+    model = User
+    success_url = reverse_lazy('dashboard:users:users_list')
+    template_name = 'dashboard/users/user_delete_confirm.html'
+
+
 class UserUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = 'users.change_user'
     model = User
