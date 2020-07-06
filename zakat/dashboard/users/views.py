@@ -1,6 +1,10 @@
 from django.contrib import messages
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.views.generic.list import ListView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
+from accounts.models import User
 # Create your views here.
 
 
@@ -34,3 +38,10 @@ def login(request):
         form = LoginForm()
 
     return render(request, 'dashboard/users/login.html', {'form': form})
+
+
+class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = 'users.view_user'
+    model = User
+    paginate_by = 10
+    template_name = 'dashboard/users/users_list.html'
