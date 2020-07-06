@@ -1,33 +1,85 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic.list import ListView
-from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, TemplateView, View, FormView
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, HttpResponseRedirect, reverse
 from accounts.models import Employee
+from .forms import EmployeeForm, UserForm
+
 
 # Create your views here.
 
-class StaffListView(LoginRequiredMixin,PermissionRequiredMixin, ListView):
+def show_ui(request):
+    return render(request, 'dashboard/user-profile.html')
+
+
+def example_form(request):
+    user_form = UserForm()
+    employee_form = EmployeeForm()
+    return render(request, 'dashboard/employee/example_form.html',
+                  {'user_form': user_form, 'employee_form': employee_form})
+
+
+class StaffListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'accounts.view_employee'
     model = Employee
     paginate_by = 20
     template_name = 'dashboard/employee/staff_list.html'
     ordering = ['-created_at']
 
-class EmployeeCreate(LoginRequiredMixin,PermissionRequiredMixin, CreateView):
+class EmployeeCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = 'accounts.add_employee'
     model = Employee
     template_name = 'dashboard/employee/employee_create_form.html'
-    success_url = '/dashboard/staffs/' #HttpResponseRedirect(reverse('staff_list'))
+    success_url = '/dashboard/staffs/'  # HttpResponseRedirect(reverse('staff_list'))
     fields = '__all__'
+    user_form_class = UserForm
+    employee_form_class = EmployeeForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_form'] = UserForm()
+        context['employee_form'] = EmployeeForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        if request.POST:
+            user_form = UserForm(request.POST)
+            employee_form = EmployeeForm(request.POST)
+            if user_form.is_valid() and employee_form.is_valid():
+                user = user_form.save()
+                employee_form.save(user)
+                return HttpResponseRedirect(reverse('dashboard:employee:staff_list'))
+            else:
+                return render(request, 'dashboard/employee/employee_create_form.html',
+                  {'user_form': user_form, 'employee_form': employee_form})
 
 
-class EmployeeEdit(LoginRequiredMixin,PermissionRequiredMixin, UpdateView):
+
+
+
+
+
+def employee_create(request):
+    user_form = UserForm()
+    employee_form = EmployeeForm()
+    if request.POST:
+        user_form = UserForm(request.POST)
+        employee_form = EmployeeForm(request.POST)
+        if user_form.is_valid() and employee_form.is_valid():
+            user = user_form.save()
+            employee_form.save(user)
+            return HttpResponseRedirect(reverse('staff_list'))
+    return render(request, 'dashboard/employee/employee_create_form.html',
+                  {'user_form': user_form, 'employee_form': employee_form})
+
+
+class EmployeeEdit(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = 'accounts.change_employee'
     model = Employee
     fields = '__all__'
     template_name = 'dashboard/employee/employee_edit_form.html'
-    success_url = '/dashboard/staffs/' #HttpResponseRedirect(reverse('staff_list'))
+    success_url = '/dashboard/staffs/'  # HttpResponseRedirect(reverse('staff_list'))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -35,7 +87,7 @@ class EmployeeEdit(LoginRequiredMixin,PermissionRequiredMixin, UpdateView):
         return context
 
 
-class EmployeeDelete(LoginRequiredMixin,PermissionRequiredMixin, DeleteView):
+class EmployeeDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     permission_required = 'accounts.delete_employee'
     model = Employee
     success_url = reverse_lazy('dashboard:employee:staff_list')

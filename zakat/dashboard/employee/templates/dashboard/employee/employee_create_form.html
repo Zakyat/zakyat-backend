@@ -1,19 +1,205 @@
 {% extends 'dashboard/base.html' %}
+{% load widget_tweaks %}
 {% block content %}
-    <form method="post" enctype="multipart/form-data">
-        {{ form.as_p }}
-        <div>
-            Erros:
-            {{ form.errors }}
+    {% csrf_token %}
+    <div class="main-content-container container-fluid px-4">
+        <!-- Page Header -->
+        <div class="page-header row no-gutters py-4">
+            <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                <span class="text-uppercase page-subtitle">Overview</span>
+                <h3 class="page-title">Employee page</h3>
+            </div>
         </div>
-        <div>
-            <input type="submit" value="Save">
+        <!-- End Page Header -->
+        <!-- Default Light Table -->
+        <div class="row">
+            <div class="col-lg-8">
+                <form method="post" action="{% url 'dashboard:employee:employee_create_form' %}"
+                      enctype="multipart/form-data">
+                    <div class="card card-small mb-4">
+                        <div class="card-header border-bottom">
+                            <h6 class="m-0">User information</h6>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item p-3">
+                                <div class="row">
+                                    <div class="col">
+
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="fePassword">Username *</label>
+                                                {% render_field user_form.username class="form-control" id="fePassword" placeholder="Username" %}
+                                                <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
+
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="feEmailAddress">Email</label>
+                                                {% render_field user_form.email class="form-control" id="feEmailAddress" placeholder="Email" %}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="feFirstName">First Name</label>
+                                                {% render_field user_form.first_name class="form-control" id="feFirstName" placeholder="First Name" %}
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="feLastName">Last Name</label>
+                                                {% render_field user_form.last_name class="form-control" id="feLastName" placeholder="Last Name" %}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="feInputAddress">Password *</label>
+                                            {% render_field user_form.password class="form-control" type="password" %}
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="feInputAddress">Acticve status:</label>
+                                            {% render_field user_form.is_active class="form-control" %}
+                                            <span class="helptext">Designates whether this user should be treated as active. Unselect this instead of deleting accounts.</span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="feInputAddress">Super user status:</label>
+                                            {% render_field user_form.is_superuser class="form-control" %}
+                                            <span class="helptext">Designates that this user has all permissions without explicitly assigning them.</span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="feInputAddress">Staff status:</label>
+                                            {{ user_form.is_staff|attr:"class:form-control"|attr:"checked" }}
+                                            <span class="helptext">Designates whether the user can log into this admin site.</span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="feInputAddress">User permissions:</label>
+                                            {% render_field user_form.user_permissions class="form-control" %}
+                                            <span class="helptext">Specific permissions for this user.</span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="feInputAddress">Groups:</label>
+                                            {% render_field user_form.groups class="form-control" %}
+                                            <span class="helptext">The groups this user belongs to. A user will get all permissions granted to each of their groups.</span>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="feInputAddress">Date joined::</label>
+                                            {% render_field user_form.date_joined class="form-control" %}
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="feInputAddress">Last login::</label>
+                                            {% render_field user_form.last_login class="form-control" %}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        {% if user_form.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ user_form.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+
+                    <div class="card card-small mb-4">
+
+                        <div class="card-header border-bottom">
+                            <h6 class="m-0">Employee information</h6>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item p-3">
+                                <div class="row">
+                                    <div class="col">
+
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="feInputCity">Position *</label>
+                                                {% render_field employee_form.position class="form-control" %}
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label for="inputZip">Phone number *</label>
+                                                {% render_field employee_form.phone_number class="form-control" %}
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="feInputAddress">Photo</label>
+                                            {% render_field employee_form.photo class="form-control" %}
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                                <label for="feDescription">Bio *</label>
+                                                {% render_field employee_form.bio class="form-control" rows="5" %}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        {% if employee_form.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ employee_form.errors  }}
+                            </div>
+                            {% endif %}
+
+                    </div>
+
+
+                    <div class="form-row float-right mb-4">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-primary ml-2">Save and continue editing</button>
+                        <button type="button" class="btn btn-danger ml-2">Delete</button>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="col-lg-4">
+                <div class="card card-small mb-4 pt-3">
+                    <div class="card-header border-bottom text-center">
+                        <div class="mb-3 mx-auto">
+                            <img class="rounded-circle" src="/static/assets/img/avatars/0.jpg" alt="User Avatar"
+                                 width="110"></div>
+                        <h4 class="mb-0">
+                            {{ request.user.username }}
+                        </h4>
+                        <span class="text-muted d-block mb-2">
+                    {{ request.user.email }}
+                </span>
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item px-4">
+                            <strong class="text-muted d-block mb-2">Position</strong>
+                            <span>+7 950 667 04 43</span>
+                        </li>
+                        <li class="list-group-item px-4">
+                            <strong class="text-muted d-block mb-2">Phone number</strong>
+                            <span>+7 950 667 04 43</span>
+                        </li>
+                        <li class="list-group-item p-4">
+                            <strong class="text-muted d-block mb-2">Bio</strong>
+                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eaque, quidem, commodi soluta qui quae minima obcaecati quod dolorum sint alias, possimus illum assumenda eligendi cumque?</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div>
-            <input type="submit" value="Save and continue editing">
-        </div>
-        <div>
-            <input type="submit" value="Save and add another">
-        </div>
-    </form>
+        <!-- End Default Light Table -->
+    </div>
 {% endblock %}
