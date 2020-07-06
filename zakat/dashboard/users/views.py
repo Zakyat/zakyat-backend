@@ -73,3 +73,8 @@ class UserCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 #     model = User
 #     fields = "__all__"
 #     template_name = 'dashboard/partner/partners_form.html'
+class UserUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = 'users.change_user'
+    model = User
+    fields = "__all__"
+    template_name = 'dashboard/partner/partners_form.html'
