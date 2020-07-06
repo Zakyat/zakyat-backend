@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.views.generic.list import ListView
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from accounts.models import User
+from django.urls import reverse_lazy
 # Create your views here.
 
 
@@ -51,3 +52,24 @@ class UserDetail(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     permission_required = 'users.view_user'
     model = User
     template_name = 'dashboard/users/user_detail.html'
+
+
+class UserCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    permission_required = 'users.create_user'
+    template_name = 'dashboard/users/users_form.html'
+    model = User
+    fields = "__all__"
+
+
+# class UserDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+#     permission_required = 'users.delete_user'
+#     model = User
+#     success_url = reverse_lazy('dashboard:partner:partners_list')
+#     template_name = 'dashboard/partner/partner_delete_confirm.html'
+#
+#
+# class UserUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+#     permission_required = 'users.change_user'
+#     model = User
+#     fields = "__all__"
+#     template_name = 'dashboard/partner/partners_form.html'
