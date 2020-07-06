@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.views.generic.list import ListView
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from accounts.models import Employee
 
 # Create your views here.
@@ -12,7 +12,7 @@ class StaffListView(LoginRequiredMixin,PermissionRequiredMixin, ListView):
     model = Employee
     paginate_by = 20
     template_name = 'dashboard/employee/staff_list.html'
-
+    ordering = ['-created_at']
 
 class EmployeeCreate(LoginRequiredMixin,PermissionRequiredMixin, CreateView):
     permission_required = 'accounts.add_employee'
