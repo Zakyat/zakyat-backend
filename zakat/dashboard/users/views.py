@@ -45,3 +45,9 @@ class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = User
     paginate_by = 10
     template_name = 'dashboard/users/users_list.html'
+
+
+class UserDetail(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+    permission_required = 'users.view_user'
+    model = User
+    template_name = 'dashboard/users/user_detail.html'
