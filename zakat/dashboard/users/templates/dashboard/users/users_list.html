@@ -21,11 +21,11 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
                             <div class="card card-small card-post h-100">
                                 <div class="card-post__image"
-                                     style="background-image: {% avatar user.user %};"></div>
+                                     style="background-image: url('{% avatar_url user.user original %}');"></div>
                                 <div class="card-body">
                                     <h5 class="card-title">
                                         <a class="text-fiord-blue"
-                                           href="{{ partner.get_absolute_url }}">{{ partner.title }}</a>
+                                           href="{{ user.get_absolute_url }}">{{ user.user.username }}</a>
                                     </h5>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
                     <h3>{% trans "No users at the moment." %}</h3><br><br><br>
                 {% endif %}
             </div>
-            <a style="color: white" href="{% url 'dashboard:partner:partner_create' %}">
+            <a style="color: white" href="{% url 'dashboard:users:user_create' %}">
                 <button type="submit" class="btn btn-accent">{% trans "Create User" %}</button>
             </a>
         </div>
