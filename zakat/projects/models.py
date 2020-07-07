@@ -55,8 +55,6 @@ class Campaign(models.Model):
     title = models.CharField(max_length=128)    # TODO: i18n
     description = models.TextField()    # TODO: i18n
     goal = models.IntegerField()        # in rubles
-    # current should be aggregated from payments
-    # TODO add closing_reason
     closing_reason = models.CharField(max_length=128, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -47,11 +47,14 @@ class CampaignFilter(django_filters.FilterSet):
                | Q(request__user__user__username__icontains=value) \
                | Q(request__title__icontains=value)
 
-    # TODO solve problem with searching through request's fields
     def filter_search(self, queryset, name, value):
-        # construct the full lookup expression.
-        queryset1 = queryset.filter(CampaignFilter.make_search1(value))
+        # TODO solve problem with searching through request's fields
+        # queryset1 = queryset.filter(CampaignFilter.make_search1(value))
         # queryset2 = queryset.filter(CampaignFilter.make_search2(value))
         # queryset = queryset1.union(queryset2)
-        queryset = queryset1
+
+        queryset1 = list(queryset.filter(CampaignFilter.make_search1(value)).values_list('id', flat=True))
+        queryset2 = list(queryset.filter(CampaignFilter.make_search2(value)).values_list('id', flat=True))
+        qs = list(set(queryset1 + queryset2))
+        queryset = queryset.filter(id__in=qs)
         return queryset
