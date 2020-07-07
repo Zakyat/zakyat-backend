@@ -24,13 +24,13 @@
                                    value="{{ filter.form.data.search }}">
 
                             <select class="form-control form-control-lg mb-3" name="status" id="id_status">
-                            {% with selected_value=filter.form.data.status %}
-                                {% for choice in filter.form.fields.status.choices %}
-                                <option value="{{ choice.0 }}"
-                                {% if selected_value == choice.0 %}selected{% endif %}
-                                >{{ choice.1 }}</option>
-                                {% endfor %}
-                            {% endwith %}
+                                {% with selected_value=filter.form.data.status %}
+                                    {% for choice in filter.form.fields.status.choices %}
+                                        <option value="{{ choice.0 }}"
+                                                {% if selected_value == choice.0 %}selected{% endif %}
+                                        >{{ choice.1 }}</option>
+                                    {% endfor %}
+                                {% endwith %}
                             </select>
 
 
@@ -49,34 +49,56 @@
 
         <div class="row">
             {% if campaigns %}
-                {% for campaign in campaigns %}
 
-                    <div class="col-lg-4">
-                        <div class="card card-small card-post mb-4">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ campaign.title }}</h5>
-                                <p class="card-text text-muted">{{ campaign.description }}</p>
-                            </div>
-                            {#                        TODO add extra info #}
-                            <div class="card-footer border-top d-flex">
-                                <div class="card-post__author d-flex">
-                                    {#                          <a href="#" class="card-post__author-avatar card-post__author-avatar--small" style="background-image: url('/static/assets/img/avatars/1.jpg');">Written by James Khan</a>#}
-                                    <div class="d-flex flex-column justify-content-center ml-3">
-                                        <span class="card-post__author-name">James Khan</span>
-                                        <small class="text-muted">21 March 2011</small>
-                                    </div>
+
+                <div class="main-content-container container-fluid px-4">
+                    <!-- Page Header -->
+                    <div class="page-header row no-gutters py-4">
+                        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                            <span class="text-uppercase page-subtitle">Overview</span>
+                            <h3 class="page-title">Data Tables</h3>
+                        </div>
+                    </div>
+                    <!-- End Page Header -->
+                    <!-- Default Light Table -->
+                    <div class="row">
+                        <div class="col">
+                            <div class="card card-small mb-4">
+                                <div class="card-header border-bottom">
+                                    <h6 class="m-0">Campaigns</h6>
                                 </div>
-                                <div class="my-auto ml-auto">
-                                    <a class="btn btn-sm btn-white" href="#">
-                                        <i class="far fa-bookmark mr-1"></i> Bookmark </a>
+                                <div class="card-body p-0 pb-3 text-center">
+                                    <table class="table mb-0">
+                                        <thead class="bg-light">
+                                        <tr>
+                                            <th scope="col" class="border-0">#</th>
+                                            <th scope="col" class="border-0">Title</th>
+                                            <th scope="col" class="border-0">Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+{#                                        TODO make row clickable #}
+                                        {% for campaign in campaigns %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ campaign.title }}</td>
+                                                <td>{{ campaign.get_status }}</td>
+                                            </tr>
+
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                {% endfor %}
+                </div>
+
             {% else %}
                 <h6>Sry</h6>
             {% endif %}
+
+
         </div>
     </div>
 

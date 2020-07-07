@@ -27,7 +27,7 @@ class CampaignFilter(django_filters.FilterSet):
                 queryset = queryset.filter(closed_at__isnull=True)
         return queryset
 
-    # TODO add all fields (payment_opt, date??)
+    # TODO add all fields (date??)
     @staticmethod
     def make_search1(value):
         return Q(title__icontains=value) \
@@ -38,7 +38,7 @@ class CampaignFilter(django_filters.FilterSet):
                | Q(request__description__icontains=value) \
                | Q(closing_reason__icontains=value) \
                | Q(payment_options__description__icontains=value) \
-               | Q(payment_options__title__icontains=value) \
+               | Q(payment_options__title__icontains=value)
 
     @staticmethod
     def make_search2(value):
