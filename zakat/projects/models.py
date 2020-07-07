@@ -62,3 +62,5 @@ class Campaign(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='campaigns')
     # property `transactions` created with a backref
 
+    def get_status(self):
+        return "Open" if self.closed_at is None else "Closed"
