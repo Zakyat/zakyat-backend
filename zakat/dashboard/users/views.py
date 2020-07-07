@@ -46,6 +46,7 @@ class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = User
     paginate_by = 10
     template_name = 'dashboard/users/users_list.html'
+    ordering = ['-user']
 
 
 class UserDetail(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
