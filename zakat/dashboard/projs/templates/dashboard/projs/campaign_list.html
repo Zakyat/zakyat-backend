@@ -24,10 +24,13 @@
                                    value="{{ filter.form.data.search }}">
 
                             <select class="form-control form-control-lg mb-3" name="status" id="id_status">
+                            {% with selected_value=filter.form.data.status %}
                                 {% for choice in filter.form.fields.status.choices %}
-                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                <option value="{{ choice.0 }}"
+                                {% if selected_value == choice.0 %}selected{% endif %}
+                                >{{ choice.1 }}</option>
                                 {% endfor %}
-
+                            {% endwith %}
                             </select>
 
 

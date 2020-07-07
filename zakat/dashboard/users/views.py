@@ -1,17 +1,20 @@
 from django.contrib import messages
-from django.shortcuts import render
 from django.contrib.auth import authenticate, login as auth_login
-# Create your views here.
-
-
+from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import render
 # TODO redirect to the 'Gatherings' page in the future
-# @user_passes_test(lambda user: user.is_anonymous,
-#                   login_url='http://127.0.0.1:8000',
-#                   redirect_field_name=None)
+from django.urls import reverse_lazy
+
 from .forms import LoginForm
 from .helper import check_is_employee
 
 
+# Create your views here.
+
+
+@user_passes_test(lambda user: user.is_anonymous,
+                  login_url=reverse_lazy('dashboard:projs:campaign-list'),
+                  redirect_field_name=None)
 def login(request):
     """Simple login page for employees only"""
     if request.method == 'POST':
