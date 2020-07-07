@@ -7,11 +7,12 @@
                 <span class="text-uppercase page-subtitle">Overview</span>
                 <h3 class="page-title">Employees</h3>
             </div>
+
         </div>
         <!-- End Page Header -->
-        <div>
-            <a href="{% url 'dashboard:employee:employee_create_form' %}">Add new staff</a>
-        </div>
+        <div class="">
+                <a class="btn btn-primary mb-2" href="{% url 'dashboard:employee:employee_create_form' %}">+ Add new staff</a>
+            </div>
         <!-- Default Light Table -->
         <div class="row">
             <div class="col">
@@ -24,8 +25,9 @@
                                 <th scope="col" class="border-0">ID</th>
                                 <th scope="col" class="border-0">First Name</th>
                                 <th scope="col" class="border-0">Last Name</th>
-                                <th scope="col" class="border-0">City</th>
+                                <th scope="col" class="border-0">Position</th>
                                 <th scope="col" class="border-0">Phone</th>
+                                <th scope="col" class="border-0">Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -35,8 +37,22 @@
                                     <td>{{ employee.id }}</td>
                                     <td>{{ employee.user.first_name }}</td>
                                     <td>{{ employee.user.last_name }}</td>
+                                    <td>{{ employee.position }}</td>
                                     <td>{{ employee.phone_number }}</td>
-                                    <td><a href="{% url 'dashboard:employee:employee_edit_form' employee.id %}">Edit</a>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary dropdown-toggle"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Edit
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item"
+                                                   href="{% url 'dashboard:employee:employee_edit_form' employee.id %}">Edit</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item"
+                                                   href="{% url 'dashboard:employee:employee_delete' employee.pk %}">Delete</a>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             {% endfor %}
