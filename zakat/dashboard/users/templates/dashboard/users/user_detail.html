@@ -1,6 +1,5 @@
 {% extends "dashboard/base.html" %}
 {% load i18n %}
-{% load avatar_tags %}
 
 {% block title %} {% trans "User Profile" %} {% endblock %}
 
@@ -13,38 +12,10 @@
                 <h3 class="page-title">{{ user.user.username }}</h3>
             </div>
         </div>
-        <!-- End Page Header -->
-        <!-- Default Light Table -->
-        <div class="card card-small mb-4 pt-3">
-            <div class="card-header border-bottom text-center">
-                <div class="mb-3 mx-auto">
-                    {% avatar user.user 120 style='border-radius: 50%;' %}
-                    <h4 class="mb-0">
-                        {{ user.user.username }}
-                    </h4>
-                    <ul>
-                        <li>{{ user.address }}</li>
-                        <li>{{ user.birthdate }}</li>
-                        <li>{{ user.citizenship }}</li>
-                        <li>{{ user.education }}</li>
-                        <li>{{ user.marital_status }}</li>
-                        <li>{{ user.phone_number }}</li>
-                        <li>{{ user.religion }}</li>
-                    </ul>
-                    <br>
-                    <button type="submit" class="btn btn-accent"><a style="color: white"
-                                                                    href="{% url 'dashboard:users:user_update' pk=user.id %}">
-                        {% trans "Change partner information" %}</a>
-                    </button>
-                    <br>
-                    <br>
-                    <a style="color: white" href="{% url 'dashboard:users:user_delete' pk=user.id %} ">
-                        <button type="submit" class="btn btn-accent">{% trans "Delete" %}</button>
-                    </a>
-                </div>
-            </div>
-            <a style="color: white" href="{% url 'dashboard:users:users_list' %}">
-                <button type="submit" class="btn btn-accent">{% trans "Go back to users list" %}</button>
+        {% include "dashboard/users/user_info_card.html" %}
+        <a style="color: white" href="{% url 'dashboard:users:users_list' %}">
+            <button type="submit" class="btn btn-accent">{% trans "Go back to users list" %}</button>
+        </a>
             </a>
             <!-- End Default Light Table -->
         </div>
