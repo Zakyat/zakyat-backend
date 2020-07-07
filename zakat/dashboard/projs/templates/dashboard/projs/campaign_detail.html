@@ -153,13 +153,12 @@
                     </div>
                     <div class="card-body">
                         <form action="{% url 'dashboard:projs:campaign-close' campaign.id %}" method="post">
-                            {#                            TODO add count title #}
                             <input class="form-control form-control-lg mb-3"
                                    type="text" name="text" id="id_text" required
                                    placeholder="Text">
 
                             <button type="submit" class="form-control form-control-lg btn btn-outline-accent">
-                                <i class="material-icons">edit</i> Close Campaign
+                                <i class="material-icons">close</i> Close Campaign
                             </button>
                         </form>
 
@@ -169,35 +168,40 @@
             </div>
 
 
-        {% if payment_options %}
-            <div class="col-lg-8 ">
+            {% if payment_options %}
+                <div class="col-lg-8 ">
 
-                <!-- Add New Post Form -->
-                <div class="card card-small mb-2">
-                    <div class="card-header border-bottom">
-                        <h4 class="mb-0">
-                            Payment Options
-                        </h4>
+                    <!-- Add New Post Form -->
+                    <div class="card card-small mb-2">
+                        <div class="card-header border-bottom">
+                            <h4 class="mb-0">
+                                Payment Options
+                            </h4>
+                        </div>
+
+
                     </div>
 
-
                 </div>
-
-            </div>
-{#        TODO make clickable? #}
-            {% for payment_option in payment_options %}
-            <div class="col-lg-8">
-                <div class="card card-small card-post mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ payment_option.title }}</h5>
-                        <p class="card-text text-muted">{{ payment_option.description }}</p>
+                {#        TODO make clickable? #}
+                {% for payment_option in payment_options %}
+                    <div class="col-lg-8">
+                        <div class="card card-small card-post">
+                            <div class="card-body">
+                                <h5 class="card-title mb-0">{{ payment_option.title }}</h5>
+                                <span class="text-muted small d-block">
+                                    Payment Type: {{ payment_option.get_payment_type }}
+                                </span>
+                                <p class="card-text text">{{ payment_option.description }}</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            {% endfor %}
+                {% endfor %}
 
-        </div>
-    {% endif %}
+                </div>
+            {% endif %}
+
+
     </div>
 
 {% endblock content %}
