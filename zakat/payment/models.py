@@ -22,5 +22,6 @@ class PaymentOptions(models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name='payment_options')
     title = models.CharField(max_length=128)
     description = models.CharField(max_length=256)
-    # True means payment was made through credit card, False - with cash money, bull - by other way
-    payment_type = models.BooleanField(null=True, blank=True)
+    # True means payment was made through credit card, False - with cash money, null - by other way
+	# TODO change representatin fields in admin page
+    payment_type = models.BooleanField(null=True, blank=True, help_text="Yes means payment was made through credit card, No - with cash money, Unknown - by other way")
