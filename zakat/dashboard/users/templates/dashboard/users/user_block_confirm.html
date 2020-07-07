@@ -12,7 +12,11 @@
                             <form action="." method="post">
                                 {% csrf_token %}
                                 <div>
+                                    {% if isBlock %}
+                                        {% trans "Are you sure you want to unblock this user?" %}
+                                    {% else %}
                                         {% trans "Are you sure you want to block this user?" %}
+                                    {% endif %}
                                 </div>
                                 <div>
                                     <input class="btn btn-accent" type="submit" value="{% trans 'Yes' %}"/> <a

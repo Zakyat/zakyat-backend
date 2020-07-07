@@ -20,6 +20,9 @@ from .helper import check_is_employee
 def block_user(request, pk):
     user = get_object_or_404(User, id=pk)
     if request.method == "POST":
+        if user.isBlock:
+            user.isBlock = False
+        else:
             user.isBlock = True
         user.save()
         return redirect('dashboard:users:users_detail', pk)

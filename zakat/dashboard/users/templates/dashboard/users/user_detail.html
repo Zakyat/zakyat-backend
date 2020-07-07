@@ -16,9 +16,10 @@
         <a style="color: white" href="{% url 'dashboard:users:users_list' %}">
             <button type="submit" class="btn btn-accent">{% trans "Go back to users list" %}</button>
         </a>
+        {% if user.isBlock %}
+            <a style="color: white" href="{% url 'dashboard:users:user_unblock' user.id %}">
+                <button type="submit" class="btn btn-danger">{% trans "Unblock this user" %}</button>
             </a>
-            <!-- End Default Light Table -->
-        </div>
         {% else %}
             <a style="color: white" href="{% url 'dashboard:users:user_block' user.id %}">
                 <button type="submit" class="btn btn-danger">{% trans "Block this user" %}</button>
