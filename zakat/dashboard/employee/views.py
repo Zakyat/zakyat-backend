@@ -4,7 +4,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView, DetailView,
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, render, HttpResponseRedirect, reverse
 from accounts.models import Employee
-from .forms import EmployeeForm, UserForm
+from .forms import EmployeeForm, UserForm, UserEditForm
 
 
 # Create your views here.
@@ -27,11 +27,12 @@ class StaffListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     template_name = 'dashboard/employee/staff_list.html'
     ordering = ['-created_at']
 
+
 class EmployeeCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = 'accounts.add_employee'
     model = Employee
     template_name = 'dashboard/employee/employee_create_form.html'
-    success_url = '/dashboard/staffs/'  # HttpResponseRedirect(reverse('staff_list'))
+    success_url = 'dashboard/staffs/'
     fields = '__all__'
     user_form_class = UserForm
     employee_form_class = EmployeeForm
@@ -55,25 +56,6 @@ class EmployeeCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
                   {'user_form': user_form, 'employee_form': employee_form})
 
 
-
-
-
-
-
-def employee_create(request):
-    user_form = UserForm()
-    employee_form = EmployeeForm()
-    if request.POST:
-        user_form = UserForm(request.POST)
-        employee_form = EmployeeForm(request.POST)
-        if user_form.is_valid() and employee_form.is_valid():
-            user = user_form.save()
-            employee_form.save(user)
-            return HttpResponseRedirect(reverse('staff_list'))
-    return render(request, 'dashboard/employee/employee_create_form.html',
-                  {'user_form': user_form, 'employee_form': employee_form})
-
-
 class EmployeeEdit(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = 'accounts.change_employee'
     model = Employee
@@ -83,8 +65,30 @@ class EmployeeEdit(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['employee'] = get_object_or_404(Employee, pk=self.kwargs['pk'])
+        self.employee = get_object_or_404(Employee, pk=self.kwargs['pk'])
+        self.user = self.employee.user
+        user_form = UserEditForm(instance=self.user)
+        user_form.fields['user_id'].initial = self.user.id
+        # user_form.user_id = self.kwargs['pk']
+        print('self.user.id', self.user.id)
+        context['employee'] = self.employee
+        context['user_form'] = user_form
+        context['employee_form'] = EmployeeForm(instance=self.employee)
         return context
+
+    def post(self, request, *args, **kwargs):
+        if request.POST:
+            user_form = UserEditForm(request.POST)
+            employee_form = EmployeeForm(request.POST)
+            if user_form.is_valid() and employee_form.is_valid():
+                user = user_form.save()
+                employee_form.save(user, edit=True)
+                return HttpResponseRedirect(reverse('dashboard:employee:staff_list'))
+            else:
+                employee = get_object_or_404(Employee, pk=self.kwargs['pk'])
+                return render(request, 'dashboard/employee/employee_edit_form.html',
+                              {'user_form': user_form, 'employee_form': employee_form, 'employee': employee})
+
 
 
 class EmployeeDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):

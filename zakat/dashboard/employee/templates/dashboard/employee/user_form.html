@@ -1,0 +1,93 @@
+{% load widget_tweaks %}
+<div class="card card-small mb-4">
+    <div class="card-header border-bottom">
+        <h6 class="m-0">User information</h6>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item p-3">
+            <div class="row">
+                <div class="col">
+
+                    {{ user_form.user_id }}
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="fePassword">Username *</label>
+                            {% render_field user_form.username class="form-control" id="fePassword" placeholder="Username" %}
+                            <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
+
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="feEmailAddress">Email</label>
+                            {% render_field user_form.email class="form-control" id="feEmailAddress" placeholder="Email" %}
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="feFirstName">First Name</label>
+                            {% render_field user_form.first_name class="form-control" id="feFirstName" placeholder="First Name" %}
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="feLastName">Last Name</label>
+                            {% render_field user_form.last_name class="form-control" id="feLastName" placeholder="Last Name" %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feInputAddress">Password *</label>
+                        {% render_field user_form.password class="form-control" type="password" %}
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="feInputAddress">Acticve status:</label>
+                        {% render_field user_form.is_active class="form-control" %}
+                        <span class="helptext">Designates whether this user should be treated as active. Unselect this instead of deleting accounts.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feInputAddress">Super user status:</label>
+                        {% render_field user_form.is_superuser class="form-control" %}
+                        <span class="helptext">Designates that this user has all permissions without explicitly assigning them.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feInputAddress">Staff status:</label>
+                        {{ user_form.is_staff|attr:"class:form-control"|attr:"checked" }}
+                        <span class="helptext">Designates whether the user can log into this admin site.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feInputAddress">User permissions:</label>
+                        {% render_field user_form.user_permissions class="form-control" %}
+                        <span class="helptext">Specific permissions for this user.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feInputAddress">Groups:</label>
+                        {% render_field user_form.groups class="form-control" %}
+                        <span class="helptext">The groups this user belongs to. A user will get all permissions granted to each of their groups.</span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="feInputAddress">Date joined::</label>
+                        {% render_field user_form.date_joined class="form-control" %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feInputAddress">Last login::</label>
+                        {% render_field user_form.last_login class="form-control" %}
+                    </div>
+
+                </div>
+            </div>
+        </li>
+    </ul>
+
+    {% if user_form.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ user_form.errors }}
+        </div>
+    {% endif %}
+</div>
