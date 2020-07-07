@@ -52,12 +52,13 @@
                 {% for campaign in campaigns %}
 
                     <div class="col-lg-4">
+{#                    TODO make card cickable (need @Ural) #}
                         <div class="card card-small card-post mb-4">
                             <div class="card-body">
-                                <h5 class="card-title">{{ campaign.title }}</h5>
+                                <a href="{% url 'dashboard:projs:campaign-detail' campaign.id %}"><h5 class="card-title">{{ campaign.title }}</h5></a>
                                 <p class="card-text text-muted">{{ campaign.description }}</p>
                             </div>
-                            {#                        TODO add extra info #}
+                            {#                        TODO add other fields #}
                             <div class="card-footer border-top d-flex">
                                 <div class="card-post__author d-flex">
                                     {#                          <a href="#" class="card-post__author-avatar card-post__author-avatar--small" style="background-image: url('/static/assets/img/avatars/1.jpg');">Written by James Khan</a>#}
@@ -75,10 +76,12 @@
                     </div>
                 {% endfor %}
             {% else %}
+{#                TODO change empty-message #}
                 <h6>Sry</h6>
             {% endif %}
         </div>
     </div>
+
 
 {% endblock content %}
 

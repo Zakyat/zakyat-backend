@@ -1,5 +1,6 @@
 from django.shortcuts import render
 # Create your views here.
+from django.views.generic import DetailView
 from django_filters.views import FilterView
 
 from dashboard.projs.filters import CampaignFilter
@@ -20,3 +21,8 @@ class СampaignListView(FilterView):
         context = super(СampaignListView, self).get_context_data(object_list=object_list, **kwargs)
         context['count'] = len(object_list)
         return context
+
+
+class CampaignDetailView(DetailView):
+    model = Campaign
+    template_name = 'dashboard/projs/campaign_detail.html'
