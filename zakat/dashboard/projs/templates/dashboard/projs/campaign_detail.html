@@ -54,6 +54,7 @@
                     </ul>
                 </div>
             </div>
+
             <div class="col-lg-4">
                 {#                TODO add full info #}
                 {#                TODO change icons #}
@@ -140,8 +141,8 @@
                 <!-- / Post Overview -->
                 <!-- Post Overview -->
             </div>
-            <!-- End Page Header -->
-            <div class="col-lg-8">
+
+            <div class="col-lg-8 mb-4">
 
                 <!-- Add New Post Form -->
                 <div class="card card-small mb-2">
@@ -166,7 +167,37 @@
                     </div>
                 </div>
             </div>
+
+
+        {% if payment_options %}
+            <div class="col-lg-8 ">
+
+                <!-- Add New Post Form -->
+                <div class="card card-small mb-2">
+                    <div class="card-header border-bottom">
+                        <h4 class="mb-0">
+                            Payment Options
+                        </h4>
+                    </div>
+
+
+                </div>
+
+            </div>
+{#        TODO make clickable? #}
+            {% for payment_option in payment_options %}
+            <div class="col-lg-8">
+                <div class="card card-small card-post mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ payment_option.title }}</h5>
+                        <p class="card-text text-muted">{{ payment_option.description }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
         </div>
+    {% endif %}
     </div>
 
 {% endblock content %}

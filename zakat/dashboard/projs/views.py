@@ -35,6 +35,8 @@ class CampaignDetailView(DetailView):
         context = super(CampaignDetailView, self).get_context_data(**kwargs)
 
         context['closing_form'] = CloseCampaignForm()
+        context['payment_options'] = self.object.get_payment_options()
+
         return context
 
 

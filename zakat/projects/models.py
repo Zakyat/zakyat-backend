@@ -73,3 +73,6 @@ class Campaign(models.Model):
         # TODO set correct time
         self.closed_at = localtime()
         self.save()
+
+    def get_payment_options(self):
+        return self.payment_options.all()
