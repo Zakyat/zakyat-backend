@@ -136,49 +136,32 @@
                 </div>
                 <!-- / Post Overview -->
                 <!-- Post Overview -->
-                <div class='card card-small mb-3'>
-                    <div class="card-header border-bottom">
-                        <h6 class="m-0">Categories</h6>
+            </div>
+            <!-- End Page Header -->
+            <div class="col-lg-8">
+
+                <!-- Add New Post Form -->
+                <div class="card card-small mb-2">
+                <div class="card-header border-bottom">
+                        <h4 class="mb-0">
+                            Close Campaign
+                        </h4>
                     </div>
-                    <div class='card-body p-0'>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item px-3 pb-2">
-                                <div class="custom-control custom-checkbox mb-1">
-                                    <input type="checkbox" class="custom-control-input" id="category1" checked>
-                                    <label class="custom-control-label" for="category1">Uncategorized</label>
-                                </div>
-                                <div class="custom-control custom-checkbox mb-1">
-                                    <input type="checkbox" class="custom-control-input" id="category2" checked>
-                                    <label class="custom-control-label" for="category2">Design</label>
-                                </div>
-                                <div class="custom-control custom-checkbox mb-1">
-                                    <input type="checkbox" class="custom-control-input" id="category3">
-                                    <label class="custom-control-label" for="category3">Development</label>
-                                </div>
-                                <div class="custom-control custom-checkbox mb-1">
-                                    <input type="checkbox" class="custom-control-input" id="category4">
-                                    <label class="custom-control-label" for="category4">Writing</label>
-                                </div>
-                                <div class="custom-control custom-checkbox mb-1">
-                                    <input type="checkbox" class="custom-control-input" id="category5">
-                                    <label class="custom-control-label" for="category5">Books</label>
-                                </div>
-                            </li>
-                            <li class="list-group-item d-flex px-3">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="New category"
-                                           aria-label="Add new category" aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-white px-2" type="button">
-                                            <i class="material-icons">add</i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                    <div class="card-body">
+                        <form action="{% url 'dashboard:projs:campaign-close' campaign.id %}" method="post">
+                            {#                            TODO add count title #}
+                            <input class="form-control form-control-lg mb-3"
+                                   type="text" name="text" id="id_text" required
+                                   placeholder="Text">
+
+                            <button type="submit" class="form-control form-control-lg btn btn-outline-accent">
+                                <i class="material-icons">edit</i> Close Campaign
+                            </button>
+                        </form>
+
+
                     </div>
                 </div>
-                <!-- / Post Overview -->
             </div>
         </div>
     </div>
