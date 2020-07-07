@@ -19,7 +19,13 @@
             </a>
             <!-- End Default Light Table -->
         </div>
+        {% else %}
+            <a style="color: white" href="{% url 'dashboard:users:user_block' user.id %}">
+                <button type="submit" class="btn btn-danger">{% trans "Block this user" %}</button>
+            </a>
+        {% endif %}
     </div>
+
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->

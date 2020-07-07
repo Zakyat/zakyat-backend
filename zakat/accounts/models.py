@@ -108,6 +108,7 @@ class User(models.Model):
     work = models.EmbeddedField(model_container=Work)
     marital_status = models.CharField(max_length=10, choices=MARITAL_STATUS)
     address = models.CharField(max_length=128)
+    isBlock = models.BooleanField(default=False)
     # cash_flow = models.ArrayField(model_container=CashFlow, default=[])
     # related_documents = models.ArrayField(model_container=Document, default=[])
     # contact_person = models.EmbeddedField(model_container=FamilyMember)

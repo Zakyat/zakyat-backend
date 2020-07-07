@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic.list import ListView
@@ -15,6 +15,16 @@ from django.urls import reverse_lazy
 #                   redirect_field_name=None)
 from .forms import LoginForm
 from .helper import check_is_employee
+
+
+def block_user(request, pk):
+    user = get_object_or_404(User, id=pk)
+    if request.method == "POST":
+            user.isBlock = True
+        user.save()
+        return redirect('dashboard:users:users_detail', pk)
+    else:
+        return render(request, 'dashboard/users/user_block_confirm.html', {'isBlock': user.isBlock})
 
 
 def login(request):
