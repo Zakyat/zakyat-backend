@@ -4,7 +4,6 @@ from django.db.models import Q
 from projects.models import Campaign
 
 
-# TODO normalize view
 class CampaignFilter(django_filters.FilterSet):
     STATUS_CHOICES = (
         ('all', 'All'),
@@ -13,15 +12,14 @@ class CampaignFilter(django_filters.FilterSet):
     )
 
     status = django_filters.ChoiceFilter(choices=STATUS_CHOICES, field_name='Status', method='filter_status')
-
     search = django_filters.CharFilter(method='filter_search')
 
     class Meta:
         model = Campaign
+        # TODO add search by date
         fields = ['search', 'status', ]
 
     def filter_status(self, queryset, name, value):
-        # construct the full lookup expression.
         if value:
             if value == 'closed':
                 queryset = queryset.filter(closed_at__isnull=False)
@@ -38,7 +36,9 @@ class CampaignFilter(django_filters.FilterSet):
                | Q(created_by__user__first_name__icontains=value) \
                | Q(created_by__user__last_name__icontains=value) \
                | Q(request__description__icontains=value) \
-               | Q(closing_reason__icontains=value)
+               | Q(closing_reason__icontains=value) \
+               | Q(payment_options__description__icontains=value) \
+               | Q(payment_options__title__icontains=value) \
 
     @staticmethod
     def make_search2(value):
