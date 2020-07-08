@@ -76,3 +76,7 @@ class Campaign(models.Model):
 
     def get_payment_options(self):
         return self.payment_options.all()
+
+    def create_payment_option(self, payment_option):
+        payment_option.campaign = self
+        payment_option.save()

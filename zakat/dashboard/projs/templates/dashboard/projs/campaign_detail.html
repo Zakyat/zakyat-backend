@@ -11,14 +11,12 @@
         <!-- Page Header -->
         <div class="page-header row no-gutters py-4">
             <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-                <span class="text-uppercase page-subtitle">Blog Posts</span>
-                <h3 class="page-title">Add New Post</h3>
+                <h3 class="page-title">Campaign Page</h3>
             </div>
         </div>
         <!-- End Page Header -->
         <div class="row">
             <div class="col-lg-8">
-                {#                TODO add full info #}
                 <div class="card card-small mb-4 ">
                     <div class="card-header border-bottom">
                         <h4 class="mb-0">
@@ -56,7 +54,6 @@
             </div>
 
             <div class="col-lg-4">
-                {#                TODO add full info #}
                 {#                TODO change icons #}
                 <!-- Post Overview -->
                 <div class='card card-small mb-3'>
@@ -66,14 +63,16 @@
                     <div class='card-body p-0'>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item p-3">
-                    <span class="d-flex mb-2">
 
-                      <i class="material-icons mr-1">flag</i>
-{#                        TODO how to odenitfy Employueer #}
-                      <strong class="mr-1">Created By:</strong>
-                        <a href="#">{{ campaign.created_by }}
-                        </a>
+                            <span class="d-flex mb-2">
+                      <i class="material-icons mr-1">visibility</i>
+                      <strong class="mr-1">Project:</strong>
+{#                                    TODO add project url to#}
+                      <a href="#">
+                          {{ campaign.project }}
+                      </a>
                     </span>
+
                                 <span class="d-flex mb-2">
                       <i class="material-icons mr-1">visibility</i>
                       <strong class="mr-1">Created at:</strong>
@@ -93,14 +92,7 @@
 
                                 {% endif %}
 
-                                <span class="d-flex mb-2">
-                      <i class="material-icons mr-1">visibility</i>
-                      <strong class="mr-1">Project:</strong>
-{#                                    TODO add project url to#}
-                      <a href="#">
-                          {{ campaign.project }}
-                      </a>
-                    </span>
+
                                 {% if campaign.request %}
                                     <span class="d-flex mb-2">
                       <i class="material-icons mr-1">visibility</i>
@@ -112,6 +104,16 @@
                     </span>
 
                                 {% endif %}
+
+                                <span class="d-flex mb-2">
+
+                      <i class="material-icons mr-1">flag</i>
+{#                        TODO how to identify Employeer #}
+{#                                    TODO add employeer url #}
+                      <strong class="mr-1">Created By:</strong>
+                        <a href="#">{{ campaign.created_by }}
+                        </a>
+                    </span>
 
                                 <span class="d-flex">
                       <i class="material-icons mr-1">score</i>
@@ -168,8 +170,7 @@
             </div>
 
 
-            {% if payment_options %}
-                <div class="col-lg-8 ">
+                <div class="col-lg-8">
 
                     <!-- Add New Post Form -->
                     <div class="card card-small mb-2">
@@ -183,9 +184,52 @@
                     </div>
 
                 </div>
+        <div class="col-lg-8">
+        <div class="card card-small mb-2">
+            <div class="card-header border-bottom">
+                        <h4 class="mb-0">Create Payment Option
+                        </h4>
+                    </div>
+            <div class="card-body">
+                <form method="post" action="{% url 'dashboard:projs:campaign-create-payment_option' campaign.pk %}">
+                    {#                            TODO add count title #}
+                    <input class="form-control form-control-lg mb-3"
+                           type="text" name="title" id="id_title"
+                           placeholder="Title">
+
+                    <input class="form-control form-control-lg mb-3"
+                           type="text" name="description" id="id_description"
+                           placeholder="Description">
+
+                    <select class="form-control form-control-lg mb-3" name="payment_type" id="id_payment_type">
+                        {% with payment_type=payment_option_form.data.payment_type %}
+                            {% for choice in payment_option_form.fields.payment_type.choices %}
+                                <option value="{{ choice.0 }}"
+                                        {% if forloop.first %}selected{% endif %}
+                                >{{ choice.1 }}</option>
+                            {% endfor %}
+                        {% endwith %}
+                    </select>
+
+
+                    {#                            TODO add from right side select field #}
+                    <button type="submit" class="form-control form-control-lg btn btn-outline-accent">
+                        <i class="material-icons">search</i>Search Campaigns
+                    </button>
+                </form>
+
+
+            </div>
+        </div>
+        </div>
+
+
+
+            {% if payment_options %}
+
                 {#        TODO make clickable? #}
                 {% for payment_option in payment_options %}
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 mb-1 {% if forloop.last %}mb-3{% endif %}">
                         <div class="card card-small card-post">
                             <div class="card-body">
                                 <h5 class="card-title mb-0">{{ payment_option.title }}</h5>
@@ -200,9 +244,13 @@
 
                 </div>
             {% endif %}
+        <!-- Add New Post Form -->
+
+
 
 
     </div>
+
 
 {% endblock content %}
 
