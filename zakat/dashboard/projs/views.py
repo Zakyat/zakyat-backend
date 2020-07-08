@@ -6,7 +6,7 @@ from django.views.generic import DetailView
 from django_filters.views import FilterView
 
 from dashboard.projs.filters import CampaignFilter
-from dashboard.projs.forms import CloseCampaignForm, PaymentOptionsCreateForm
+from dashboard.projs.forms import CloseCampaignForm, PaymentOptionsCreateForm, CampaignEditForm
 from payment.models import PaymentOptions
 from projects.models import Campaign
 
@@ -70,3 +70,21 @@ def create_payment_option(request, campaign_pk):
         payment_option = PaymentOptions(**cleaned_data)
         campaign.create_payment_option(payment_option)
     return redirect(reverse_lazy('dashboard:projs:campaign-detail', args=[campaign_pk,]))
+
+
+def edit_campaign(request, pk):
+    try:
+        campaign = Campaign.objects.get(id=pk)
+    except Campaign.DoesNotExist as e:
+        raise e
+    status_code = 200
+    if request.method == 'POST':
+        form = CampaignEditForm(request.POST, instance=campaign)
+        if form.is_valid():
+            campaign = form.save()
+            return redirect(reverse_lazy('dashboard:projs:campaign-detail', args=[campaign.id]))
+        else:
+            status_code = 400
+    else:
+        form = CampaignEditForm(instance=campaign)
+    return render(request, 'dashboard/projs/campaign_edit.html', {'form': form, 'campaign_id': campaign.id}, status=status_code)
