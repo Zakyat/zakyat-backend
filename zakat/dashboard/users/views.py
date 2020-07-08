@@ -4,8 +4,11 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic.list import ListView
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
-from accounts.models import User
 from django.urls import reverse_lazy
+from accounts.models import User
+from .forms import SearchForm
+from .helper import get_country_code
+from django.db.models import Q
 # Create your views here.
 
 
@@ -57,9 +60,32 @@ def login(request):
 class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'users.view_user'
     model = User
+    form_class = SearchForm
     paginate_by = 10
     template_name = 'dashboard/users/users_list.html'
     ordering = ['-user']
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        country_code = get_country_code(query)
+        if query:
+            object_list = self.model.objects.filter(
+                Q(user__username__icontains=query) |
+                Q(user__first_name__icontains=query) |
+                Q(user__last_name__icontains=query) |
+                Q(user__email__icontains=query) |
+                Q(phone_number__icontains=query) |
+                Q(citizenship__icontains=country_code) |
+                Q(religion__icontains=query) |
+                Q(birthdate__icontains=query) |
+                Q(education__icontains=query) |
+                Q(work__icontains=query) |
+                Q(marital_status__icontains=query) |
+                Q(address__icontains=query)
+            )
+        else:
+            object_list = self.model.objects.all()
+        return object_list
 
 
 class UserDetail(LoginRequiredMixin, PermissionRequiredMixin, DetailView):

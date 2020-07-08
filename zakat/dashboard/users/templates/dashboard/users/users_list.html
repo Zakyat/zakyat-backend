@@ -4,14 +4,28 @@
 
 {% block title %} {% trans "User Prolife" %} {% endblock %}
 
+
+
 {% block content %}
 
     <div class="main-content-container container-fluid px-4">
         <div class="main-content-container container-fluid px-4">
             <!-- Page Header -->
             <div class="page-header row no-gutters py-4">
-                <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-                    <h3 class="page-title">{% trans "Users" %}: {{ page_obj.paginator.count }}</h3>
+                <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="clear: both">
+                    <h3 class="page-title" style="float: left">{% trans "Users" %}: {{ page_obj.paginator.count }}</h3>
+
+                    <form style="float: right" action="{% url 'dashboard:users:users_list' %}" method="get">
+                        <div class="input-group input-group-seamless ml-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                            </div>
+                            <input class="navbar-search form-control" name="q" type="text" placeholder="{% trans "Search for user..." %}"
+                                   aria-label="Search">
+                        </div>
+                    </form>
                 </div>
             </div>
             <!-- End Page Header -->
@@ -35,15 +49,15 @@
                     <h3>{% trans "No users at the moment." %}</h3><br><br><br>
                 {% endif %}
             </div>
-{#            <a style="color: white" href="{% url 'dashboard:users:user_create' %}">#}
-{#                <button type="submit" class="btn btn-accent">{% trans "Create User" %}</button>#}
-{#            </a>#}
+            {#            <a style="color: white" href="{% url 'dashboard:users:user_create' %}">#}
+            {#                <button type="submit" class="btn btn-accent">{% trans "Create User" %}</button>#}
+            {#            </a>#}
         </div>
         <br>
         <div class="pagination">
             <span class="step-links">
                 {% if page_obj.has_previous %}
-{#                    <input type="image" src="" href="?page=1">#}
+                    {#                    <input type="image" src="" href="?page=1">#}
                     <a href="?page=1">{% trans "First" %}</a>
                     <a href="?page={{ page_obj.previous_page_number }}">{% trans "Previous" %}</a>
                 {% endif %}
