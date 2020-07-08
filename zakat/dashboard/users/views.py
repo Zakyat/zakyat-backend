@@ -9,6 +9,7 @@ from accounts.models import User
 from .forms import SearchForm
 from .helper import get_country_code
 from django.db.models import Q
+from payment.models import Transaction
 # Create your views here.
 
 
@@ -67,6 +68,9 @@ class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('q')
+        display_paid_zakat = self.request.GET.get('zakat_persons')
+        rubs = self.request.GET.get('zakat_sum_r')
+        # dollars = self.request.GET.get('zakat_sum_d')
         country_code = get_country_code(query)
         if query:
             object_list = self.model.objects.filter(
@@ -85,6 +89,8 @@ class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
             )
         else:
             object_list = self.model.objects.all()
+        if rubs:
+            object_list = object_list.filter(transactions__amount__gt=rubs)
         return object_list
 
 

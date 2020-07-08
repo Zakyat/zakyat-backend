@@ -4,30 +4,33 @@
 
 {% block title %} {% trans "User Prolife" %} {% endblock %}
 
-
-
 {% block content %}
 
     <div class="main-content-container container-fluid px-4">
         <div class="main-content-container container-fluid px-4">
             <!-- Page Header -->
-            <div class="page-header row no-gutters py-4">
-                <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="clear: both">
-                    <h3 class="page-title" style="float: left">{% trans "Users" %}: {{ page_obj.paginator.count }}</h3>
+{#            <div class="page-header row no-gutters py-4">#}
+{#                <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="clear: both">#}
+{#                    <h3 class="page-title" style="float: left">{% trans "Users" %}: {{ page_obj.paginator.count }}</h3>#}
+{##}
+{#                    <form style="float: right" action="{% url 'dashboard:users:users_list' %}" method="get">#}
+{#                        <div class="input-group input-group-seamless ml-3">#}
+{#                            <div class="input-group-prepend">#}
+{#                                <div class="input-group-text">#}
+{#                                    <i class="fas fa-search"></i>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <input class="navbar-search form-control" name="q" type="text"#}
+{#                                   placeholder="{% trans "Search for user..." %}"#}
+{#                                   aria-label="Search">#}
+{#                        </div>#}
+{#                    </form>#}
+{#                </div>#}
+{#            </div>#}
 
-                    <form style="float: right" action="{% url 'dashboard:users:users_list' %}" method="get">
-                        <div class="input-group input-group-seamless ml-3">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <i class="fas fa-search"></i>
-                                </div>
-                            </div>
-                            <input class="navbar-search form-control" name="q" type="text" placeholder="{% trans "Search for user..." %}"
-                                   aria-label="Search">
-                        </div>
-                    </form>
-                </div>
-            </div>
+        {% include "dashboard/users/search_filter.html" %}
+        <br>
+        <hr>
             <!-- End Page Header -->
             <div class="row">
                 {% if object_list %}
