@@ -7,11 +7,13 @@
 
 
 
+
     <div class="main-content-container container-fluid px-4">
         <!-- Page Header -->
         <div class="page-header row no-gutters py-4">
             <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
                 <h3 class="page-title">Campaign Page</h3>
+
             </div>
         </div>
         <!-- End Page Header -->
@@ -22,6 +24,7 @@
                         <h4 class="mb-0">
                             {{ campaign.title }}
                         </h4>
+
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item px-4">
@@ -129,6 +132,9 @@
                     </span>
                             </li>
                             <li class="list-group-item d-flex px-3">
+                                <a class="btn btn-sm btn-secondary text-white"
+                                        href="{% url 'dashboard:projs:campaign-edit' campaign.id %}">
+                      <i class="material-icons">edit</i> Edit Campaign</a>
                                 <a
                                         {#                                        TODO add href to see payment history #}
                                         href="#"
@@ -159,7 +165,7 @@
                                    type="text" name="text" id="id_text" required
                                    placeholder="Text">
 
-                            <button type="submit" class="form-control form-control-lg btn btn-outline-accent">
+                            <button type="submit" class=" form-control form-control-lg btn btn-outline-danger">
                                 <i class="material-icons">close</i> Close Campaign
                             </button>
                         </form>
