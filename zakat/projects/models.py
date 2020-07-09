@@ -1,3 +1,4 @@
+from django.utils.timezone import localtime
 from djongo import models
 from accounts.models import User, Employee, Document
 
@@ -64,3 +65,18 @@ class Campaign(models.Model):
 
     def get_status(self):
         return "Open" if self.closed_at is None else "Closed"
+
+    def close_campaign(self, text_reason):
+        if not text_reason:
+            raise ValueError('In order to close campaign you nee to set som reason')
+        self.closing_reason = text_reason
+        # TODO set correct time
+        self.closed_at = localtime()
+        self.save()
+
+    def get_payment_options(self):
+        return self.payment_options.all()
+
+    def create_payment_option(self, payment_option):
+        payment_option.campaign = self
+        payment_option.save()
