@@ -135,3 +135,12 @@ def payment_option_delete(request, pk):
         return redirect(reverse_lazy('dashboard:projs:campaign-detail', args=[campaign_id]))
     except PaymentOptions.DoesNotExist as e:
         raise e
+
+
+@require_http_methods(["POST", ])
+def campaign_delete(request, pk):
+    try:
+        Campaign.objects.get(pk=pk).delete()
+        return redirect(reverse_lazy('dashboard:projs:campaign-list'))
+    except Campaign.DoesNotExist as e:
+        raise e
