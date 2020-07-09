@@ -1,6 +1,8 @@
+from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect
 # Create your views here.
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
 from django.views.generic import DetailView
 from django_filters.views import FilterView
@@ -15,8 +17,7 @@ def index(request):
     return render(request, 'dashboard/projs/campaign_list.html', {'page_obj': Campaign.objects.all()})
 
 
-# TODO pagination
-# TODO add access perms
+@method_decorator(staff_member_required, name='dispatch')
 class СampaignListView(FilterView):
     template_name = 'dashboard/projs/campaign_list.html'
     filterset_class = CampaignFilter
@@ -28,6 +29,7 @@ class СampaignListView(FilterView):
         return context
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class CampaignDetailView(DetailView):
     model = Campaign
     template_name = 'dashboard/projs/campaign_detail.html'
@@ -42,7 +44,7 @@ class CampaignDetailView(DetailView):
         return context
 
 
-# TODO add access perms
+@staff_member_required
 @require_http_methods(["POST", ])
 def close_campaign(request, pk):
     try:
@@ -56,7 +58,7 @@ def close_campaign(request, pk):
     return redirect(reverse_lazy('dashboard:projs:campaign-detail', args=[pk, ]))
 
 
-# TODO add access perms
+@staff_member_required
 @require_http_methods(["POST", ])
 def payment_option_create(request, campaign_pk):
     try:
@@ -71,6 +73,7 @@ def payment_option_create(request, campaign_pk):
     return redirect(reverse_lazy('dashboard:projs:campaign-detail', args=[campaign_pk, ]))
 
 
+@staff_member_required
 def campaign_edit(request, pk):
     try:
         campaign = Campaign.objects.get(id=pk)
@@ -90,6 +93,7 @@ def campaign_edit(request, pk):
                   status=status_code)
 
 
+@staff_member_required
 def campaign_create(request):
     status_code = 200
     if request.method == 'POST':
@@ -106,6 +110,7 @@ def campaign_create(request):
     return render(request, 'dashboard/projs/campaign_create.html', {'form': form}, status=status_code)
 
 
+@staff_member_required
 def payment_option_edit(request, pk):
     try:
         payment_option = PaymentOptions.objects.get(pk=pk)
@@ -124,6 +129,7 @@ def payment_option_edit(request, pk):
     return render(request, 'dashboard/projs/payment_option_edit.html', {'form': form},
                   status=status_code)
 
+@staff_member_required
 @require_http_methods(["POST", ])
 def payment_option_delete(request, pk):
     try:
@@ -134,7 +140,7 @@ def payment_option_delete(request, pk):
     except PaymentOptions.DoesNotExist as e:
         raise e
 
-
+@staff_member_required
 @require_http_methods(["POST", ])
 def campaign_delete(request, pk):
     try:
