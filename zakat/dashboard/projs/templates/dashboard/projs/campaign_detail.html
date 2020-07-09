@@ -199,15 +199,15 @@
             <div class="card-body">
                 <form method="post" action="{% url 'dashboard:projs:campaign-create-payment_option' campaign.pk %}">
                     {#                            TODO add count title #}
-                    <input class="form-control form-control-lg mb-3"
+                    <input class="form-control form-control-lg mb-3" required
                            type="text" name="title" id="id_title"
                            placeholder="Title">
 
-                    <input class="form-control form-control-lg mb-3"
+                    <input class="form-control form-control-lg mb-3" required
                            type="text" name="description" id="id_description"
                            placeholder="Description">
 
-                    <select class="form-control form-control-lg mb-3" name="payment_type" id="id_payment_type">
+                    <select class="form-control form-control-lg mb-3" name="payment_type" id="id_payment_type" required>
                         {% with payment_type=payment_option_form.data.payment_type %}
                             {% for choice in payment_option_form.fields.payment_type.choices %}
                                 <option value="{{ choice.0 }}"
