@@ -43,7 +43,7 @@ class CampaignDetailView(DetailView):
 
 
 # TODO add access perms
-@require_http_methods(["POST",])
+@require_http_methods(["POST", ])
 def close_campaign(request, pk):
     try:
         campaign = Campaign.objects.get(id=pk)
@@ -54,10 +54,11 @@ def close_campaign(request, pk):
     if close_campaign_form.is_valid():
         cleaned_data = close_campaign_form.cleaned_data
         campaign.close_campaign(cleaned_data['text'])
-    return redirect(reverse_lazy('dashboard:projs:campaign-detail', args=[pk,]))
+    return redirect(reverse_lazy('dashboard:projs:campaign-detail', args=[pk, ]))
+
 
 # TODO add access perms
-@require_http_methods(["POST",])
+@require_http_methods(["POST", ])
 def create_payment_option(request, campaign_pk):
     try:
         campaign = Campaign.objects.get(id=campaign_pk)
@@ -69,7 +70,7 @@ def create_payment_option(request, campaign_pk):
         cleaned_data = payment_option_create_form.cleaned_data
         payment_option = PaymentOptions(**cleaned_data)
         campaign.create_payment_option(payment_option)
-    return redirect(reverse_lazy('dashboard:projs:campaign-detail', args=[campaign_pk,]))
+    return redirect(reverse_lazy('dashboard:projs:campaign-detail', args=[campaign_pk, ]))
 
 
 def edit_campaign(request, pk):
@@ -87,4 +88,21 @@ def edit_campaign(request, pk):
             status_code = 400
     else:
         form = CampaignEditForm(instance=campaign)
-    return render(request, 'dashboard/projs/campaign_edit.html', {'form': form, 'campaign_id': campaign.id}, status=status_code)
+    return render(request, 'dashboard/projs/campaign_edit.html', {'form': form, 'campaign_id': campaign.id},
+                  status=status_code)
+
+
+def create_campaign(request):
+    status_code = 200
+    if request.method == 'POST':
+        form = CampaignEditForm(request.POST)
+        if form.is_valid():
+            campaign = form.save(commit=False)
+            campaign.created_by = request.user.employee
+            campaign.save()
+            return redirect(reverse_lazy('dashboard:projs:campaign-detail', args=[campaign.id]))
+        else:
+            status_code = 400
+    else:
+        form = CampaignEditForm()
+    return render(request, 'dashboard/projs/campaign_create.html', {'form': form}, status=status_code)
