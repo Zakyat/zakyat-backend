@@ -124,20 +124,20 @@ def convert_embedded_field(field, registry=None):
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
-# AUTH_PASSWORD_VALIDATORS = [
-#     {
-#         'NAME': 'django.contrib.users.password_validation.UserAttributeSimilarityValidator',
-#     },
-#     {
-#         'NAME': 'django.contrib.users.password_validation.MinimumLengthValidator',
-#     },
-#     {
-#         'NAME': 'django.contrib.users.password_validation.CommonPasswordValidator',
-#     },
-#     {
-#         'NAME': 'django.contrib.users.password_validation.NumericPasswordValidator',
-#     },
-# ]
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.users.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.users.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.users.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.users.password_validation.NumericPasswordValidator',
+    },
+]
 
 
 # Internationalization
