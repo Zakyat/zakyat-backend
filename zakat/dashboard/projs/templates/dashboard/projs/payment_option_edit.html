@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <form method="post"
                               action="{% url 'dashboard:projs:payment_option-edit' form.instance.id %}">
-
+                        <strong class="text-muted d-block mb-2">Title</strong>
                             <input class="form-control
                              {% if form.errors.title %}is-invalid{% endif %}
                              form-control-lg mb-3" required
@@ -31,6 +31,7 @@
                                 <div class="invalid-feedback">{{ form.errors.title.0 }}</div>
                             {% endif %}
 
+                            <strong class="text-muted d-block mb-2">Description</strong>
                             <input class="form-control
                                  {% if form.errors.description %}is-invalid{% endif %}
                                  form-control-lg mb-3" required
@@ -40,6 +41,7 @@
                             {% if form.errors.description %}
                                 <div class="invalid-feedback">{{ form.errors.description.0 }}</div>
                             {% endif %}
+                        <strong class="text-muted d-block mb-2">Payment Type</strong>
                             <select class="form-control
                                  {% if form.errors.payment_type %}is-invalid{% endif %}
                                  form-control-lg mb-3" name="payment_type"

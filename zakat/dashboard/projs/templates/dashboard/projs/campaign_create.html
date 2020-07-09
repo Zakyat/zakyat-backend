@@ -22,6 +22,7 @@
 
                             <div class="form-row">
                                 <div class="form-group col-lg-6">
+                                <strong class="text-muted d-block mb-2">Title</strong>
                                     <input class="form-control
                                     {% if form.errors.title %}is-invalid{% endif %}
                                          form-control-lg" required
@@ -35,6 +36,7 @@
                                 </div>
 
                                 <div class="form-group col-lg-2">
+                                <strong class="text-muted d-block mb-2">Goal</strong>
                                     <input class="form-control
                                      {% if form.errors.goal %}is-invalid{% endif %}
                                      form-control-lg" required
@@ -47,6 +49,7 @@
                                 </div>
 
                                 <div class="form-group col-lg-2">
+                                <strong class="text-muted d-block mb-2">Project</strong>
                                     <select required class="form-control form-control-lg
                                     {% if form.errors.project %}is-invalid{% endif %}"
                                             name="project" id="id_project">
@@ -76,6 +79,7 @@
 
 
                                 <div class="form-group col-lg-2">
+                                <strong class="text-muted d-block mb-2">Request</strong>
                                     <select required class="form-control
                                     {% if form.errors.request %}is-invalid{% endif %}
                                     form-control-lg " name="request" id="id_request">
@@ -90,7 +94,7 @@
 
                             </div>
 
-
+                            <strong class="text-muted d-block mb-2">Description</strong>
                             <input class="form-control
                             {% if form.errors.description %}is-invalid{% endif %}
                             form-control-lg " required
@@ -112,7 +116,6 @@
             </div>
         </div>
     </div>
-
 
 
 {% endblock content %}
