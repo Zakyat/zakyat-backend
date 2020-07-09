@@ -76,26 +76,13 @@
 
 
                                 <div class="form-group col-lg-2">
-                                    <select class="form-control
+                                    <select required class="form-control
                                     {% if form.errors.request %}is-invalid{% endif %}
                                     form-control-lg " name="request" id="id_request">
-                                        <option value="" selected>---------</option>
-                                        {% with selected_value=form.initial.request %}
-                                            {% if selected_value %}
-                                                {% for request in form.fields.request.queryset %}
-                                                    <option value="{{ request.id }}"
-                                                            {% if selected_value == request.id %}selected{% endif %}
-                                                    >{{ request }}</option>
-                                                {% endfor %}
-                                            {% else %}
                                                 {% for request in form.fields.request.queryset %}
                                                     <option value="{{ request.id }}"
                                                     >{{ request }}</option>
                                                 {% endfor %}
-
-                                            {% endif %}
-
-                                        {% endwith %}
 
                                     </select>
                                 <div class="invalid-feedback">{{ form.errors.request.0 }}</div>
