@@ -10,22 +10,40 @@
 
         </div>
         <!-- End Page Header -->
-        <form action="">
 
-            <div class="input-group col-lg-4 mb-2" action="{% url 'dashboard:employee:staff_list' %}">
-                <input type="text" class="form-control" placeholder="Search employee" name="search">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit">
-                        <i class="fa fa-search"></i>
-                    </button>
+        <!--search-->
+        <div class="d-flex justify-content-between">
+            <div class="d-flex">
+                <form action="{% url 'dashboard:employee:staff_list' %}">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search employee" name="search">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!--sort filter-->
+                <div class="dropdown show mb-2 ml-2">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        New created
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="?sort=new_created">New created</a>
+                        <a class="dropdown-item" href="?sort=old_created">Old created</a>
+                        <a class="dropdown-item" href="?sort=new_updated">New updated</a>
+                        <a class="dropdown-item" href="?sort=old_updated">Old updated</a>
+                    </div>
                 </div>
             </div>
-        </form>
-
-        <div class="">
+            <!--add button-->
             <a class="btn btn-primary mb-2" href="{% url 'dashboard:employee:employee_create_form' %}">+ Add new
                 staff</a>
         </div>
+        {#        </div>#}
         <!-- Default Light Table -->
         <div class="row">
             <div class="col">

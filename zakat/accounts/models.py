@@ -115,8 +115,8 @@ class User(models.Model):
 class Employee(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     phone_number = models.CharField(max_length=16)
     photo = models.ImageField(upload_to='uploads', default='uploads/anon.png')
     bio = models.TextField()
     position = models.CharField(max_length=32)
-    updated_at = models.DateTimeField(auto_now=True)

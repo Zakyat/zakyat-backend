@@ -38,6 +38,7 @@ class StaffListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
         search_query = self.request.GET.get('search', '')
+        sort =  self.request.GET.get('sort', '')
 
         if search_query:
             qset = (
@@ -53,6 +54,16 @@ class StaffListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
             employee_list = Employee.objects.filter(qset)
         else:
             employee_list = self.get_queryset()
+
+        if sort:
+            if sort == 'new_created':
+                employee_list = employee_list.order_by('-created_at')
+            if sort == 'old_created':
+                employee_list = employee_list.order_by('created_at')
+            if sort == 'new_updated':
+                employee_list = employee_list.order_by('-updated_at')
+            if sort == 'old_updated':
+                employee_list = employee_list.order_by('updated_at')
 
         context = self.get_context_data()
         context['employee_list'] = employee_list
