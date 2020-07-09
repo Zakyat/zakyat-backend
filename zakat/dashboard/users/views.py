@@ -1,5 +1,5 @@
-from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages, auth
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic.list import ListView
@@ -136,3 +136,8 @@ class UserUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = User
     fields = "__all__"
     template_name = 'dashboard/partner/partners_form.html'
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('dashboard:users:login')
