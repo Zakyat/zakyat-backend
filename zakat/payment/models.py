@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator
 from djongo import models
 from accounts.models import User
 from channels.layers import get_channel_layer
@@ -34,9 +35,9 @@ def send_transaction_notification():
 
 
 class Transaction(models.Model):
-    amount = models.IntegerField()
+    amount = models.IntegerField(validators=[MinValueValidator(1)])
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='transactions')
-    campaign = models.ForeignKey(Campaign, on_delete=models.DO_NOTHING, related_name='transactions', null=True)
+    campaign = models.ForeignKey(Campaign, on_delete=models.DO_NOTHING, related_name='transactions', blank=True, null=True)
     type = models.CharField(max_length=16, choices=PAYMENT_TYPES)
     transaction_type = models.CharField(max_length=4, choices=TRANSACTION_TYPES, default=0)
     description = models.TextField()
