@@ -4,12 +4,23 @@ from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from projects.models import Campaign
 
-TRANSACTION_TYPES = (
+# ---- Field enums ----
+
+PAYMENT_TYPES = (
     ('card', 'Card'),
     ('cash', 'Cash'),
     ('transfer', 'Transfer'),
     ('withdraw', 'Withdraw'),
 )
+
+TRANSACTION_TYPES = (
+    ('0', 'sadaka'),
+    ('1', 'zakat'),
+    ('2', 'direct')
+)
+
+
+# ---- Models ----
 
 
 def send_transaction_notification():
@@ -25,8 +36,9 @@ def send_transaction_notification():
 class Transaction(models.Model):
     amount = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='transactions')
-    campaign = models.ForeignKey(Campaign, on_delete=models.DO_NOTHING, related_name='transactions')
-    type = models.CharField(max_length=16, choices=TRANSACTION_TYPES)
+    campaign = models.ForeignKey(Campaign, on_delete=models.DO_NOTHING, related_name='transactions', null=True)
+    type = models.CharField(max_length=16, choices=PAYMENT_TYPES)
+    transaction_type = models.CharField(max_length=4, choices=TRANSACTION_TYPES, default=0)
     description = models.TextField()
 
     def save(self, force_insert=False, force_update=False, using=None,
