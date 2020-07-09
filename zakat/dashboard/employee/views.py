@@ -1,3 +1,5 @@
+from functools import reduce
+
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic.list import ListView
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, TemplateView, View, FormView
@@ -6,6 +8,7 @@ from django.shortcuts import get_object_or_404, render, HttpResponseRedirect, re
 from accounts.models import Employee
 from .forms import EmployeeForm, UserForm, UserEditForm
 from django.db.models import Q
+import operator
 
 
 # Create your views here.
@@ -37,14 +40,17 @@ class StaffListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         search_query = self.request.GET.get('search', '')
 
         if search_query:
-            employee_list = Employee.objects.filter(
-                Q(phone_number__icontains=search_query) |
-                Q(position__icontains=search_query) |
-                Q(bio__icontains=search_query) |
-                Q(user__first_name__icontains=search_query) |
-                Q(user__last_name__icontains=search_query) |
-                Q(user__username__icontains=search_query)
+            qset = (
+                    Q(phone_number__icontains=search_query) |
+                    Q(position__icontains=search_query) |
+                    Q(bio__icontains=search_query) |
+                    Q(user__first_name__icontains=search_query) |
+                    Q(user__last_name__icontains=search_query) |
+                    Q(user__username__icontains=search_query) |
+                    Q(user__id__icontains=search_query)
             )
+
+            employee_list = Employee.objects.filter(qset)
         else:
             employee_list = self.get_queryset()
 
