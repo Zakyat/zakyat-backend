@@ -8,7 +8,8 @@ from django.urls import reverse_lazy
 from accounts.models import User
 from .forms import SearchForm
 from .helper import get_country_code
-from django.db.models import Q
+from django.db.models import Q, Sum
+from django.contrib.admin.views.decorators import staff_member_required
 from payment.models import Transaction
 # Create your views here.
 
@@ -21,6 +22,7 @@ from .forms import LoginForm
 from .helper import check_is_employee
 
 
+@staff_member_required
 def block_user(request, pk):
     user = get_object_or_404(User, id=pk)
     if request.method == "POST":
@@ -73,7 +75,6 @@ class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     def get_queryset(self):
         query = self.request.GET.get('q')
         rubs = self.request.GET.get('zakat_sum_r')
-        # dollars = self.request.GET.get('zakat_sum_d')
         display_paid_zakat = self.request.GET.get('zakat_persons')
         self.query = query
         self.rubs = rubs
@@ -96,8 +97,10 @@ class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
             )
         else:
             object_list = self.model.objects.all()
-        if rubs:
-            object_list = object_list.filter(transactions__amount__gt=rubs)
+        if self.display_paid_zakat:
+            object_list = object_list.filter(transactions__transaction_type=1)  # 1 means zakat type
+        if self.rubs:
+            object_list = list(object_list.annotate(total_sum=Sum('transactions__amount')).filter(total_sum__gte=rubs))
         return object_list
 
     def get_context_data(self, *, object_list=None, **kwargs):
