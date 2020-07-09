@@ -18,11 +18,15 @@ NEEDY_CATEGORIES = (
     ('single_parent_families', 'Single Parent Families'),
     ('orphan', 'Orphan'),
     ('refuge', 'Refuge'),
-    ('person_without_a_fixed_residence_or_traveler_for_russians', 'Person without a fixed residence or traveler for russians'),
-    ('person_without_a_fixed_residence_or_traveler_for_foreign', 'Person without a fixed residence or traveler for foreign'),
+    ('person_without_a_fixed_residence_or_traveler_for_russians',
+     'Person without a fixed residence or traveler for russians'),
+    ('person_without_a_fixed_residence_or_traveler_for_foreign',
+     'Person without a fixed residence or traveler for foreign'),
     ('debtor', 'debtor'),
-    ('people_who_have_devoted_themselves_to_islam_or_for_study_of_the_Quran', 'People who have devoted themselves to islam or for study of the Quran'),
-    ('children_or_adults_with_disabilities_or_people_with_severe_diseases', 'Children or adults with disabilities or people with severe diseases'),
+    ('people_who_have_devoted_themselves_to_islam_or_for_study_of_the_Quran',
+     'People who have devoted themselves to islam or for study of the Quran'),
+    ('children_or_adults_with_disabilities_or_people_with_severe_diseases',
+     'Children or adults with disabilities or people with severe diseases'),
 )
 
 
@@ -40,10 +44,11 @@ class Request(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     denying_reason = models.CharField(max_length=256, null=True, blank=True)  # TODO: i18n
 
+
 class Project(models.Model):
     created_by = models.OneToOneField(Employee, on_delete=models.PROTECT)
-    title = models.CharField(max_length=128)    # TODO: i18n
-    description = models.TextField()    # TODO: i18n
+    title = models.CharField(max_length=128)  # TODO: i18n
+    description = models.TextField()  # TODO: i18n
     # property `campaigns` created with a backref
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -53,14 +58,15 @@ class Project(models.Model):
 class Campaign(models.Model):
     request = models.OneToOneField(Request, on_delete=models.SET_NULL, null=True, blank=True)
     created_by = models.OneToOneField(Employee, on_delete=models.PROTECT)
-    title = models.CharField(max_length=128)    # TODO: i18n
-    description = models.TextField()    # TODO: i18n
-    goal = models.IntegerField()        # in rubles
+    title = models.CharField(max_length=128)  # TODO: i18n
+    description = models.TextField()  # TODO: i18n
+    goal = models.IntegerField()  # in rubles
     closing_reason = models.CharField(max_length=128, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     closed_at = models.DateTimeField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='campaigns')
+
     # property `transactions` created with a backref
 
     def get_status(self):
@@ -77,6 +83,14 @@ class Campaign(models.Model):
     def get_payment_options(self):
         return self.payment_options.all()
 
-    def create_payment_option(self, payment_option):
+    def payment_option_create(self, payment_option):
         payment_option.campaign = self
         payment_option.save()
+
+    # TODO accomplish
+    def get_collected_money(self):
+        return 100
+
+    # TODO accomplish
+    def calculate_ratio(self):
+        return self.get_collected_money() / self.goal

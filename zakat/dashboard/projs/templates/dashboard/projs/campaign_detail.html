@@ -30,7 +30,7 @@
                         <li class="list-group-item px-4">
                             <div class="progress-wrapper">
                                 {#                                TODO add number=campaign.collected/campaign.goal #}
-                                <strong class="text-muted d-block mb-2">collected/goal</strong>
+                                <strong class="text-muted d-block mb-2">collected/goal {{ campaign.calculate_ratio }}</strong>
                                 <div class="progress progress-sm">
                                     <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="74"
                                          aria-valuemin="0" aria-valuemax="100" style="width: 74%;">
@@ -57,7 +57,6 @@
             </div>
 
             <div class="col-lg-4">
-                {#                TODO change icons #}
                 <!-- Post Overview -->
                 <div class='card card-small mb-3'>
                     <div class="card-header border-bottom">
@@ -68,7 +67,7 @@
                             <li class="list-group-item p-3">
 
                             <span class="d-flex mb-2">
-                      <i class="material-icons mr-1">visibility</i>
+                      <i class="material-icons mr-1">link</i>
                       <strong class="mr-1">Project:</strong>
 {#                                    TODO add project url to#}
                       <a href="#">
@@ -77,18 +76,18 @@
                     </span>
 
                                 <span class="d-flex mb-2">
-                      <i class="material-icons mr-1">visibility</i>
+                      <i class="material-icons mr-1">alarm_add</i>
                       <strong class="mr-1">Created at:</strong>
                       <strong class="text-black-50">{{ campaign.created_at }}</strong>
                     </span>
                                 <span class="d-flex mb-2">
-                      <i class="material-icons mr-1">visibility</i>
+                      <i class="material-icons mr-1">edit</i>
                       <strong class="mr-1">Updated At:</strong>
                       <strong class="text-warning">{{ campaign.updated_at }}</strong>
                     </span>
                                 {% if campaign.closed_at %}
                                     <span class="d-flex mb-2">
-                      <i class="material-icons mr-1">visibility</i>
+                      <i class="material-icons mr-1">alarm_on</i>
                       <strong class="mr-1">Closed At:</strong>
                       <strong class="text-danger">{{ campaign.closed_at }}</strong>
                     </span>
@@ -110,8 +109,7 @@
 
                                 <span class="d-flex mb-2">
 
-                      <i class="material-icons mr-1">flag</i>
-{#                        TODO how to identify Employeer #}
+                      <i class="material-icons mr-1">person</i>
 {#                                    TODO add employeer url #}
                       <strong class="mr-1">Created By:</strong>
                         <a href="#">{{ campaign.created_by }}
@@ -119,22 +117,21 @@
                     </span>
 
                                 <span class="d-flex">
-                      <i class="material-icons mr-1">score</i>
+                      <i class="material-icons mr-1">monetization_on</i>
                       <strong class="mr-1">GOAL:</strong>
 {#                                    TODO add currency sign #}
                       <strong class="text-danger">{{ campaign.goal }} RUBLES</strong>
                     </span>
                                 <span class="d-flex">
-                      <i class="material-icons mr-1">score</i>
+                      <i class="material-icons mr-1">tag_faces</i>
                       <strong class="mr-1">Collected:</strong>
-{#                                    TODO add collected #}
-                      <strong class="text-success">COLLECTED</strong>
+                      <strong class="text-success">COLLECTED {{ campaign.get_collected_money }}</strong>
                     </span>
                             </li>
                             <li class="list-group-item d-flex px-3">
                                 <a class="btn btn-sm btn-secondary text-white"
-                                        href="{% url 'dashboard:projs:campaign-edit' campaign.id %}">
-                      <i class="material-icons">edit</i> Edit Campaign</a>
+                                   href="{% url 'dashboard:projs:campaign-edit' campaign.id %}">
+                                    <i class="material-icons">edit</i> Edit Campaign</a>
                                 <a
                                         {#                                        TODO add href to see payment history #}
                                         href="#"
@@ -176,58 +173,58 @@
             </div>
 
 
-                <div class="col-lg-8">
+            <div class="col-lg-8">
 
-                    <!-- Add New Post Form -->
-                    <div class="card card-small mb-2">
-                        <div class="card-header border-bottom">
-                            <h4 class="mb-0">
-                                Payment Options
-                            </h4>
-                        </div>
-
-
+                <!-- Add New Post Form -->
+                <div class="card card-small mb-2">
+                    <div class="card-header border-bottom">
+                        <h4 class="mb-0">
+                            Payment Options
+                        </h4>
                     </div>
 
+
                 </div>
-        <div class="col-lg-8">
-        <div class="card card-small mb-2">
-            <div class="card-header border-bottom">
+
+            </div>
+            <div class="col-lg-8">
+                <div class="card card-small mb-2">
+                    <div class="card-header border-bottom">
                         <h4 class="mb-0">Create Payment Option
                         </h4>
                     </div>
-            <div class="card-body">
-                <form method="post" action="{% url 'dashboard:projs:campaign-create-payment_option' campaign.pk %}">
-                    {#                            TODO add count title #}
-                    <input class="form-control form-control-lg mb-3" required
-                           type="text" name="title" id="id_title"
-                           placeholder="Title">
+                    <div class="card-body">
+                        <form method="post"
+                              action="{% url 'dashboard:projs:campaign-create-payment_option' campaign.pk %}">
+                            <input class="form-control form-control-lg mb-3" required
+                                   type="text" name="title" id="id_title"
+                                   placeholder="Title">
 
-                    <input class="form-control form-control-lg mb-3" required
-                           type="text" name="description" id="id_description"
-                           placeholder="Description">
+                            <input class="form-control form-control-lg mb-3" required
+                                   type="text" name="description" id="id_description"
+                                   placeholder="Description">
 
-                    <select class="form-control form-control-lg mb-3" name="payment_type" id="id_payment_type" required>
-                        {% with payment_type=payment_option_form.data.payment_type %}
-                            {% for choice in payment_option_form.fields.payment_type.choices %}
-                                <option value="{{ choice.0 }}"
-                                        {% if forloop.first %}selected{% endif %}
-                                >{{ choice.1 }}</option>
-                            {% endfor %}
-                        {% endwith %}
-                    </select>
-
-
-                    {#                            TODO add from right side select field #}
-                    <button type="submit" class="form-control form-control-lg btn btn-outline-accent">
-                        <i class="material-icons">search</i>Search Campaigns
-                    </button>
-                </form>
+                            <select class="form-control form-control-lg mb-3" name="payment_type" id="id_payment_type"
+                                    required>
+                                {% with payment_type=payment_option_form.data.payment_type %}
+                                    {% for choice in payment_option_form.fields.payment_type.choices %}
+                                        <option value="{{ choice.0 }}"
+                                                {% if forloop.first %}selected{% endif %}
+                                        >{{ choice.1 }}</option>
+                                    {% endfor %}
+                                {% endwith %}
+                            </select>
 
 
+                            <button type="submit" class="form-control form-control-lg btn btn-outline-accent">
+                                <i class="material-icons">search</i>Search Campaigns
+                            </button>
+                        </form>
+
+
+                    </div>
+                </div>
             </div>
-        </div>
-        </div>
 
 
 
@@ -243,6 +240,10 @@
                                     Payment Type: {{ payment_option.get_payment_type }}
                                 </span>
                                 <p class="card-text text">{{ payment_option.description }}</p>
+{#                                TODO btn ro rigth side #}
+                                <a href="{% url 'dashboard:projs:payment_option-edit' payment_option.id %}" class="btn btn-sm btn-secondary float-right text-white">
+                                    <i class="material-icons">edit</i> Edit
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -251,8 +252,6 @@
                 </div>
             {% endif %}
         <!-- Add New Post Form -->
-
-
 
 
     </div>

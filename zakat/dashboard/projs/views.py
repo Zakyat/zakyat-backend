@@ -6,7 +6,7 @@ from django.views.generic import DetailView
 from django_filters.views import FilterView
 
 from dashboard.projs.filters import CampaignFilter
-from dashboard.projs.forms import CloseCampaignForm, PaymentOptionsCreateForm, CampaignEditForm
+from dashboard.projs.forms import CloseCampaignForm, PaymentOptionsForm, CampaignEditForm
 from payment.models import PaymentOptions
 from projects.models import Campaign
 
@@ -36,7 +36,7 @@ class CampaignDetailView(DetailView):
         context = super(CampaignDetailView, self).get_context_data(**kwargs)
 
         context['closing_form'] = CloseCampaignForm()
-        context['payment_option_form'] = PaymentOptionsCreateForm()
+        context['payment_option_form'] = PaymentOptionsForm()
         context['payment_options'] = self.object.get_payment_options()
 
         return context
@@ -59,21 +59,21 @@ def close_campaign(request, pk):
 
 # TODO add access perms
 @require_http_methods(["POST", ])
-def create_payment_option(request, campaign_pk):
+def payment_option_create(request, campaign_pk):
     try:
         campaign = Campaign.objects.get(id=campaign_pk)
     except Campaign.DoesNotExist as e:
         # TODO where to redirect
         raise e
-    payment_option_create_form = PaymentOptionsCreateForm(request.POST)
+    payment_option_create_form = PaymentOptionsForm(request.POST)
     if payment_option_create_form.is_valid():
         cleaned_data = payment_option_create_form.cleaned_data
         payment_option = PaymentOptions(**cleaned_data)
-        campaign.create_payment_option(payment_option)
+        campaign.payment_option_create(payment_option)
     return redirect(reverse_lazy('dashboard:projs:campaign-detail', args=[campaign_pk, ]))
 
 
-def edit_campaign(request, pk):
+def campaign_edit(request, pk):
     try:
         campaign = Campaign.objects.get(id=pk)
     except Campaign.DoesNotExist as e:
@@ -92,7 +92,7 @@ def edit_campaign(request, pk):
                   status=status_code)
 
 
-def create_campaign(request):
+def campaign_create(request):
     status_code = 200
     if request.method == 'POST':
         form = CampaignEditForm(request.POST)
@@ -106,3 +106,32 @@ def create_campaign(request):
     else:
         form = CampaignEditForm()
     return render(request, 'dashboard/projs/campaign_create.html', {'form': form}, status=status_code)
+
+
+def payment_option_edit(request, pk):
+    try:
+        payment_option = PaymentOptions.objects.get(pk=pk)
+    except PaymentOptions.DoesNotExist as e:
+        raise e
+    status_code = 200
+    if request.method == 'POST':
+        form = PaymentOptionsForm(request.POST, instance=payment_option)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse_lazy('dashboard:projs:campaign-detail', args=[payment_option.campaign.id]))
+        else:
+            status_code = 400
+    else:
+        form = PaymentOptionsForm(instance=payment_option)
+    return render(request, 'dashboard/projs/payment_option_edit.html', {'form': form},
+                  status=status_code)
+
+@require_http_methods(["POST", ])
+def payment_option_delete(request, pk):
+    try:
+        payment_option = PaymentOptions.objects.get(pk=pk)
+        campaign_id = payment_option.campaign_id
+        payment_option.delete()
+        return redirect(reverse_lazy('dashboard:projs:campaign-detail', args=[campaign_id]))
+    except PaymentOptions.DoesNotExist as e:
+        raise e

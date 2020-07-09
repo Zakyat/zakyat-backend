@@ -8,7 +8,7 @@ class CloseCampaignForm(forms.Form):
     text = forms.CharField(max_length=128)
 
 
-class PaymentOptionsCreateForm(forms.ModelForm):
+class PaymentOptionsForm(forms.ModelForm):
     PAYMENT_TYPES_ENUM = (
         ('true', 'Credit Card'),
         ('unknown', 'Some Other'),
