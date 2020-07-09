@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, render, HttpResponseRedirect, reverse
 from accounts.models import Employee
 from .forms import EmployeeForm, UserForm, UserEditForm
+from django.db.models import Q
 
 
 # Create your views here.
@@ -26,6 +27,30 @@ class StaffListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     paginate_by = 20
     template_name = 'dashboard/employee/staff_list.html'
     ordering = ['-created_at']
+
+    #
+    # def get_queryset(self):
+    #     return Employee.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        search_query = self.request.GET.get('search', '')
+
+        if search_query:
+            employee_list = Employee.objects.filter(
+                Q(phone_number__icontains=search_query) |
+                Q(position__icontains=search_query) |
+                Q(bio__icontains=search_query) |
+                Q(user__first_name__icontains=search_query) |
+                Q(user__last_name__icontains=search_query) |
+                Q(user__username__icontains=search_query)
+            )
+        else:
+            employee_list = self.get_queryset()
+
+        context = self.get_context_data()
+        context['employee_list'] = employee_list
+        return self.render_to_response(context)
 
 
 class EmployeeCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
@@ -53,7 +78,7 @@ class EmployeeCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
                 return HttpResponseRedirect(reverse('dashboard:employee:staff_list'))
             else:
                 return render(request, 'dashboard/employee/employee_create_form.html',
-                  {'user_form': user_form, 'employee_form': employee_form})
+                              {'user_form': user_form, 'employee_form': employee_form})
 
 
 class EmployeeEdit(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -88,7 +113,6 @@ class EmployeeEdit(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
                 employee = get_object_or_404(Employee, pk=self.kwargs['pk'])
                 return render(request, 'dashboard/employee/employee_edit_form.html',
                               {'user_form': user_form, 'employee_form': employee_form, 'employee': employee})
-
 
 
 class EmployeeDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
