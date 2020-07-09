@@ -24,8 +24,6 @@ class Transaction(models.Model):
     description = models.TextField()
 
 
-)
-
 SUBSCRIPTION_DAYS = (
     ('0', 'null'),
     ('1', 'everyday'),
