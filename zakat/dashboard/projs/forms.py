@@ -30,8 +30,7 @@ class PaymentOptionsForm(forms.ModelForm):
         return self.PAYMENT_TYPES_TRANSFOR.get(payment_type)
 
 
-class CampaignEditForm(forms.ModelForm):
+class CampaignForm(forms.ModelForm):
     class Meta:
         model = Campaign
-        # TODO keep in mind to specify Employer as creator
         fields = ['title', 'description', 'project', 'request', 'goal']

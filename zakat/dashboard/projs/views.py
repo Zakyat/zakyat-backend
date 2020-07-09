@@ -6,7 +6,7 @@ from django.views.generic import DetailView
 from django_filters.views import FilterView
 
 from dashboard.projs.filters import CampaignFilter
-from dashboard.projs.forms import CloseCampaignForm, PaymentOptionsForm, CampaignEditForm
+from dashboard.projs.forms import CloseCampaignForm, PaymentOptionsForm, CampaignForm
 from payment.models import PaymentOptions
 from projects.models import Campaign
 
@@ -48,7 +48,6 @@ def close_campaign(request, pk):
     try:
         campaign = Campaign.objects.get(id=pk)
     except Campaign.DoesNotExist as e:
-        # TODO where to redirect
         raise e
     close_campaign_form = CloseCampaignForm(request.POST)
     if close_campaign_form.is_valid():
@@ -63,7 +62,6 @@ def payment_option_create(request, campaign_pk):
     try:
         campaign = Campaign.objects.get(id=campaign_pk)
     except Campaign.DoesNotExist as e:
-        # TODO where to redirect
         raise e
     payment_option_create_form = PaymentOptionsForm(request.POST)
     if payment_option_create_form.is_valid():
@@ -80,14 +78,14 @@ def campaign_edit(request, pk):
         raise e
     status_code = 200
     if request.method == 'POST':
-        form = CampaignEditForm(request.POST, instance=campaign)
+        form = CampaignForm(request.POST, instance=campaign)
         if form.is_valid():
             campaign = form.save()
             return redirect(reverse_lazy('dashboard:projs:campaign-detail', args=[campaign.id]))
         else:
             status_code = 400
     else:
-        form = CampaignEditForm(instance=campaign)
+        form = CampaignForm(instance=campaign)
     return render(request, 'dashboard/projs/campaign_edit.html', {'form': form, 'campaign_id': campaign.id},
                   status=status_code)
 
@@ -95,7 +93,7 @@ def campaign_edit(request, pk):
 def campaign_create(request):
     status_code = 200
     if request.method == 'POST':
-        form = CampaignEditForm(request.POST)
+        form = CampaignForm(request.POST)
         if form.is_valid():
             campaign = form.save(commit=False)
             campaign.created_by = request.user.employee
@@ -104,7 +102,7 @@ def campaign_create(request):
         else:
             status_code = 400
     else:
-        form = CampaignEditForm()
+        form = CampaignForm()
     return render(request, 'dashboard/projs/campaign_create.html', {'form': form}, status=status_code)
 
 

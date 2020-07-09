@@ -14,10 +14,12 @@ class CampaignFilter(django_filters.FilterSet):
     status = django_filters.ChoiceFilter(choices=STATUS_CHOICES, field_name='Status', method='filter_status')
     search = django_filters.CharFilter(method='filter_search')
 
+    created_at = django_filters.DateFromToRangeFilter()
+
     class Meta:
         model = Campaign
         # TODO add search by date
-        fields = ['search', 'status', ]
+        fields = ['search', 'status', 'created_at', ]
 
     def filter_status(self, queryset, name, value):
         if value:
@@ -27,7 +29,6 @@ class CampaignFilter(django_filters.FilterSet):
                 queryset = queryset.filter(closed_at__isnull=True)
         return queryset
 
-    # TODO add all fields (date??)
     @staticmethod
     def make_search1(value):
         return Q(title__icontains=value) \

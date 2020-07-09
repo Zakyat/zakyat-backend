@@ -54,7 +54,6 @@ class Project(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-# TODO add fields
 class Campaign(models.Model):
     request = models.OneToOneField(Request, on_delete=models.SET_NULL, null=True, blank=True)
     created_by = models.OneToOneField(Employee, on_delete=models.PROTECT)
@@ -76,7 +75,6 @@ class Campaign(models.Model):
         if not text_reason:
             raise ValueError('In order to close campaign you nee to set som reason')
         self.closing_reason = text_reason
-        # TODO set correct time
         self.closed_at = localtime()
         self.save()
 

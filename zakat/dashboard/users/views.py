@@ -2,7 +2,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
-# TODO redirect to the 'Gatherings' page in the future
 from django.urls import reverse_lazy
 
 from .forms import LoginForm
