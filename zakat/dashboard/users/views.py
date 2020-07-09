@@ -66,11 +66,18 @@ class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     template_name = 'dashboard/users/users_list.html'
     ordering = ['-user']
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.display_paid_zakat = False
+
     def get_queryset(self):
         query = self.request.GET.get('q')
-        display_paid_zakat = self.request.GET.get('zakat_persons')
         rubs = self.request.GET.get('zakat_sum_r')
         # dollars = self.request.GET.get('zakat_sum_d')
+        display_paid_zakat = self.request.GET.get('zakat_persons')
+        self.query = query
+        self.rubs = rubs
+        self.display_paid_zakat = display_paid_zakat
         country_code = get_country_code(query)
         if query:
             object_list = self.model.objects.filter(
@@ -92,6 +99,13 @@ class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         if rubs:
             object_list = object_list.filter(transactions__amount__gt=rubs)
         return object_list
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        context['display_paid_zakat'] = self.display_paid_zakat
+        context['more_than_sum'] = self.rubs if self.rubs is not None else -1
+        context['query'] = self.query
+        return context
 
 
 class UserDetail(LoginRequiredMixin, PermissionRequiredMixin, DetailView):

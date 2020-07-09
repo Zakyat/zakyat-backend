@@ -16,7 +16,7 @@
                         </div>
                         <input id="search" name="q" type="text"
                                placeholder="{% trans "Search for user..." %}"
-                               aria-label="Search">
+                               aria-label="Search" value="{{ query }}">
                         <div class="result-count">
                             <span>{{ page_obj.paginator.count }}</span> {% trans "results" %}
                         </div>
@@ -25,22 +25,19 @@
                 <div class="advance-search">
                     <span class="desc">{% trans "Advanced Search" %}</span>
                     <div class="item">
-                        <input type="checkbox" name="zakat_persons" id="zakat_person">
-                        <label for="zakat_person" style="margin-left: 15px">{% trans 'display who paid even once zakat' %}</label>
+                        <input type="checkbox" name="zakat_persons" id="zakat_person"
+                               {% if display_paid_zakat %}checked{% endif %}>
+                        <label for="zakat_person"
+                               style="margin-left: 15px">{% trans 'display who paid even once zakat' %}</label>
                     </div>
                     <hr>
                     <div class="item">
                         <label for="zakat_sum">{% trans 'Display who gave sadaka more than' %}</label>
-                        <input type="number" step="0,01" name="zakat_sum_r" id="zakat_sum_r">
+                        <input type="number" min="0" step="0,01" name="zakat_sum_r" id="zakat_sum_r"
+                               {% if more_than_sum != -1 %}value="{{ more_than_sum }}"{% endif %}>
                         <label>{% trans "rubls" %}</label>
                     </div>
                     <hr>
-{#                    <div class="item">#}
-{#                        <label for="zakat_sum">{% trans 'Display who gave sadaka more than' %}</label>#}
-{#                        <input type="number" step="0,01" name="zakat_sum_d" id="zakat_sum_d">#}
-{#                        <label>{% trans "dollars" %}</label>#}
-{#                    </div>#}
-{#                    <hr>#}
                     <div class="item">
                         <button type="submit" class="btn btn-accent">{% trans "Search" %}</button>
                     </div>
