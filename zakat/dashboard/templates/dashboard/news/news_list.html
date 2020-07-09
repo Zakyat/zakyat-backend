@@ -8,11 +8,11 @@
 </head>
 <body>
     <h1>News Dashboard</h1>
-    <button><a href="{% url 'dashboard:post_create' %}">Create a new post</a></button>
+    <button><a href="{% url 'dashboard:news_posts:post_create' %}">Create a new post</a></button>
     <hr>
     {% for post in object_list %}
         <div>
-            <div><b><a href="{% url 'dashboard:post_detail' pk=post.id %}">{{ post.title }}</a></b></div>
+            <div><b><a href="{% url 'dashboard:news_posts:post_detail' pk=post.id %}">{{ post.title }}</a></b></div>
             <div>Created by {{ post.created_by }} {{ post.created_at|naturaltime }}</div>
             <div>{{ post.description }}</div>
             <div>Project: <a href="">{{ post.project.title }}</a></div>
@@ -28,7 +28,7 @@
                     {% endfor %}
                 </ul>
             </div>
-            <a href="{% url 'dashboard:post_edit' pk=post.id %}"><button>Edit this post</button></a>
+            <a href="{% url 'dashboard:news_posts:post_edit' pk=post.id %}"><button>Edit this post</button></a>
             <form action="" method="post">
                 <input name="post_id" type="hidden" value="{{ post.id }}">
                 <input type="submit" value="Delete this post">
@@ -42,13 +42,13 @@
         <div>
             <span>
                 {% if page_obj.has_previous %}
-                    <a href="{% url 'site:feed' %}?page={{ page_obj.previous_page_number }}">Previous</a>
+                    <a href="{% url 'dashboard:news_posts:news_list' %}?page={{ page_obj.previous_page_number }}">Previous</a>
                 {% endif %}
                 <span>
                     Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
                 </span>
                 {% if page_obj.has_next %}
-                    <a href="{% url 'site:feed' %}?page={{ page_obj.next_page_number }}">Next</a>
+                    <a href="{% url 'dashboard:news_posts:news_list' %}?page={{ page_obj.next_page_number }}">Next</a>
                 {% endif %}
             </span>
         </div>
