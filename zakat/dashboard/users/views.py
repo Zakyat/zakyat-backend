@@ -1,4 +1,9 @@
+
 from django.contrib import messages
+
+from django.contrib import messages, auth
+from django.shortcuts import render, redirect
+
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
@@ -36,3 +41,8 @@ def login(request):
         form = LoginForm()
 
     return render(request, 'dashboard/users/login.html', {'form': form})
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('dashboard:users:login')

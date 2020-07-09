@@ -8,7 +8,7 @@
 <body>
     <h1>Post Details</h1>
     <div>
-        <div><b><a href="{% url 'dashboard:post_detail' pk=post.id %}">{{ post.title }}</a></b></div>
+        <div><b><a href="{% url 'dashboard:news_posts:post_detail' pk=post.id %}">{{ post.title }}</a></b></div>
         <div>Created by {{ post.created_by }} {{ post.created_at|naturaltime }}</div>
         <div>{{ post.description }}</div>
         <div>Project: <a href="">{{ post.project.title }}</a></div>
@@ -24,7 +24,7 @@
                 {% endfor %}
             </ul>
         </div>
-        <button><a href="{% url 'dashboard:post_edit' pk=post.id %}">Edit this post</a></button>
+        <button><a href="{% url 'dashboard:news_posts:post_edit' pk=post.id %}">Edit this post</a></button>
         <form action="" method="post">
             <input name="post_id" type="hidden" value="{{ post.id }}">
             <input type="submit" value="Delete this post">
