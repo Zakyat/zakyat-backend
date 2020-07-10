@@ -169,7 +169,11 @@ LANGUAGES = [
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 from PIL import Image
 
@@ -210,9 +214,6 @@ CHANNEL_LAYERS = {
         },
     },
 }
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 CELERY_BROKER_URL = os.getenv('BROKER_URL', '')
 CELERY_ACCEPT_CONTENT = ['json']
