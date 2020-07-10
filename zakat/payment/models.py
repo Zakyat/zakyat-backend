@@ -24,9 +24,9 @@ TRANSACTION_TYPES = (
 # ---- Field enums ----
 
 SUBSCRIPTION_DAYS = (
-    ('0', 'null'),
-    ('1', 'everyday'),
-    ('30', 'everymonth')
+    (0, 'null'),
+    (1, 'everyday'),
+    (30, 'everymonth')
 )
 
 DONATION_STATUS = (
@@ -60,7 +60,7 @@ class Transaction(models.Model):
     transaction_type = models.CharField(max_length=4, choices=TRANSACTION_TYPES, default=0)
     description = models.TextField()
     currency = models.CharField(max_length=20, null=True)
-    subscription_days = models.IntegerField(choices=SUBSCRIPTION_DAYS, default="0")
+    subscription_days = models.IntegerField(choices=SUBSCRIPTION_DAYS, default=0)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
