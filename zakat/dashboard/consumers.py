@@ -15,7 +15,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         unread_requests = Request.objects.filter(status='processing').count() + Request.objects.filter(
             status='negotiation').count()
-        unread_transaction_count = Transaction.objects.count()
+        unread_transaction_count = Transaction.objects.filter(campaign=None).count()
         await self.channel_layer.group_send(
             'notification',
             {
