@@ -51,9 +51,6 @@ class PaymentOptions(models.Model):
     def get_payment_type(self):
         return PAYMENT_TYPES.get(self.payment_type)
 
-    # True means payment was made through credit card, False - with cash money, bull - by other way
-    payment_type = models.BooleanField(null=True, blank=True)
-
 
 class Transaction(models.Model):
     amount = models.IntegerField()
