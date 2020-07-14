@@ -16,14 +16,6 @@ PAYMENT_TYPES = {
 }
 
 
-class Transaction(models.Model):
-    amount = models.IntegerField()
-    user = models.ForeignKey(DjangoUser, on_delete=models.DO_NOTHING, related_name='transactions')
-    campaign = models.ForeignKey(Campaign, on_delete=models.DO_NOTHING, related_name='transactions')
-    type = models.CharField(max_length=16, choices=TRANSACTION_TYPES)
-    description = models.TextField()
-
-
 SUBSCRIPTION_DAYS = (
     ('0', 'null'),
     ('1', 'everyday'),
