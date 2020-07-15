@@ -46,7 +46,7 @@ class Request(models.Model):
 
 
 class Project(models.Model):
-    created_by = models.OneToOneField(Employee, on_delete=models.PROTECT)
+    created_by = models.ForeignKey(Employee, on_delete=models.PROTECT)
     title = models.CharField(max_length=128)  # TODO: i18n
     description = models.TextField()  # TODO: i18n
     # property `campaigns` created with a backref
