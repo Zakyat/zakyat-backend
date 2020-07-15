@@ -49,7 +49,7 @@ class Transaction(models.Model):
     currency = models.CharField(max_length=20, null=True)
     subscription_days = models.IntegerField(choices=SUBSCRIPTION_DAYS, default="0")
     campaign = models.ForeignKey(Campaign, on_delete=models.DO_NOTHING, related_name='transactions')
-    type = models.CharField(max_length=16, choices=TRANSACTION_TYPES)
+    type = models.CharField(max_length=16, choices=TRANSACTION_TYPES, default='card')
     description = models.TextField()
 
 
