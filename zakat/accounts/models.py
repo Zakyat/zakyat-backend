@@ -107,7 +107,7 @@ class User(models.Model):
     work = models.EmbeddedField(model_container=Work)
     marital_status = models.CharField(max_length=10, choices=MARITAL_STATUS)
     address = models.CharField(max_length=128)
-    cash_flow = models.ArrayField(model_container=CashFlow, default=[])
+    # cash_flow = models.ArrayField(model_container=CashFlow, default=[])
     related_documents = models.ArrayField(model_container=Document, default=[])
     contact_person = models.EmbeddedField(model_container=FamilyMember)
     family_members = models.ArrayField(model_container=FamilyMember, default=[]) # ArrayField with nested FileField causes a problem
