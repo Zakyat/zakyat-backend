@@ -66,6 +66,20 @@ class Campaign(models.Model):
     closed_at = models.DateTimeField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='campaigns')
 
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+
+        if self.request is None:
+            request = Request.objects.create(title='Default title',
+                                             description='Default description',
+                                             goal=100)
+            self.request = request
+
+        super(Campaign, self).save(force_insert=force_insert,
+                                   force_update=force_update,
+                                   using=using,
+                                   update_fields=update_fields)
+
     # property `transactions` created with a backref
 
     def get_status(self):
