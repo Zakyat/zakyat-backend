@@ -112,7 +112,7 @@ class User(models.Model):
     marital_status =  models.CharField(max_length=10, choices=MARITAL_STATUS)
     address = models.CharField(max_length=128)
     # cash_flow = models.ArrayField(model_container=CashFlow, default=[])
-    # related_documents = models.ArrayField(model_container=Document, default=[])
+    related_documents = models.ArrayField(model_container=Document, default=[], blank=True)
     # contact_person = models.EmbeddedField(model_container=FamilyMember)
     # family_members = models.ArrayField(model_container=FamilyMember,
     #                                    default=[])  # ArrayField with nested FileField causes a problem
