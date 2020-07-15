@@ -55,7 +55,7 @@ class Project(models.Model):
 
 
 class Campaign(models.Model):
-    request = models.OneToOneField(Request, on_delete=models.SET_NULL, null=True, blank=True)
+    request = models.OneToOneField(Request, on_delete=models.SET_NULL, null=True, blank=True, help_text='Either Request model will be created automatically')
     created_by = models.ForeignKey(Employee, on_delete=models.PROTECT)
     title = models.CharField(max_length=128)  # TODO: i18n
     description = models.TextField()  # TODO: i18n
@@ -64,16 +64,22 @@ class Campaign(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     closed_at = models.DateTimeField(null=True, blank=True)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='campaigns', blank=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='campaigns', blank=True, help_text='Either Project model will be created automatically')
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
 
-        if self.request is None:
+        if self.request_id is None:
             request = Request.objects.create(title='Default title',
                                              description='Default description',
                                              goal=100)
             self.request = request
+
+        if self.project_id is None:
+            project = Project.objects.create(created_by=self.created_by,
+                                             title='Default title',
+                                             description='Default description')
+            self.project = project
 
         super(Campaign, self).save(force_insert=force_insert,
                                    force_update=force_update,

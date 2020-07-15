@@ -22,56 +22,47 @@
 
                             <div class="form-row">
                                 <div class="form-group col-lg-6">
-                                <strong class="text-muted d-block mb-2">Title</strong>
+                                    <strong class="text-muted d-block mb-2">Title</strong>
                                     <input class="form-control
                                     {% if form.errors.title %}is-invalid{% endif %}
                                          form-control-lg" required
                                            type="text" name="title" id="id_title"
                                            placeholder="Title"
                                            value="{{ form.initial.title }}">
-                                {% if form.errors.title %}
-                                                                        <div class="invalid-feedback">{{ form.errors.title.0 }}</div>
+                                    {% if form.errors.title %}
+                                        <div class="invalid-feedback">{{ form.errors.title.0 }}</div>
 
-                                {% endif %}
+                                    {% endif %}
                                 </div>
 
                                 <div class="form-group col-lg-2">
-                                <strong class="text-muted d-block mb-2">Goal</strong>
+                                    <strong class="text-muted d-block mb-2">Goal</strong>
                                     <input class="form-control
                                      {% if form.errors.goal %}is-invalid{% endif %}
                                      form-control-lg" required
                                            type="text" name="goal" id="id_goal"
                                            placeholder="Goal"
                                            value="{{ form.initial.goal }}">
-                                {% if form.errors.goal %}
+                                    {% if form.errors.goal %}
                                         <div class="invalid-feedback">{{ form.errors.goal.0 }}</div>
-                                {% endif %}
+                                    {% endif %}
                                 </div>
 
                                 <div class="form-group col-lg-2">
-                                <strong class="text-muted d-block mb-2">Project</strong>
-                                    <select required class="form-control form-control-lg
+                                    <strong class="text-muted d-block mb-2">Project</strong>
+                                    <select class="form-control form-control-lg
                                     {% if form.errors.project %}is-invalid{% endif %}"
                                             name="project" id="id_project">
-                                        {% with selected_value=form.initial.project %}
-                                            {% if selected_value %}
-                                                {% for project in form.fields.project.queryset %}
-                                                    <option value="{{ project.id }}"
-                                                            {% if selected_value == project.id %}selected{% endif %}
-                                                    >{{ project }}</option>
-                                                {% endfor %}
-                                            {% else %}
+                                            <option value="" selected>---------</option>
                                                 {% for project in form.fields.project.queryset %}
                                                     <option value="{{ project.id }}"
                                                     >{{ project }}</option>
                                                 {% endfor %}
 
-                                            {% endif %}
 
-                                        {% endwith %}
 
                                     </select>
-                                        <div class="invalid-feedback">{{ form.errors.project.0 }}</div>
+                                    <div class="invalid-feedback">{{ form.errors.project.0 }}</div>
                                     {% if form.errors.project %}
 
                                     {% endif %}
@@ -79,17 +70,18 @@
 
 
                                 <div class="form-group col-lg-2">
-                                <strong class="text-muted d-block mb-2">Request</strong>
-                                    <select required class="form-control
+                                    <strong class="text-muted d-block mb-2">Request</strong>
+                                    <select class="form-control
                                     {% if form.errors.request %}is-invalid{% endif %}
                                     form-control-lg " name="request" id="id_request">
-                                                {% for request in form.fields.request.queryset %}
-                                                    <option value="{{ request.id }}"
-                                                    >{{ request }}</option>
-                                                {% endfor %}
+                                        <option value="" selected>---------</option>
+                                        {% for request in form.fields.request.queryset %}
+                                            <option value="{{ request.id }}"
+                                            >{{ request }}</option>
+                                        {% endfor %}
 
                                     </select>
-                                <div class="invalid-feedback">{{ form.errors.request.0 }}</div>
+                                    <div class="invalid-feedback">{{ form.errors.request.0 }}</div>
                                 </div>
 
                             </div>
