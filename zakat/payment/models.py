@@ -1,5 +1,7 @@
 from djongo import models
 from django.contrib.auth.models import User as DjangoUser
+
+from accounts.models import CURRENCIES
 from projects.models import Campaign
 
 TRANSACTION_TYPES = (
@@ -46,7 +48,7 @@ class PaymentOptions(models.Model):
 
 class Transaction(models.Model):
     amount = models.IntegerField()
-    currency = models.CharField(max_length=20, null=True)
+    currency = models.CharField(max_length=3, choices=CURRENCIES, default='RUB')
     subscription_days = models.IntegerField(choices=SUBSCRIPTION_DAYS, default="0")
     campaign = models.ForeignKey(Campaign, on_delete=models.DO_NOTHING, related_name='transactions')
     type = models.CharField(max_length=16, choices=TRANSACTION_TYPES, default='card')
