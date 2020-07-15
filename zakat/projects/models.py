@@ -39,7 +39,7 @@ class Request(models.Model):
     status = models.CharField(max_length=16, choices=STATUSES, default='processing')
     needy_category = models.CharField(max_length=70, choices=NEEDY_CATEGORIES, null=True, blank=True)
     goal = models.IntegerField(default=0)
-    documents = models.ArrayField(model_container=Document, default=[])
+    # documents = models.ArrayField(model_container=Document, default=[], blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     denying_reason = models.CharField(max_length=256, null=True, blank=True)  # TODO: i18n
