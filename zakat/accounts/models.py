@@ -76,7 +76,7 @@ class CashFlow(models.Model):
     type = models.CharField(choices=CASH_FLOW_TYPES, max_length=10)
     amount = models.IntegerField()
     description = models.TextField()
-    currency = models.CharField(max_length=3, choices=CURRENCIES)
+    currency = models.CharField(max_length=3, choices=CURRENCIES, default='RUB')
 
     class Meta:
         abstract = True
@@ -111,7 +111,7 @@ class User(models.Model):
     work = models.EmbeddedField(model_container=Work, blank=True)
     marital_status =  models.CharField(max_length=10, choices=MARITAL_STATUS)
     address = models.CharField(max_length=128)
-    # cash_flow = models.ArrayField(model_container=CashFlow, default=[])
+    cash_flow = models.ArrayField(model_container=CashFlow, default=[], blank=True)
     related_documents = models.ArrayField(model_container=Document, default=[], blank=True)
     # contact_person = models.EmbeddedField(model_container=FamilyMember)
     # family_members = models.ArrayField(model_container=FamilyMember,
