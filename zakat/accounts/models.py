@@ -117,6 +117,17 @@ class User(models.Model):
     # family_members = models.ArrayField(model_container=FamilyMember,
     #                                    default=[])  # ArrayField with nested FileField causes a problem
 
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if self.work.place == '' or self.work.position == '':
+            work = Work(position='Unemployed', place='Nowhere')
+            self.work = work
+
+        super(User, self).save(force_insert=force_insert,
+                               force_update=force_update,
+                               using=using,
+                               update_fields=update_fields)
+
 
 class Employee(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
