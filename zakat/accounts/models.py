@@ -52,14 +52,15 @@ DOCUMENT_TYPES = (
 )
 
 RELATIONS = (
-    ('father',   'Father'),
-    ('mother',   'Mother'),
-    ('son',      'Son'),
+    ('father', 'Father'),
+    ('mother', 'Mother'),
+    ('son', 'Son'),
     ('daughter', 'Daughter'),
-    ('brother',  'Brother'),
-    ('sister',   'Sister'),
-    ('other',    'Other'),
+    ('brother', 'Brother'),
+    ('sister', 'Sister'),
+    ('other', 'Other'),
 )
+
 
 # ---- Models ----
 
@@ -70,6 +71,7 @@ class Work(models.Model):
     class Meta:
         abstract = True
 
+
 class CashFlow(models.Model):
     type = models.CharField(choices=CASH_FLOW_TYPES, max_length=10)
     amount = models.IntegerField()
@@ -79,6 +81,7 @@ class CashFlow(models.Model):
     class Meta:
         abstract = True
 
+
 class Document(models.Model):
     type = models.CharField(choices=DOCUMENT_TYPES, max_length=10)
     title = models.CharField(max_length=128)
@@ -86,6 +89,7 @@ class Document(models.Model):
 
     class Meta:
         abstract = True
+
 
 class FamilyMember(models.Model):
     name = models.CharField(max_length=64)
@@ -103,14 +107,16 @@ class User(models.Model):
     citizenship = CountryField()
     religion = models.CharField(max_length=10, choices=RELIGIONS)
     birthdate = models.DateField()
-    education = models.CharField(max_length=128)    # TODO: Why??
-    work = models.EmbeddedField(model_container=Work)
-    marital_status = models.CharField(max_length=10, choices=MARITAL_STATUS)
+    education = models.CharField(max_length=128)  # TODO: Why??
+    work = models.EmbeddedField(model_container=Work, blank=True)
+    marital_status =  models.CharField(max_length=10, choices=MARITAL_STATUS)
     address = models.CharField(max_length=128)
     # cash_flow = models.ArrayField(model_container=CashFlow, default=[])
-    related_documents = models.ArrayField(model_container=Document, default=[])
-    contact_person = models.EmbeddedField(model_container=FamilyMember)
-    family_members = models.ArrayField(model_container=FamilyMember, default=[]) # ArrayField with nested FileField causes a problem
+    # related_documents = models.ArrayField(model_container=Document, default=[])
+    # contact_person = models.EmbeddedField(model_container=FamilyMember)
+    # family_members = models.ArrayField(model_container=FamilyMember,
+    #                                    default=[])  # ArrayField with nested FileField causes a problem
+
 
 class Employee(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
