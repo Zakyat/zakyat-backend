@@ -18,7 +18,6 @@ class CampaignFilter(django_filters.FilterSet):
 
     class Meta:
         model = Campaign
-        # TODO add search by date
         fields = ['search', 'status', 'created_at', ]
 
     def filter_status(self, queryset, name, value):
@@ -49,7 +48,7 @@ class CampaignFilter(django_filters.FilterSet):
                | Q(request__title__icontains=value)
 
     def filter_search(self, queryset, name, value):
-        # TODO solve problem with searching through request's fields
+        # TODO solve problem with searching through request's fields (for the future)
         # queryset1 = queryset.filter(CampaignFilter.make_search1(value))
         # queryset2 = queryset.filter(CampaignFilter.make_search2(value))
         # queryset = queryset1.union(queryset2)

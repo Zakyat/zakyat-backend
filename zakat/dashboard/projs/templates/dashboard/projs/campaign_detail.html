@@ -4,11 +4,6 @@
 
 {% block content %}
 
-{#TODO add 2 fiields to list add initial #}
-i
-
-
-
     <div class="main-content-container container-fluid px-4">
         <!-- Page Header -->
         <div class="page-header row no-gutters py-4">
@@ -120,7 +115,6 @@ i
                                 <span class="d-flex">
                       <i class="material-icons mr-1">monetization_on</i>
                       <strong class="mr-1">GOAL:</strong>
-{#                                    TODO add currency sign #}
                       <strong class="text-danger">{{ campaign.goal }} RUBLES</strong>
                     </span>
                                 <span class="d-flex">
@@ -231,7 +225,6 @@ i
 
             {% if payment_options %}
 
-                {#        TODO make clickable? #}
                 {% for payment_option in payment_options %}
                     <div class="col-lg-8 mb-1 {% if forloop.last %}mb-3{% endif %}">
                         <div class="card card-small card-post">
@@ -241,7 +234,6 @@ i
                                     Payment Type: {{ payment_option.get_payment_type }}
                                 </span>
                                 <p class="card-text text">{{ payment_option.description }}</p>
-{#                                TODO btn ro rigth side #}
                                 <a href="{% url 'dashboard:projs:payment_option-edit' payment_option.id %}" class="btn btn-sm btn-secondary float-right text-white">
                                     <i class="material-icons">edit</i> Edit
                                 </a>
