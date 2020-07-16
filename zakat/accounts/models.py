@@ -110,13 +110,14 @@ class User(models.Model):
     birthdate = models.DateField()
     education = models.CharField(max_length=128)  # TODO: Why??
     work = models.EmbeddedField(model_container=Work, blank=True)
-    marital_status =  models.CharField(max_length=10, choices=MARITAL_STATUS)
+    marital_status = models.CharField(max_length=10, choices=MARITAL_STATUS)
     address = models.CharField(max_length=128)
     isBlock = models.BooleanField(default=False)
-    cash_flow = models.ArrayField(model_container=CashFlow, default=[])
-    related_documents = models.ArrayField(model_container=Document, default=[])
-    contact_person = models.EmbeddedField(model_container=FamilyMember)
-    family_members = models.ArrayField(model_container=FamilyMember, default=[]) # ArrayField with nested FileField causes a problem
+
+    # cash_flow = models.ArrayField(model_container=CashFlow, default=[])
+    # related_documents = models.ArrayField(model_container=Document, default=[])
+    # contact_person = models.EmbeddedField(model_container=FamilyMember)
+    # family_members = models.ArrayField(model_container=FamilyMember, default=[]) # ArrayField with nested FileField causes a problem
     # contact_person = models.EmbeddedField(model_container=FamilyMember)
     # family_members = models.ArrayField(model_container=FamilyMember,
     #                                    default=[])  # ArrayField with nested FileField causes a problem
@@ -131,6 +132,9 @@ class User(models.Model):
                                force_update=force_update,
                                using=using,
                                update_fields=update_fields)
+
+    def get_absolute_url(self):
+        return reverse('dashboard:users:users_detail', args=[self.id])
 
 
     def get_absolute_url(self):

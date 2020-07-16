@@ -103,9 +103,12 @@ class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         if self.zakat == 'paid':
             object_list = object_list.filter(transactions__transaction_type=1)  # 1 means zakat type
         elif self.zakat == 'not paid':
-            object_list = object_list.exclude(transactions__transaction_type=1)  # 1 means zakat type
+            trans = [t.user.id for t in Transaction.objects.filter(transaction_type=1)]
+            object_list = object_list.exclude(id__in=trans)  # 1 means zakat type
         if self.rubs:
             object_list = list(object_list.annotate(total_sum=Sum('transactions__amount')).filter(total_sum__gte=rubs))
+        # if self.zakat == 'not paid':
+        #     object_list = object_list.exclude()
         return object_list
 
     def get_context_data(self, *, object_list=None, **kwargs):

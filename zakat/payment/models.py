@@ -59,7 +59,7 @@ def send_transaction_notification():
 
 class Transaction(models.Model):
     amount = models.IntegerField(validators=[MinValueValidator(1)])
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='transactions')
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='transactions', null=True, blank=True)
     campaign = models.ForeignKey(Campaign, on_delete=models.DO_NOTHING, related_name='transactions', blank=True,
                                  null=True)
     type = models.CharField(max_length=16, choices=PAYMENT_TYPES)
@@ -89,15 +89,6 @@ class PaymentOptions(models.Model):
 
     def get_payment_type(self):
         return MONEY_TYPES.get(self.payment_type)
-
-
-class Transaction(models.Model):
-    amount = models.IntegerField()
-    currency = models.CharField(max_length=3, choices=CURRENCIES, default='RUB')
-    subscription_days = models.IntegerField(choices=SUBSCRIPTION_DAYS, default="0")
-    campaign = models.ForeignKey(Campaign, on_delete=models.DO_NOTHING, related_name='transactions')
-    type = models.CharField(max_length=16, choices=TRANSACTION_TYPES, default='card')
-    description = models.TextField()
 
 
 class CardPaymentInfo(models.Model):
