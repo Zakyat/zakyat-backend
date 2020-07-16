@@ -113,7 +113,7 @@ class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
-        context['display_paid_zakat'] = self.zakat
+        context['zakat'] = self.zakat
         context['more_than_sum'] = self.rubs if self.rubs is not None else -1
         context['query'] = self.query
         return context
