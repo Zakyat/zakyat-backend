@@ -2,113 +2,97 @@
 {% load i18n %}
 {% block content %}
     <br>
-    <div class="s007">
-        <form action="{% url 'dashboard:users:users_list' %}" method="get">
-            <div class="inner-form">
-                <div class="basic-search">
-                    <div class="input-field">
-                        <div class="icon-wrap">
-                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20"
-                                 viewBox="0 0 20 20">
-                                <path d="M18.869 19.162l-5.943-6.484c1.339-1.401 2.075-3.233 2.075-5.178 0-2.003-0.78-3.887-2.197-5.303s-3.3-2.197-5.303-2.197-3.887 0.78-5.303 2.197-2.197 3.3-2.197 5.303 0.78 3.887 2.197 5.303 3.3 2.197 5.303 2.197c1.726 0 3.362-0.579 4.688-1.645l5.943 6.483c0.099 0.108 0.233 0.162 0.369 0.162 0.121 0 0.242-0.043 0.338-0.131 0.204-0.187 0.217-0.503 0.031-0.706zM1 7.5c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5-2.916 6.5-6.5 6.5-6.5-2.916-6.5-6.5z"></path>
-                            </svg>
-                        </div>
-                        <input id="search" name="q" type="text"
-                               placeholder="{% trans "Search for user..." %}"
-                               aria-label="Search" value="{% if query %}{{ query }}{% endif %}">
-                        <div class="result-count">
-                            <span>{{ page_obj.paginator.count }}</span> {% trans "results" %}
-                        </div>
-                    </div>
-                </div>
-                <div class="advance-search">
-                    <span class="desc">{% trans "Advanced Search" %}</span>
-                    <div class="item">
-                        <input type="checkbox" name="zakat_persons" id="zakat_person"
-                               {% if display_paid_zakat %}checked{% endif %}>
-                        <label for="zakat_person"
-                               style="margin-left: 15px">{% trans 'display who paid even once zakat' %}</label>
-                    </div>
-                    <hr>
-                    <div class="item">
-                        <label for="zakat_sum">{% trans 'Display who gave sadaka more than' %}</label>
-                        <input type="number" min="0" step="0,01" name="zakat_sum_r" id="zakat_sum_r"
-                               {% if more_than_sum != -1 %}value="{{ more_than_sum }}"{% endif %}>
-                        <label>{% trans "rubls" %}</label>
-                    </div>
-                    <hr>
-                    <div class="item">
-                        <button type="submit" class="btn btn-accent">{% trans "Search" %}</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+{#    <div class="s007">#}
+{#        <form action="{% url 'dashboard:users:users_list' %}" method="get">#}
+{#            <div class="inner-form">#}
+{#                <div class="basic-search">#}
+{#                    <div class="input-field">#}
+{#                        <div class="icon-wrap">#}
+{#                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg"#}
+{#                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20"#}
+{#                                 viewBox="0 0 20 20">#}
+{#                                <path d="M18.869 19.162l-5.943-6.484c1.339-1.401 2.075-3.233 2.075-5.178 0-2.003-0.78-3.887-2.197-5.303s-3.3-2.197-5.303-2.197-3.887 0.78-5.303 2.197-2.197 3.3-2.197 5.303 0.78 3.887 2.197 5.303 3.3 2.197 5.303 2.197c1.726 0 3.362-0.579 4.688-1.645l5.943 6.483c0.099 0.108 0.233 0.162 0.369 0.162 0.121 0 0.242-0.043 0.338-0.131 0.204-0.187 0.217-0.503 0.031-0.706zM1 7.5c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5-2.916 6.5-6.5 6.5-6.5-2.916-6.5-6.5z"></path>#}
+{#                            </svg>#}
+{#                        </div>#}
+{#                        <input id="search" name="q" type="text"#}
+{#                               placeholder="{% trans "Search for user..." %}"#}
+{#                               aria-label="Search" value="{% if query %}{{ query }}{% endif %}">#}
+{#                        <div class="result-count">#}
+{#                            <span>{{ page_obj.paginator.count }}</span> {% trans "results" %}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="advance-search">#}
+{#                    <span class="desc">{% trans "Advanced Search" %}</span>#}
+{#                    <div class="item">#}
+{#                        <input type="checkbox" name="zakat_persons" id="zakat_person"#}
+{#                               {% if display_paid_zakat %}checked{% endif %}>#}
+{#                        <label for="zakat_person"#}
+{#                               style="margin-left: 15px">{% trans 'display who paid even once zakat' %}</label>#}
+{#                    </div>#}
+{#                    <hr>#}
+{#                    <div class="item">#}
+{#                        <label for="zakat_sum">{% trans 'Display who gave sadaka more than' %}</label>#}
+{#                        <input type="number" min="0" step="0,01" name="zakat_sum_r" id="zakat_sum_r"#}
+{#                               {% if more_than_sum != -1 %}value="{{ more_than_sum }}"{% endif %}>#}
+{#                        <label>{% trans "rubls" %}</label>#}
+{#                    </div>#}
+{#                    <hr>#}
+{#                    <div class="item">#}
+{#                        <button type="submit" class="btn btn-accent">{% trans "Search" %}</button>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </form>#}
+{#    </div>#}
 
     <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <!-- Add New Post Form -->
-                <div class="card card-small mb-2">
-                    <div class="card-body">
-                        <form class="add-new-post">
-
-                            <div class="form-row">
-                                <div class="form-group col-lg-6">
-                                    <strong class="text-muted d-block mb-2">Search</strong>
-                                    <input class="form-control form-control-lg mb-3"
-                                           type="text" name="search" id="id_search"
-                                           placeholder="Search"
-                                           value="{{ filter.form.data.search }}">
-                                </div>
-                                <div class="form-group col-lg-2">
-                                <strong class="text-muted d-block mb-2">Status</strong>
-                                    <select class="form-control form-control-lg mb-3" name="status" id="id_status">
-                                        {% with selected_value=filter.form.data.status %}
-                                            {% for choice in filter.form.fields.status.choices %}
-                                                <option value="{{ choice.0 }}"
-                                                        {% if selected_value == choice.0 %}selected{% endif %}
-                                                >{{ choice.1 }}</option>
-                                            {% endfor %}
-                                        {% endwith %}
-                                    </select>
-                                </div>
-                                <div class="form-group col-lg-2">
-                                    <strong class="text-muted d-block mb-2">After</strong>
-                                    <input class="form-control form-control-lg mb-3"
-                                           type="date" name="created_at_after" id="id_created_at_0"
-                                           value="{{ filter.form.data.created_at_after }}">
-                                </div>
-                                <div class="form-group col-lg-2">
-                                    <strong class="text-muted d-block mb-2">Before</strong>
-                                    <input class="form-control form-control-lg mb-3"
-                                           type="date" name="created_at_before" id="id_created_at_1"
-                                           value="{{ filter.form.data.created_at_before }}">
-                                </div>
-
+        <div class="col-lg-12 col-md-12">
+            <!-- Add New Post Form -->
+            <div class="card card-small mb-2">
+                <div class="card-body">
+                    <form class="add-new-post" action="{% url 'dashboard:users:users_list' %}" method="get">
+                        <div class="form-row">
+                            <div class="form-group col-lg-6">
+                                <strong class="text-muted d-block mb-2">Search</strong>
+                                <input class="form-control form-control-lg mb-3"
+                                       type="text" id="search" name="q"
+                                       placeholder="Search"
+                                       value="{% if query %}{{ query }}{% endif %}">
                             </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-lg-10">
-                                    <button type="submit" class="form-control form-control-lg btn btn-outline-accent">
-                                        <i class="material-icons">search</i>Search Campaigns
-                                    </button>
-                                </div>
-                                <div class="form-group col-lg-2">
-                                    <a href="" type="submit"
-                                       class="form-control form-control-lg btn btn-accent  text-white">
-                                        <i class="material-icons">add</i>Create Campaign
-                                    </a>
-                                </div>
+                            <div class="form-group col-lg-2">
+                                <strong class="text-muted d-block mb-2">{% trans 'Zakat' %}</strong>
+                                <select class="form-control form-control-lg mb-3" name="zakat_persons" id="zakat_person">
+                                    <option value="default">
+                                        {% trans '-------' %}
+                                    </option>
+                                    <option value="paid">
+                                        {% trans 'paid' %}
+                                    </option>
+                                    <option value="not paid">
+                                        {% trans 'not paid' %}
+                                    </option>
+                                </select>
                             </div>
-                        </form>
-
-
-                    </div>
+                            <div class="form-group col-lg-2">
+                                <strong class="text-muted d-block mb-2">{% trans 'Sadaka Sum' %}</strong>
+                                <input class="form-control form-control-lg mb-3"
+                                       type="number" min="0" step="0,01" name="zakat_sum_r" id="zakat_sum_r"
+                                       {% if more_than_sum != -1 %}value="{{ more_than_sum }}"{% endif %}>
+                            </div>
+                            <div class="item" class="form-group col-lg-2">
+                                <button type="submit" class="form-control form-control-lg btn btn-accent  text-white"
+                                style="margin-top: 27px; height: 48px; width: 140px; margin-left: 5px">
+                                    <i class="material-icons">search</i>
+                                    {% trans "Search" %}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-
             </div>
         </div>
+    </div>
     {#    <script src="js/extention/choices.js"></script>#}
     <script>
         const customSelects = document.querySelectorAll("select");

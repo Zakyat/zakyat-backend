@@ -70,15 +70,15 @@ class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.display_paid_zakat = False
+        self.zakat = False
 
     def get_queryset(self):
         query = self.request.GET.get('q')
         rubs = self.request.GET.get('zakat_sum_r')
-        display_paid_zakat = self.request.GET.get('zakat_persons')
+        zakat = self.request.GET.get('zakat_persons')
         self.query = query
         self.rubs = rubs
-        self.display_paid_zakat = display_paid_zakat
+        self.zakat = zakat
         country_code = get_country_code(query)
         if query:
             object_list = self.model.objects.filter(
@@ -97,15 +97,17 @@ class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
             )
         else:
             object_list = self.model.objects.all()
-        if self.display_paid_zakat:
+        if self.zakat == 'paid':
             object_list = object_list.filter(transactions__transaction_type=1)  # 1 means zakat type
+        elif self.zakat == 'not paid':
+            object_list = object_list.exclude(transactions__transaction_type=1)  # 1 means zakat type
         if self.rubs:
             object_list = list(object_list.annotate(total_sum=Sum('transactions__amount')).filter(total_sum__gte=rubs))
         return object_list
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
-        context['display_paid_zakat'] = self.display_paid_zakat
+        context['display_paid_zakat'] = self.zakat
         context['more_than_sum'] = self.rubs if self.rubs is not None else -1
         context['query'] = self.query
         return context
