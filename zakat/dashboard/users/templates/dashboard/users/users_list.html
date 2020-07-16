@@ -39,89 +39,97 @@
 
                                     <!-- Send Email Form Start here -->
                                     <form action="#">
-                                        <table class="table mb-0">
-                                            <thead class="bg-light">
-                                            <tr>
-                                                <th scope="col" class="border-0">#</th>
-                                                <th scope="col" class="border-0">{% trans "Icon" %}</th>
-                                                <th scope="col" class="border-0">ID</th>
-                                                <th scope="col" class="border-0">{% trans "First Name" %}</th>
-                                                <th scope="col" class="border-0">{% trans "Last Name" %}</th>
-                                                <th scope="col" class="border-0">{% trans "Email" %}</th>
-                                                <th scope="col" class="border-0">{% trans "Phone" %}</th>
-                                                <th scope="col" class="border-0">{% trans "Religion" %}</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {% for user in page_obj %}
+                                        {% if page_obj.paginator.count == 0 %}
+                                            <div style="margin-top: 10px">
+                                                {% trans 'Sorry, no results 🥺' %}
+                                            </div>
+                                        {% else %}
+                                            <table class="table mb-0">
+                                                <thead class="bg-light">
                                                 <tr>
-                                                    <td>
-                                                        <input type="checkbox">
-                                                    </td>
-                                                    <td>
-                                                        <a class="text-fiord-blue" href="{{ user.get_absolute_url }}">
-                                                            {% avatar user.user 25 %}
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a class="text-fiord-blue" href="{{ user.get_absolute_url }}">
-                                                            {{ user.user.username }}
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        {% if user.user.first_name %}
-                                                            <a class="text-fiord-blue"
-                                                               href="{{ user.get_absolute_url }}">
-                                                                {{ user.user.first_name }}
-                                                            </a>
-                                                        {% else %}
-                                                            {% trans "-" %}
-                                                        {% endif %}
-                                                    </td>
-                                                    <td>
-                                                        {% if user.user.last_name %}
-                                                            <a class="text-fiord-blue"
-                                                               href="{{ user.get_absolute_url }}">
-                                                                {{ user.user.last_name }}
-                                                            </a>
-                                                        {% else %}
-                                                            {% trans "-" %}
-                                                        {% endif %}
-                                                    </td>
-                                                    <td>
-                                                        {% if user.user.email %}
-                                                            <a class="text-fiord-blue"
-                                                               href="{{ user.get_absolute_url }}">
-                                                                {{ user.user.email }}
-                                                            </a>
-                                                        {% else %}
-                                                            {% trans "-" %}
-                                                        {% endif %}
-                                                    </td>
-                                                    <td>
-                                                        {% if user.phone_number %}
-                                                            <a class="text-fiord-blue"
-                                                               href="{{ user.get_absolute_url }}">
-                                                                {{ user.phone_number }}
-                                                            </a>
-                                                        {% else %}
-                                                            {% trans "-" %}
-                                                        {% endif %}
-                                                    </td>
-                                                    <td>
-                                                        {% if user.religion %}
-                                                            <a class="text-fiord-blue"
-                                                               href="{{ user.get_absolute_url }}">
-                                                                {{ user.religion }}
-                                                            </a>
-                                                        {% else %}
-                                                            {% trans "-" %}
-                                                        {% endif %}
-                                                    </td>
+                                                    <th scope="col" class="border-0">#</th>
+                                                    <th scope="col" class="border-0">{% trans "Icon" %}</th>
+                                                    <th scope="col" class="border-0">ID</th>
+                                                    <th scope="col" class="border-0">{% trans "First Name" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Last Name" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Email" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Phone" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Religion" %}</th>
                                                 </tr>
-                                            {% endfor %}
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                {% for user in page_obj %}
+                                                    <tr>
+                                                        <td>
+                                                            <input type="checkbox">
+                                                        </td>
+                                                        <td>
+                                                            <a class="text-fiord-blue"
+                                                               href="{{ user.get_absolute_url }}">
+                                                                {% avatar user.user 25 %}
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a class="text-fiord-blue"
+                                                               href="{{ user.get_absolute_url }}">
+                                                                {{ user.user.username }}
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            {% if user.user.first_name %}
+                                                                <a class="text-fiord-blue"
+                                                                   href="{{ user.get_absolute_url }}">
+                                                                    {{ user.user.first_name }}
+                                                                </a>
+                                                            {% else %}
+                                                                {% trans "-" %}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if user.user.last_name %}
+                                                                <a class="text-fiord-blue"
+                                                                   href="{{ user.get_absolute_url }}">
+                                                                    {{ user.user.last_name }}
+                                                                </a>
+                                                            {% else %}
+                                                                {% trans "-" %}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if user.user.email %}
+                                                                <a class="text-fiord-blue"
+                                                                   href="{{ user.get_absolute_url }}">
+                                                                    {{ user.user.email }}
+                                                                </a>
+                                                            {% else %}
+                                                                {% trans "-" %}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if user.phone_number %}
+                                                                <a class="text-fiord-blue"
+                                                                   href="{{ user.get_absolute_url }}">
+                                                                    {{ user.phone_number }}
+                                                                </a>
+                                                            {% else %}
+                                                                {% trans "-" %}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if user.religion %}
+                                                                <a class="text-fiord-blue"
+                                                                   href="{{ user.get_absolute_url }}">
+                                                                    {{ user.religion }}
+                                                                </a>
+                                                            {% else %}
+                                                                {% trans "-" %}
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        {% endif %}
                                         <br>
 
                                         <div class="container">
