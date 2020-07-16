@@ -146,3 +146,4 @@ zakat/.idea/
 dump.rdb
 
 *.jpg
+**/migrations/
