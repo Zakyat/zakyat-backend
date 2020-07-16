@@ -17,9 +17,9 @@ PAYMENT_TYPES = (
 )
 
 TRANSACTION_TYPES = (
-    ('0', 'sadaka'),
-    ('1', 'zakat'),
-    ('2', 'direct')
+    (0, 'sadaka'),
+    (1, 'zakat'),
+    (2, 'direct')
 )
 
 # ---- Field enums ----
@@ -89,15 +89,6 @@ class PaymentOptions(models.Model):
 
     def get_payment_type(self):
         return MONEY_TYPES.get(self.payment_type)
-
-
-class Transaction(models.Model):
-    amount = models.IntegerField()
-    currency = models.CharField(max_length=3, choices=CURRENCIES, default='RUB')
-    subscription_days = models.IntegerField(choices=SUBSCRIPTION_DAYS, default="0")
-    campaign = models.ForeignKey(Campaign, on_delete=models.DO_NOTHING, related_name='transactions')
-    type = models.CharField(max_length=16, choices=TRANSACTION_TYPES, default='card')
-    description = models.TextField()
 
 
 class CardPaymentInfo(models.Model):
