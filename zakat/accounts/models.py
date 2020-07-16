@@ -1,5 +1,6 @@
 from djongo import models
 from django.contrib.auth.models import User as DjangoUser
+from django.urls import reverse
 
 from django_countries.fields import CountryField
 
@@ -111,8 +112,11 @@ class User(models.Model):
     work = models.EmbeddedField(model_container=Work, blank=True)
     marital_status =  models.CharField(max_length=10, choices=MARITAL_STATUS)
     address = models.CharField(max_length=128)
-    cash_flow = models.ArrayField(model_container=CashFlow, default=[], blank=True)
-    related_documents = models.ArrayField(model_container=Document, default=[], blank=True)
+    isBlock = models.BooleanField(default=False)
+    cash_flow = models.ArrayField(model_container=CashFlow, default=[])
+    related_documents = models.ArrayField(model_container=Document, default=[])
+    contact_person = models.EmbeddedField(model_container=FamilyMember)
+    family_members = models.ArrayField(model_container=FamilyMember, default=[]) # ArrayField with nested FileField causes a problem
     # contact_person = models.EmbeddedField(model_container=FamilyMember)
     # family_members = models.ArrayField(model_container=FamilyMember,
     #                                    default=[])  # ArrayField with nested FileField causes a problem
@@ -128,6 +132,9 @@ class User(models.Model):
                                using=using,
                                update_fields=update_fields)
 
+
+    def get_absolute_url(self):
+        return reverse('dashboard:users:users_detail', args=[self.id])
 
 class Employee(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)

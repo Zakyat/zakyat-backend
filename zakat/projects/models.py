@@ -1,6 +1,8 @@
 from django.utils.timezone import localtime
 from djongo import models
 from accounts.models import User, Employee, Document
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 # ---- Field enums ----
 STATUSES = (
@@ -32,6 +34,18 @@ NEEDY_CATEGORIES = (
 
 # ---- Models ----
 
+def send_request_notification():
+    unread_requests = Request.objects.filter(status='processing').count() + Request.objects.filter(
+        status='negotiation').count()
+    layer = get_channel_layer()
+    async_to_sync(layer.group_send)(
+        'notification',
+        {
+            'type': 'notify',
+            'requests': unread_requests
+        })
+
+
 class Request(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='requests', null=True, blank=True)
     title = models.CharField(max_length=128)  # TODO: i18n
@@ -39,10 +53,19 @@ class Request(models.Model):
     status = models.CharField(max_length=16, choices=STATUSES, default='processing')
     needy_category = models.CharField(max_length=70, choices=NEEDY_CATEGORIES, null=True, blank=True)
     goal = models.IntegerField(default=0)
-    # documents = models.ArrayField(model_container=Document, default=[], blank=True)
+    # documents = models.ArrayField(model_container=Document, default=[])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     denying_reason = models.CharField(max_length=256, null=True, blank=True)  # TODO: i18n
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super(Request, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
+        send_request_notification()
+
+    def delete(self, using=None, keep_parents=False):
+        super(Request, self).delete(using=None, keep_parents=False)
+        send_request_notification()
 
 
 class Project(models.Model):

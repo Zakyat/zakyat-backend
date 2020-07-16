@@ -1,27 +1,38 @@
+from django.core.validators import MinValueValidator
 from djongo import models
+from accounts.models import User
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+from projects.models import Campaign
 from django.contrib.auth.models import User as DjangoUser
 
 from accounts.models import CURRENCIES
 from projects.models import Campaign
 
-TRANSACTION_TYPES = (
+PAYMENT_TYPES = (
     ('card', 'Card'),
     ('cash', 'Cash'),
     ('transfer', 'Transfer'),
     ('withdraw', 'Withdraw'),
 )
 
-PAYMENT_TYPES = {
+TRANSACTION_TYPES = (
+    ('0', 'sadaka'),
+    ('1', 'zakat'),
+    ('2', 'direct')
+)
+
+# ---- Field enums ----
+MONEY_TYPES = {
     True: 'Card',
     False: 'Cash Money',
     None: 'Some Other',
 }
 
-
 SUBSCRIPTION_DAYS = (
-    ('0', 'null'),
-    ('1', 'everyday'),
-    ('30', 'everymonth')
+    (0, 'null'),
+    (1, 'everyday'),
+    (30, 'everymonth')
 )
 
 DONATION_STATUS = (
@@ -31,6 +42,40 @@ DONATION_STATUS = (
     ('in_th_process_of_trnsf_mny', 'in_the_process_of_transferring_money'),
     ('mny_trnsf', 'money_transferred'),
 )
+
+
+# ---- Models ----
+
+
+def send_transaction_notification():
+    layer = get_channel_layer()
+    async_to_sync(layer.group_send)(
+        'notification',
+        {
+            'type': 'notify',
+            'transaction': Transaction.objects.filter(campaign=None).count()
+        })
+
+
+class Transaction(models.Model):
+    amount = models.IntegerField(validators=[MinValueValidator(1)])
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='transactions')
+    campaign = models.ForeignKey(Campaign, on_delete=models.DO_NOTHING, related_name='transactions', blank=True,
+                                 null=True)
+    type = models.CharField(max_length=16, choices=PAYMENT_TYPES)
+    transaction_type = models.CharField(max_length=4, choices=TRANSACTION_TYPES, default=0)
+    description = models.TextField()
+    currency = models.CharField(max_length=20, null=True)
+    subscription_days = models.IntegerField(choices=SUBSCRIPTION_DAYS, default=0)
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super(Transaction, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
+        send_transaction_notification()
+
+    def delete(self, using=None, keep_parents=False):
+        super(Transaction, self).delete(using=None, keep_parents=False)
+        send_transaction_notification()
 
 
 class PaymentOptions(models.Model):
@@ -43,7 +88,7 @@ class PaymentOptions(models.Model):
                                        help_text="Yes means payment was made through credit card, No - with cash money, Unknown - by other way")
 
     def get_payment_type(self):
-        return PAYMENT_TYPES.get(self.payment_type)
+        return MONEY_TYPES.get(self.payment_type)
 
 
 class Transaction(models.Model):
