@@ -4,7 +4,8 @@
 
 {% block content %}
 
-
+{#TODO add 2 fiields to list add initial #}
+i
 
 
 
@@ -12,7 +13,7 @@
         <!-- Page Header -->
         <div class="page-header row no-gutters py-4">
             <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-                <h3 class="page-title">Campaign Page</h3>
+                <h3 class="page-title">Campaign Page {% if campaign.closed_at %}{% endif %}</h3>
 
             </div>
         </div>
