@@ -17,9 +17,9 @@ PAYMENT_TYPES = (
 )
 
 TRANSACTION_TYPES = (
-    (0, 'sadaka'),
-    (1, 'zakat'),
-    (2, 'direct')
+    ('0', 'sadaka'),
+    ('1', 'zakat'),
+    ('2', 'direct')
 )
 
 # ---- Field enums ----
@@ -59,7 +59,7 @@ def send_transaction_notification():
 
 class Transaction(models.Model):
     amount = models.IntegerField(validators=[MinValueValidator(1)])
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='transactions')
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='transactions', null=True, blank=True)
     campaign = models.ForeignKey(Campaign, on_delete=models.DO_NOTHING, related_name='transactions', blank=True,
                                  null=True)
     type = models.CharField(max_length=16, choices=PAYMENT_TYPES)
