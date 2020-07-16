@@ -11,6 +11,8 @@ app_name = 'dashboard'
 urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('users/', include('dashboard.users.urls')),
+#     path('', include('dashboard.users.urls')),
+    path('', include('dashboard.projs.urls', namespace='projs')),
     #Here you write all your paths
     #For example 'staffs/', 'staffs/create'
     path('staffs/', include('dashboard.employee.urls', namespace='employee'),),

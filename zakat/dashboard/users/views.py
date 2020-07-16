@@ -11,13 +11,13 @@ from .helper import get_country_code
 from django.db.models import Q, Sum
 from django.contrib.admin.views.decorators import staff_member_required
 from payment.models import Transaction
-# Create your views here.
+from django.contrib import messages, auth
 
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import render
+from django.urls import reverse_lazy
 
-# TODO redirect to the 'Gatherings' page in the future
-# @user_passes_test(lambda user: user.is_anonymous,
-#                   login_url='http://127.0.0.1:8000',
-#                   redirect_field_name=None)
 from .forms import LoginForm
 from .helper import check_is_employee
 
@@ -36,6 +36,9 @@ def block_user(request, pk):
         return render(request, 'dashboard/users/user_block_confirm.html', {'isBlock': user.isBlock})
 
 
+@user_passes_test(lambda user: user.is_anonymous,
+                  login_url=reverse_lazy('dashboard:projs:campaign-list'),
+                  redirect_field_name=None)
 def login(request):
     """Simple login page for employees only"""
     if request.method == 'POST':

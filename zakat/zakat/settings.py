@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django_countries',
     'graphene_django',
     'avatar',
+    'django_filters',
     # our apps
     'accounts',
     'projects',
@@ -58,6 +59,7 @@ INSTALLED_APPS = [
     'dashboard',
     'dashboard.users',
     'dashboard.employee',
+    'dashboard.projs',
     'dashboard.partner',
 ]
 
@@ -174,6 +176,7 @@ STATIC_URL = '/static/'
 # ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 from PIL import Image
 
