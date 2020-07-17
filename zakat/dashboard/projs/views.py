@@ -13,18 +13,14 @@ from payment.models import PaymentOptions
 from projects.models import Campaign
 
 
-def index(request):
-    return render(request, 'dashboard/projs/campaign_list.html', {'page_obj': Campaign.objects.all()})
-
-
 @method_decorator(staff_member_required, name='dispatch')
-class СampaignListView(FilterView):
+class CampaignListView(FilterView):
     template_name = 'dashboard/projs/campaign_list.html'
     filterset_class = CampaignFilter
     context_object_name = 'campaigns'
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(СampaignListView, self).get_context_data(object_list=object_list, **kwargs)
+        context = super(CampaignListView, self).get_context_data(object_list=object_list, **kwargs)
         context['count'] = len(object_list)
         return context
 
@@ -129,6 +125,7 @@ def payment_option_edit(request, pk):
     return render(request, 'dashboard/projs/payment_option_edit.html', {'form': form},
                   status=status_code)
 
+
 @staff_member_required
 @require_http_methods(["POST", ])
 def payment_option_delete(request, pk):
@@ -139,6 +136,7 @@ def payment_option_delete(request, pk):
         return redirect(reverse_lazy('dashboard:projs:campaign-detail', args=[campaign_id]))
     except PaymentOptions.DoesNotExist as e:
         raise e
+
 
 @staff_member_required
 @require_http_methods(["POST", ])

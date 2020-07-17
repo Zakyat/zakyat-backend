@@ -18,7 +18,6 @@ class CampaignFilter(django_filters.FilterSet):
 
     class Meta:
         model = Campaign
-        # TODO add search by date
         fields = ['search', 'status', 'created_at', ]
 
     def filter_status(self, queryset, name, value):
