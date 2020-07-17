@@ -137,6 +137,9 @@ class User(models.Model):
         return reverse('dashboard:users:users_detail', args=[self.id])
 
 
+    def get_absolute_url(self):
+        return reverse('dashboard:users:users_detail', args=[self.id])
+
 class Employee(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=16)

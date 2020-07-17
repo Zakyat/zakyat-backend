@@ -63,13 +63,13 @@
                             <div class="form-group col-lg-2">
                                 <strong class="text-muted d-block mb-2">{% trans 'Zakat' %}</strong>
                                 <select class="form-control form-control-lg mb-3" name="zakat_persons" id="zakat_person">
-                                    <option value="default">
+                                    <option value="default" {% if zakat == 'default' %}selected{% endif %}>
                                         {% trans '-------' %}
                                     </option>
-                                    <option value="paid">
+                                    <option value="paid" {% if zakat == 'paid' %}selected{% endif %}>
                                         {% trans 'paid' %}
                                     </option>
-                                    <option value="not paid">
+                                    <option value="not paid" {% if zakat == 'not paid' %}selected{% endif %}>
                                         {% trans 'not paid' %}
                                     </option>
                                 </select>

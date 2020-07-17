@@ -37,13 +37,13 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-2">
-                                    <strong class="text-muted d-block mb-2">After</strong>
-                                    <input class="form-control form-control-lg mb-3"
+                                    <strong class="text-muted d-block mb-2">Created After</strong>
+                                    <input class="form-crontrol form-control-lg mb-3"
                                            type="date" name="created_at_after" id="id_created_at_0"
                                            value="{{ filter.form.data.created_at_after }}">
                                 </div>
                                 <div class="form-group col-lg-2">
-                                    <strong class="text-muted d-block mb-2">Before</strong>
+                                    <strong class="text-muted d-block mb-2">Created Before</strong>
                                     <input class="form-control form-control-lg mb-3"
                                            type="date" name="created_at_before" id="id_created_at_1"
                                            value="{{ filter.form.data.created_at_before }}">
@@ -97,16 +97,24 @@
                                             <th scope="col" class="border-0">#</th>
                                             <th scope="col" class="border-0">Title</th>
                                             <th scope="col" class="border-0">Status</th>
+                                            <th scope="col" class="border-0">Created</th>
+                                            <th scope="col" class="border-0">Closed</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {#                                        TODO make row clickable #}
                                         {% for campaign in campaigns %}
                                             <tr class="row-click"
                                                 onclick="window.location='{% url 'dashboard:projs:campaign-detail' campaign.id %}';">
                                                 <td>{{ forloop.counter }}</td>
                                                 <td>{{ campaign.title }}</td>
                                                 <td>{{ campaign.get_status }}</td>
+                                                <td>{{ campaign.get_normal_created_at_view }}</td>
+                                                <td>
+                                                    {% if campaign.closed_at %}
+                                                    {{ campaign.get_normal_closed_at_view }}
+                                                    {% else %}
+                                                    -
+                                                    {% endif %}</td>
                                             </tr>
 
                                         {% endfor %}

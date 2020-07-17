@@ -83,11 +83,14 @@
                                     <select required class="form-control
                                     {% if form.errors.request %}is-invalid{% endif %}
                                     form-control-lg " name="request" id="id_request">
-                                        {% for request in form.fields.request.queryset %}
-                                            <option value="{{ request.id }}"
-                                            >{{ request }}</option>
-                                        {% endfor %}
-
+                                        {% with selected_value=form.initial.project %}
+                                            {% for request in form.fields.request.queryset %}
+                                                <option value="{{ request.id }}"
+                                                        {% if selected_value == request.id %
+                                                                }selected{% endif %}
+                                                >{{ request }}</option>
+                                            {% endfor %}
+                                        {% endwith %}
                                     </select>
                                     <div class="invalid-feedback">{{ form.errors.request.0 }}</div>
                                 </div>

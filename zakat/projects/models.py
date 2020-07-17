@@ -78,7 +78,8 @@ class Project(models.Model):
 
 
 class Campaign(models.Model):
-    request  = models.OneToOneField(Request, on_delete=models.SET_NULL, null=True, blank=True, help_text='Either Request model will be created automatically')
+    request = models.OneToOneField(Request, on_delete=models.SET_NULL, null=True, blank=True,
+                                   help_text='Either Request model will be created automatically')
     created_by = models.ForeignKey(Employee, on_delete=models.PROTECT)
     title = models.CharField(max_length=128)  # TODO: i18n
     description = models.TextField()  # TODO: i18n
@@ -87,7 +88,8 @@ class Campaign(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     closed_at = models.DateTimeField(null=True, blank=True)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='campaigns', blank=True, help_text='Either Project model will be created automatically')
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='campaigns', blank=True,
+                                help_text='Either Project model will be created automatically')
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
@@ -135,3 +137,15 @@ class Campaign(models.Model):
     # TODO accomplish
     def calculate_ratio(self):
         return self.get_collected_money() / self.goal
+
+    def get_normal_date_view(self, date):
+        try:
+            return date.strftime("%Y %b %d")
+        except:
+            return None
+
+    def get_normal_created_at_view(self):
+        return self.get_normal_date_view(self.created_at)
+
+    def get_normal_closed_at_view(self):
+        return self.get_normal_date_view(self.closed_at)
