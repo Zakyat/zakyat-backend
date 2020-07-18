@@ -38,7 +38,7 @@ msgid "Users"
 msgstr "Пользователи"
 
 #: dashboard/templates/dashboard/includes/sidebar.html:50
-msgid "Camping"
+msgid "Campaign"
 msgstr "Сборы"
 
 #: dashboard/templates/dashboard/includes/sidebar.html:57
