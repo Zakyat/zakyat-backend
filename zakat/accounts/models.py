@@ -120,8 +120,7 @@ class User(models.Model):
     isBlock = models.BooleanField(default=False)
 
     # cash_flow = models.ArrayField(model_container=CashFlow, default=[])
-    related_documents = models.EmbeddedField(model_container=Document, blank=True,
-                                             null=True)
+    related_documents = models.ArrayField(model_container=Document, blank=True, default=[])
 
     # contact_person = models.EmbeddedField(model_container=FamilyMember)
     # family_members = models.ArrayField(model_container=FamilyMember, default=[]) # ArrayField with nested FileField causes a problem
