@@ -60,7 +60,8 @@ def login(request):
     else:
         form = LoginForm()
 
-    return render(request, 'dashboard/users/login.html', {'form': form})
+    return render(request, 'static/')
+    # return render(request, 'dashboard/users/login.html', {'form': form})
 
 
 class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):

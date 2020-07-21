@@ -1,0 +1,20 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% load avatar_tags %}
+
+{% block content %}
+    {% trans 'Your avatar:' %}
+    {% avatar user 80 %}
+    {% trans 'Add new:' %}
+    <form enctype="multipart/form-data" method="POST" action="{% url 'avatar_add' %}">
+        <p>
+            <label for="id_avatar">avatar:</label>
+            <input type="file" name="avatar" accept="image/*" required="" id="id_avatar">
+            <input type="button" pseudo="-webkit-file-upload-button" value="Выбрать файл">
+        </p>
+        <p>
+            {% csrf_token %}
+            <input type="submit" value="Загрузить новое изображение">
+        </p>
+    </form>
+{% endblock content %}

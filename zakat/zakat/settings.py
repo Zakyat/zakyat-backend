@@ -79,7 +79,7 @@ ROOT_URLCONF = 'zakat.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['dashboard/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -193,7 +193,7 @@ AVATAR_GRAVATAR_DEFAULT = '/dashboard/defaultAvatar.jpg'
 AVATAR_GRAVATAR_FORCEDEFAULT = False
 AVATAR_GRAVATAR_FIELD = 'email'
 AVATAR_GRAVATAR_BASE_URL = '/dashboard/defaultAvatar.jpg'
-AVATAR_CHANGE_TEMPLATE = 'avatar/change.html'
+AVATAR_CHANGE_TEMPLATE = 'avatar/add.html'
 AVATAR_ALLOWED_FILE_EXTS = ('.jpg', '.jpeg', '.png')
 AVATAR_ADD_TEMPLATE = 'avatar/add.html'
 AVATAR_MAX_SIZE = 1024 * 1024 * 2
@@ -204,6 +204,7 @@ AVATAR_HASH_FILENAMES = False
 AVATAR_THUMB_FORMAT = "png"
 AVATAR_THUMB_QUALITY = 80
 AVATAR_RESIZE_METHOD = Image.ANTIALIAS
+AVATAR_CLEANUP_DELETED = True
 
 # Конфигурация Channels
 ASGI_APPLICATION = "zakat.routing.application"
