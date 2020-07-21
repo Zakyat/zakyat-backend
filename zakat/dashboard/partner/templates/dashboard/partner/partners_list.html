@@ -26,8 +26,12 @@
             <!-- Page Header -->
             <div class="page-header row no-gutters py-4">
                 <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-                    <span class="text-uppercase page-subtitle">Components</span>
                     <h3 class="page-title">Партнеры</h3>
+                </div>
+                <div style="width: 100%;display: flex;justify-content: flex-end ">
+                    <a style="color: white" href="{% url 'dashboard:partner:partner_create' %}">
+                        <button type="submit" class="btn btn-accent">Создать партнера</button>
+                    </a>
                 </div>
             </div>
             <!-- End Page Header -->
@@ -51,12 +55,9 @@
                     <h3>На данный момент партнеров нет.</h3><br><br><br>
                 {% endif %}
             </div>
-            <a style="color: white" href="{% url 'dashboard:partner:partner_create' %}">
-                <button type="submit" class="btn btn-accent">Создать партнера</button>
-            </a>
         </div>
         <br>
-        <div class="pagination">
+        <div class="pagination" style="width: 100%;display: flex;justify-content: flex-end ">
             <span class="step-links">
                 {% if page_obj.has_previous %}
 {#                    <input type="image" src="" href="?page=1">#}
