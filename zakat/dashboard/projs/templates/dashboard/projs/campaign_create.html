@@ -1,4 +1,4 @@
-{% extends "dashboard/base.html" %}
+Goal{% extends "dashboard/base.html" %}
 {% load static %}
 {% block title %}Campaigns{% endblock %}
 
@@ -40,7 +40,7 @@
                                     <input class="form-control
                                      {% if form.errors.goal %}is-invalid{% endif %}
                                      form-control-lg" required
-                                           type="text" name="goal" id="id_goal"
+                                           type="number" min="0" step="0.01" name="goal" id="id_goal"
                                            placeholder="Goal"
                                            value="{{ form.initial.goal }}">
                                     {% if form.errors.goal %}
