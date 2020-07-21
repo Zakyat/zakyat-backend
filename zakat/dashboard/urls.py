@@ -17,6 +17,7 @@ urlpatterns = [
     #For example 'staffs/', 'staffs/create'
     path('staffs/', include('dashboard.employee.urls', namespace='employee'),),
     path('partners/', include('dashboard.partner.urls', namespace='partner'),),
+    path('banners/', include('dashboard.banner.urls', namespace='banner'),),
     # Here you write all your paths
     # For example 'staffs/', 'staffs/create'
     path('news/', include('dashboard.news_posts.urls', namespace='news_posts'),),
