@@ -20,4 +20,8 @@ app_name = 'banner'
 
 urlpatterns = [
     path('',BannersList.as_view(),name="banners_list"),
+    path('create/', BannerCreate.as_view(), name="banner_create"),
+    path('<int:pk>/', BannerDetail.as_view(), name="banner_detail"),
+    path('<int:pk>/delete/', BannerDelete.as_view(), name="banner_delete"),
+    path('<int:pk>/update/', BannerUpdate.as_view(), name="banner_update"),
 ]
