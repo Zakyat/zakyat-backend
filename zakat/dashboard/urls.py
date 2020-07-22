@@ -7,20 +7,19 @@ from .forms import PasswordResetForm
 
 app_name = 'dashboard'
 
-
 urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('users/', include('dashboard.users.urls')),
-#     path('', include('dashboard.users.urls')),
+    path('sadaka_zakat/', include('dashboard.sadaka_zakat.urls')),
     path('', include('dashboard.projs.urls', namespace='projs')),
-    #Here you write all your paths
-    #For example 'staffs/', 'staffs/create'
-    path('staffs/', include('dashboard.employee.urls', namespace='employee'),),
-    path('partners/', include('dashboard.partner.urls', namespace='partner'),),
-    path('banners/', include('dashboard.banner.urls', namespace='banner'),),
     # Here you write all your paths
     # For example 'staffs/', 'staffs/create'
-    path('news/', include('dashboard.news_posts.urls', namespace='news_posts'),),
+    path('staffs/', include('dashboard.employee.urls', namespace='employee'), ),
+    path('partners/', include('dashboard.partner.urls', namespace='partner'), ),
+    path('banners/', include('dashboard.banner.urls', namespace='banner'), ),
+    # Here you write all your paths
+    # For example 'staffs/', 'staffs/create'
+    path('news/', include('dashboard.news_posts.urls', namespace='news_posts'), ),
     path('password-reset/',
          PasswordResetView.as_view(template_name='dashboard/password_reset/password_reset.html',
                                    form_class=PasswordResetForm,
