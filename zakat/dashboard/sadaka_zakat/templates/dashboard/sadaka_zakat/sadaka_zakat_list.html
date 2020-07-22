@@ -1,0 +1,206 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% load avatar_tags %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+{% block title %} {% trans "User Prolife" %} {% endblock %}
+
+{% block content %}
+
+    <div class="main-content-container container-fluid px-4">
+        <div class="main-content-container container-fluid px-4">
+
+            {% include "dashboard/users/search_filter.html" %}
+            <br>
+            <hr>
+            <!-- End Page Header -->
+            <div class="row">
+                <div class="main-content-container container-fluid px-4">
+                    <!-- Page Header -->
+                    <div class="page-header row no-gutters py-4">
+                        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                            <h3 class="page-title">{% trans "Users total count" %}:
+                                <span>{{ page_obj.paginator.count }}</span></h3>
+                        </div>
+                    </div>
+                    <!-- End Page Header -->
+                    <!-- Default Light Table -->
+                    <div class="row">
+                        <div class="col">
+                            <div class="card card-small mb-4">
+                                <div class="card-header border-bottom">
+                                    <h6 class="m-0">{% trans "Users" %}</h6>
+                                </div>
+                                <div class="card-body p-0 pb-3 text-center">
+
+                                    <!-- Send Email Form Start here -->
+                                    <form action="#">
+                                        {% if page_obj.paginator.count == 0 %}
+                                            <div style="margin-top: 10px">
+                                                {% trans 'Sorry, no results 🥺' %}
+                                            </div>
+                                        {% else %}
+                                            <table class="table mb-0">
+                                                <thead class="bg-light">
+                                                <tr>
+                                                    <th scope="col" class="border-0">#</th>
+                                                    <th scope="col" class="border-0">{% trans "Icon" %}</th>
+                                                    <th scope="col" class="border-0">ID</th>
+                                                    <th scope="col" class="border-0">{% trans "First Name" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Last Name" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Email" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Phone" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Religion" %}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for user in page_obj %}
+                                                    <tr>
+                                                        <td>
+                                                            <input type="checkbox">
+                                                        </td>
+                                                        <td>
+                                                            <a class="text-fiord-blue"
+                                                               href="{{ user.get_absolute_url }}">
+                                                                {% avatar user.user 25 %}
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a class="text-fiord-blue"
+                                                               href="{{ user.get_absolute_url }}">
+                                                                {{ user.user.username }}
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            {% if user.user.first_name %}
+                                                                <a class="text-fiord-blue"
+                                                                   href="{{ user.get_absolute_url }}">
+                                                                    {{ user.user.first_name }}
+                                                                </a>
+                                                            {% else %}
+                                                                {% trans "-" %}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if user.user.last_name %}
+                                                                <a class="text-fiord-blue"
+                                                                   href="{{ user.get_absolute_url }}">
+                                                                    {{ user.user.last_name }}
+                                                                </a>
+                                                            {% else %}
+                                                                {% trans "-" %}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if user.user.email %}
+                                                                <a class="text-fiord-blue"
+                                                                   href="{{ user.get_absolute_url }}">
+                                                                    {{ user.user.email }}
+                                                                </a>
+                                                            {% else %}
+                                                                {% trans "-" %}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if user.phone_number %}
+                                                                <a class="text-fiord-blue"
+                                                                   href="{{ user.get_absolute_url }}">
+                                                                    {{ user.phone_number }}
+                                                                </a>
+                                                            {% else %}
+                                                                {% trans "-" %}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if user.religion %}
+                                                                <a class="text-fiord-blue"
+                                                                   href="{{ user.get_absolute_url }}">
+                                                                    {{ user.religion }}
+                                                                </a>
+                                                            {% else %}
+                                                                {% trans "-" %}
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        {% endif %}
+                                        <br>
+
+                                        <div class="container">
+                                            <button type="button" class="btn btn-accent" data-toggle="modal"
+                                                    data-target="#sendEmail">
+                                                {% trans "Create email" %}
+                                            </button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="sendEmail" role="dialog">
+                                                <div class="modal-dialog">
+
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal">
+                                                                &times;
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <h4>Title</h4>
+                                                            <input type="text" id="title" style="width: 201px;"/>
+                                                            <hr>
+                                                            <h4>Email Text</h4>
+                                                            <textarea name="message" id="message" cols="30"
+                                                                      rows="10" style="resize: none;"></textarea><br/>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-accent"
+                                                                    data-toggle="modal"
+                                                                    data-target="#sendEmail">
+                                                                {% trans "Send email" %}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <!-- End Modal -->
+                                        </div>
+                                    </form>
+                                    <!-- Send Email Form End Here -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Default Light Table -->
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">{% trans "First" %}</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">{% trans "Previous" %}</a>
+                {% endif %}
+
+                <span class="current">
+                    {% trans "Page" %} {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">{% trans "Next" %}</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">{% trans "Last" %}</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
