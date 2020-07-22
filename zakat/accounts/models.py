@@ -142,9 +142,6 @@ class User(models.Model):
     def get_absolute_url(self):
         return reverse('dashboard:users:users_detail', args=[self.id])
 
-    def get_absolute_url(self):
-        return reverse('dashboard:users:users_detail', args=[self.id])
-
 
 class Employee(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)

@@ -47,78 +47,74 @@
                                                 <thead class="bg-light">
                                                 <tr>
                                                     <th scope="col" class="border-0">#</th>
-                                                    <th scope="col" class="border-0">{% trans "Icon" %}</th>
-                                                    <th scope="col" class="border-0">ID</th>
-                                                    <th scope="col" class="border-0">{% trans "First Name" %}</th>
-                                                    <th scope="col" class="border-0">{% trans "Last Name" %}</th>
-                                                    <th scope="col" class="border-0">{% trans "Email" %}</th>
-                                                    <th scope="col" class="border-0">{% trans "Phone" %}</th>
-                                                    <th scope="col" class="border-0">{% trans "Religion" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Amount" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "UserId" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Transection" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Currency" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Subscription" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Type" %}</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {% for user in page_obj %}
+                                                {% for transaction in page_obj %}
                                                     <tr>
                                                         <td>
-                                                            <input type="checkbox">
-                                                        </td>
-                                                        <td>
                                                             <a class="text-fiord-blue"
-                                                               href="{{ user.get_absolute_url }}">
-                                                                {% avatar user.user 25 %}
+                                                               href="#">
+                                                                {{ transaction.id }}
                                                             </a>
                                                         </td>
                                                         <td>
                                                             <a class="text-fiord-blue"
-                                                               href="{{ user.get_absolute_url }}">
-                                                                {{ user.user.username }}
+                                                               href="#">
+                                                                {{ transaction.amount }}
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            {% if user.user.first_name %}
+                                                            {% if transaction.user %}
                                                                 <a class="text-fiord-blue"
-                                                                   href="{{ user.get_absolute_url }}">
-                                                                    {{ user.user.first_name }}
+                                                                   href="#">
+                                                                    {{ transaction.user.id }}
                                                                 </a>
                                                             {% else %}
                                                                 {% trans "-" %}
                                                             {% endif %}
                                                         </td>
                                                         <td>
-                                                            {% if user.user.last_name %}
+                                                            {% if transaction.campaign %}
                                                                 <a class="text-fiord-blue"
-                                                                   href="{{ user.get_absolute_url }}">
-                                                                    {{ user.user.last_name }}
+                                                                   href="#">
+                                                                    {{ transaction.campaign }}
                                                                 </a>
                                                             {% else %}
                                                                 {% trans "-" %}
                                                             {% endif %}
                                                         </td>
                                                         <td>
-                                                            {% if user.user.email %}
+                                                            {% if transaction.transaction_type %}
                                                                 <a class="text-fiord-blue"
-                                                                   href="{{ user.get_absolute_url }}">
-                                                                    {{ user.user.email }}
+                                                                   href="#">
+                                                                    {{ transaction.transaction_type }}
                                                                 </a>
                                                             {% else %}
                                                                 {% trans "-" %}
                                                             {% endif %}
                                                         </td>
                                                         <td>
-                                                            {% if user.phone_number %}
+                                                            {% if transaction.currency %}
                                                                 <a class="text-fiord-blue"
-                                                                   href="{{ user.get_absolute_url }}">
-                                                                    {{ user.phone_number }}
+                                                                   href="#">
+                                                                    {{ transaction.currency }}
                                                                 </a>
                                                             {% else %}
                                                                 {% trans "-" %}
                                                             {% endif %}
                                                         </td>
                                                         <td>
-                                                            {% if user.religion %}
+                                                            {% if transaction.type %}
                                                                 <a class="text-fiord-blue"
-                                                                   href="{{ user.get_absolute_url }}">
-                                                                    {{ user.religion }}
+                                                                   href="#">
+                                                                    {{ transaction.type }}
                                                                 </a>
                                                             {% else %}
                                                                 {% trans "-" %}

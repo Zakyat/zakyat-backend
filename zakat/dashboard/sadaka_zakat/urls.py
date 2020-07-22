@@ -4,5 +4,5 @@ from .views import TransactionList
 app_name = 'sadaka_zakat'
 
 urlpatterns = [
-    path('', TransactionList.as_view(), 'sadaka_zakat_list'),
+    path('', TransactionList.as_view(), name='sadaka_zakat_list'),
 ]

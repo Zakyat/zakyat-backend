@@ -12,7 +12,7 @@ class TransactionList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     form_class = SearchForm
     paginate_by = 10
     template_name = 'dashboard/sadaka_zakat/sadaka_zakat_list.html'
-    ordering = ['-transaction']
+    # ordering = ['-transaction']
 
     # def __init__(self, **kwargs):
     #  super().__init__(**kwargs)
