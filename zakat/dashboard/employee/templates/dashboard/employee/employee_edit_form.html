@@ -1,5 +1,6 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
     {% csrf_token %}
     <div class="main-content-container container-fluid px-4">
@@ -7,7 +8,7 @@
         <div class="page-header row no-gutters py-4">
             <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
                 <span class="text-uppercase page-subtitle"><a href="{% url 'dashboard:employee:staff_list'%}">Back to staffs page</a></span>
-                <h3 class="page-title">Employee edit page</h3>
+                <h3 class="page-title">{% trans "Employee edit page" %}</h3>
             </div>
         </div>
         <!-- End Page Header -->
@@ -18,9 +19,9 @@
                     {% include 'dashboard/employee/user_form.html' %}
                     {% include 'dashboard/employee/employee_form.html' %}
                     <div class="form-row float-right mb-4">
-                        <button type="submit" class="btn btn-primary">Save</button>
-                        <button type="button" class="btn btn-primary ml-2">Save and continue editing</button>
-                        <a href="{% url 'dashboard:employee:employee_delete' employee.pk %}" class="btn btn-danger ml-2">Delete</a>
+                        <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+                        <button type="button" class="btn btn-primary ml-2">{% trans "Save and continue editing" %}</button>
+                        <a href="{% url 'dashboard:employee:employee_delete' employee.pk %}" class="btn btn-danger ml-2">{% trans "Delete" %}</a>
                     </div>
                 </div>
             </div>

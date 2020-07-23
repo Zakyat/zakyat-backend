@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-23 12:43+0000\n"
+"POT-Creation-Date: 2020-07-23 16:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,96 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: dashboard/employee/templates/dashboard/employee/change_password.html:3
+msgid "User Profile"
+msgstr "Профиль пользователя"
+
+#: dashboard/employee/templates/dashboard/employee/change_password.html:16
+msgid "Employee change password page"
+msgstr "Страница для замены пароля работника"
+
+#: dashboard/employee/templates/dashboard/employee/change_password.html:25
+msgid "Employee change password form"
+msgstr "Форма для замены пароля работника"
+
+#: dashboard/employee/templates/dashboard/employee/change_password.html:34
+#: dashboard/employee/templates/dashboard/employee/change_password.html:36
+#: dashboard/employee/templates/dashboard/employee/change_password.html:40
+#: dashboard/employee/templates/dashboard/employee/change_password.html:44
+#: dashboard/employee/templates/dashboard/employee/user_form.html:39
+msgid "Password"
+msgstr "Пароль"
+
+#: dashboard/employee/templates/dashboard/employee/change_password.html:38
+#, fuzzy
+#| msgid "New updated"
+msgid "New password"
+msgstr "Недавно обновленные"
+
+#: dashboard/employee/templates/dashboard/employee/change_password.html:42
+msgid "Confirm new password"
+msgstr "Подтвердить новый пароль"
+
+#: dashboard/employee/templates/dashboard/employee/change_password.html:46
+msgid "Update password"
+msgstr "Обновить пароль"
+
+#: dashboard/employee/templates/dashboard/employee/employee_create_form.html:10
+msgid "Back to staffs page"
+msgstr "Вернуться на страницу работников"
+
+#: dashboard/employee/templates/dashboard/employee/employee_create_form.html:11
+msgid "Employee create page"
+msgstr "Страница создания работника"
+
+#: dashboard/employee/templates/dashboard/employee/employee_create_form.html:22
+#: dashboard/employee/templates/dashboard/employee/employee_edit_form.html:22
+msgid "Save"
+msgstr "Сохранить"
+
+#: dashboard/employee/templates/dashboard/employee/employee_create_form.html:23
+#: dashboard/employee/templates/dashboard/employee/employee_edit_form.html:23
+msgid "Save and continue editing"
+msgstr "Сохранить и продолжить редактирование"
+
+#: dashboard/employee/templates/dashboard/employee/employee_delete_confirm.html:9
+msgid "Do you want to delete the employee ?"
+msgstr "Вы действительно хотите удалить пользователя?"
+
+#: dashboard/employee/templates/dashboard/employee/employee_delete_confirm.html:18
+msgid "Yes"
+msgstr "Да"
+
+#: dashboard/employee/templates/dashboard/employee/employee_delete_confirm.html:19
+msgid "Cancel"
+msgstr "Отмена"
+
+#: dashboard/employee/templates/dashboard/employee/employee_edit_form.html:11
+msgid "Employee edit page"
+msgstr "Страница для редактирования работника"
+
+#: dashboard/employee/templates/dashboard/employee/employee_edit_form.html:24
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:87
+msgid "Delete"
+msgstr "Удалить"
+
+#: dashboard/employee/templates/dashboard/employee/employee_form.html:15
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:61
+msgid "Position"
+msgstr "Должность"
+
+#: dashboard/employee/templates/dashboard/employee/employee_form.html:20
+msgid "Phone number"
+msgstr "Номер телефона"
+
+#: dashboard/employee/templates/dashboard/employee/employee_form.html:27
+msgid "Photo"
+msgstr "Фотография"
+
+#: dashboard/employee/templates/dashboard/employee/employee_form.html:33
+msgid "Bio"
+msgstr "Био"
 
 #: dashboard/employee/templates/dashboard/employee/staff_list.html:8
 #: dashboard/templates/dashboard/includes/sidebar.html:38
@@ -58,22 +148,21 @@ msgid "ID"
 msgstr "ID"
 
 #: dashboard/employee/templates/dashboard/employee/staff_list.html:58
+#: dashboard/employee/templates/dashboard/employee/user_form.html:15
 #, fuzzy
 #| msgid "Users"
 msgid "Username"
 msgstr "Пользователи"
 
 #: dashboard/employee/templates/dashboard/employee/staff_list.html:59
+#: dashboard/employee/templates/dashboard/employee/user_form.html:28
 msgid "First Name"
 msgstr "Имя"
 
 #: dashboard/employee/templates/dashboard/employee/staff_list.html:60
+#: dashboard/employee/templates/dashboard/employee/user_form.html:32
 msgid "Last Name"
 msgstr "Фамилие"
-
-#: dashboard/employee/templates/dashboard/employee/staff_list.html:61
-msgid "Position"
-msgstr "Должность"
 
 #: dashboard/employee/templates/dashboard/employee/staff_list.html:62
 msgid "Phone"
@@ -83,13 +172,66 @@ msgstr "Номер телефона"
 msgid "Action"
 msgstr "Действие"
 
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:80
 #: dashboard/employee/templates/dashboard/employee/staff_list.html:84
 msgid "Edit"
 msgstr "Редактировать"
 
-#: dashboard/employee/templates/dashboard/employee/staff_list.html:87
-msgid "Delete"
-msgstr "Удалить"
+#: dashboard/employee/templates/dashboard/employee/user_form.html:5
+msgid "User information"
+msgstr ""
+
+#: dashboard/employee/templates/dashboard/employee/user_form.html:17
+msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+
+#: dashboard/employee/templates/dashboard/employee/user_form.html:21
+msgid "Email"
+msgstr ""
+
+#: dashboard/employee/templates/dashboard/employee/user_form.html:44
+msgid "Confirm password"
+msgstr "Подтвердить пароль"
+
+#: dashboard/employee/templates/dashboard/employee/user_form.html:49
+msgid "Change password"
+msgstr "Поменять пароль"
+
+#: dashboard/employee/templates/dashboard/employee/user_form.html:56
+msgid "Active status?"
+msgstr "Активный статус?"
+
+#: dashboard/employee/templates/dashboard/employee/user_form.html:58
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+
+#: dashboard/employee/templates/dashboard/employee/user_form.html:63
+msgid "Super user status?"
+msgstr ""
+
+#: dashboard/employee/templates/dashboard/employee/user_form.html:65
+msgid ""
+"Designates that this user has all permissions without explicitly assigning "
+"them."
+msgstr ""
+
+#: dashboard/employee/templates/dashboard/employee/user_form.html:70
+msgid "Staff status?"
+msgstr "Статус работника?"
+
+#: dashboard/employee/templates/dashboard/employee/user_form.html:72
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+
+#: dashboard/employee/templates/dashboard/employee/user_form.html:76
+msgid "User permissions:"
+msgstr "Разрешения для пользователей"
+
+#: dashboard/employee/templates/dashboard/employee/user_form.html:78
+msgid "Specific permissions for this user."
+msgstr ""
 
 #: dashboard/templates/dashboard/includes/navigation.html:66
 msgid "Change your avatar"
