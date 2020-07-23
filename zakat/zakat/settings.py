@@ -50,8 +50,10 @@ INSTALLED_APPS = [
     'graphene_django',
     'avatar',
     'django_filters',
+    'social_django',
     # our apps
     'accounts',
+    'accounts.users_auth',
     'projects',
     'news',
     'payment',
@@ -88,6 +90,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -149,6 +153,32 @@ AAUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+###
+### Social Auth Part:
+###
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.vk.VKOAuth2',          # vk authorization backend
+    'django.contrib.auth.backends.ModelBackend',  # class authorization backend
+)
+
+#VK API APP KEYS:
+SOCIAL_AUTH_VK_OAUTH2_KEY = '7547346'                   # os.getenv('SOCIAL_AUTH_VK_OAUTH2_KEY','')
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'O7Z1wGQuArZV1eSORPiN'   # os.getenv('SOCIAL_AUTH_VK_OAUTH2_SECRET','')
+
+
+SOCIAL_AUTH_URL_NAMESPACE = 'auth:social'
+
+LOGIN_URL = '/auth/login/vk-oauth2/'
+
+LOGIN_REDIRECT_URL = '/auth/test'  # change on right url
+LOGOUT_REDIRECT_URL = '/'          # change on right url
+
+###
+###
+###
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
