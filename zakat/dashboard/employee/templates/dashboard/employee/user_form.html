@@ -43,7 +43,12 @@
                             <label for="feInputAddress">Confirm password *</label>
                             {% render_field user_form.password2 class="form-control" type="password" %}
                         </div>
+                    {% else %}
+                        <div class="mt-2 mb-2">
+                        <a class="btn btn-primary" href="{% url 'dashboard:employee:change_password' user.id %}">Change password </a>
+                        </div>
                     {% endif %}
+
 
 
                     <div class="form-group">

@@ -7,7 +7,9 @@ from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, render, HttpResponseRedirect, reverse
 from accounts.models import Employee
 from .forms import EmployeeForm, UserForm, UserEditForm, UserRegistrationForm
+from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import Q
+from django.contrib.auth.models import User
 import operator
 
 
@@ -24,9 +26,16 @@ def example_form(request):
                   {'user_form': user_form, 'employee_form': employee_form})
 
 
-def user_creation_form(request):
-    form = UserRegistrationForm()
-    return render(request, 'dashboard/employee/user_creation_form.html', {'user_form':form})
+def change_password(request, id):
+    user = get_object_or_404(User, id=id)
+    employee = get_object_or_404(Employee, user=user)
+    form = PasswordChangeForm(user)
+    if request.POST:
+        form = PasswordChangeForm(user, request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('dashboard:employee:employee_edit_form'))
+    return render(request, 'dashboard/employee/change_password.html', {'form':form, 'employee':employee})
 
 class StaffListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'accounts.view_employee'
