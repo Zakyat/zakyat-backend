@@ -33,22 +33,31 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="feInputAddress">Password *</label>
-                        {% render_field user_form.password class="form-control" type="password" %}
-                    </div>
+                    {% if create_password %}
+                        <div class="form-group">
+                            <label for="feInputAddress">Password *</label>
+                            {% render_field user_form.password class="form-control" type="password" %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="feInputAddress">Confirm password *</label>
+                            {% render_field user_form.password2 class="form-control" type="password" %}
+                        </div>
+                    {% endif %}
 
 
                     <div class="form-group">
                         <label for="feInputAddress">Acticve status?</label>
                         {% render_field user_form.is_active %}
-                        <p class="helptext">Designates whether this user should be treated as active. Unselect this instead of deleting accounts.</p>
+                        <p class="helptext">Designates whether this user should be treated as active. Unselect this
+                            instead of deleting accounts.</p>
                     </div>
 
                     <div class="form-group">
                         <label for="feInputAddress">Super user status?</label>
                         {% render_field user_form.is_superuser %}
-                        <p class="helptext">Designates that this user has all permissions without explicitly assigning them.</p>
+                        <p class="helptext">Designates that this user has all permissions without explicitly assigning
+                            them.</p>
                     </div>
 
                     <div class="form-group">
@@ -66,14 +75,14 @@
 
                     <div class="form-group">
                         <label for="feInputAddress">Date joined::</label>
-                        {{ user_form.date_joined | attr:"form-control" | attr:"disabled" }}
-{#                        {% render_field user_form.date_joined class="form-control" %}#}
+                        {{ user_form.date_joined | attr:"form-control" }}
+                        {#                        {% render_field user_form.date_joined class="form-control" %}#}
                     </div>
 
-{#                    <div class="form-group">#}
-{#                        <label for="feInputAddress">Last login::</label>#}
-{#                        {% render_field user_form.last_login class="form-control" %}#}
-{#                    </div>#}
+                    {#                    <div class="form-group">#}
+                    {#                        <label for="feInputAddress">Last login::</label>#}
+                    {#                        {% render_field user_form.last_login class="form-control" %}#}
+                    {#                    </div>#}
 
                 </div>
             </div>

@@ -6,7 +6,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView, DetailView,
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, render, HttpResponseRedirect, reverse
 from accounts.models import Employee
-from .forms import EmployeeForm, UserForm, UserEditForm
+from .forms import EmployeeForm, UserForm, UserEditForm, UserRegistrationForm
 from django.db.models import Q
 import operator
 
@@ -23,6 +23,10 @@ def example_form(request):
     return render(request, 'dashboard/employee/example_form.html',
                   {'user_form': user_form, 'employee_form': employee_form})
 
+
+def user_creation_form(request):
+    form = UserRegistrationForm()
+    return render(request, 'dashboard/employee/user_creation_form.html', {'user_form':form})
 
 class StaffListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'accounts.view_employee'
@@ -77,6 +81,7 @@ class EmployeeCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['user_form'] = UserForm()
+        context['create_password'] = True
         context['employee_form'] = EmployeeForm()
         return context
 

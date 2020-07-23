@@ -4,8 +4,35 @@ from django.contrib.auth.models import User, Permission
 from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 
-
 class UserForm(forms.ModelForm):
+    content_type = ContentType.objects.get_for_model(User)
+    user_permissions = forms.ModelMultipleChoiceField(
+        queryset=Permission.objects,
+        widget=forms.CheckboxSelectMultiple,
+        required=False)
+
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
+    password2 = forms.CharField(widget=forms.PasswordInput, required=True)
+
+    class Meta:
+        model = User
+        fields = "__all__"
+
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd['password'] != cd['password2']:
+            raise forms.ValidationError('Passwords don\'t match.')
+        return cd['password2']
+
+    def save(self, commit=True):
+        user = super(UserForm, self).save(commit=False)
+        user.set_password(self.cleaned_data['password2'])
+        user.save()
+        return user
+
+
+class UserEditForm(forms.ModelForm):
+    user_id = forms.IntegerField(widget=forms.HiddenInput)
     content_type = ContentType.objects.get_for_model(User)
     user_permissions = forms.ModelMultipleChoiceField(
         queryset=Permission.objects,
@@ -15,26 +42,7 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = "__all__"
-        widgets = {
-
-        }
-
-
-    def save(self, commit=True):
-        user = super(UserForm, self).save(commit=True)
-        return user
-
-
-class UserEditForm(UserForm):
-    user_id = forms.IntegerField(widget=forms.HiddenInput)
-    # user = User()
-    # user.user_permissions
-    #
-    # def __int__(self, *args, **kwargs):
-    #     super(UserEditForm, self).__init__(*args, **kwargs)
-    #     content_type = ContentType.objects.get_for_model(User)
-    #     self.fields['user_permissions'].queryset = Permission.objects.filter(content_type=content_type)
-    #     self.fields['user_permissions'].widget.attrs.update({'class': 'permission-select'})
+        exclude = ('password',)
 
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -64,6 +72,7 @@ class UserEditForm(UserForm):
         user.save()
         return user
 
+
 class EmployeeForm(forms.ModelForm):
     class Meta:
         model = Employee
@@ -82,3 +91,16 @@ class EmployeeForm(forms.ModelForm):
                 Employee.objects.filter(user=user).update(**self.cleaned_data)
 
 
+class UserRegistrationForm(forms.ModelForm):
+    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'email')
+
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd['password'] != cd['password2']:
+            raise forms.ValidationError('Passwords don\'t match.')
+        return cd['password2']
