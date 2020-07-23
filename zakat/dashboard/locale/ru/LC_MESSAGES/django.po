@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-04 12:51+0300\n"
+"POT-Creation-Date: 2020-07-23 12:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,9 +20,84 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:8
 #: dashboard/templates/dashboard/includes/sidebar.html:38
 msgid "Employees"
 msgstr "Работники"
+
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:19
+msgid "Search employee"
+msgstr "Поиск работников"
+
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:31
+msgid "Sort by date"
+msgstr "Сортировка по дате"
+
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:35
+msgid "New created"
+msgstr "Недавно созданные"
+
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:36
+msgid "Old created"
+msgstr "Давно созданные"
+
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:37
+msgid "New updated"
+msgstr "Недавно обновленные"
+
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:38
+msgid "Old updated"
+msgstr "Давно созданные"
+
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:44
+msgid "+ Add new staff"
+msgstr "+ Добавить нового работника"
+
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:57
+msgid "ID"
+msgstr "ID"
+
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:58
+#, fuzzy
+#| msgid "Users"
+msgid "Username"
+msgstr "Пользователи"
+
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:59
+msgid "First Name"
+msgstr "Имя"
+
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:60
+msgid "Last Name"
+msgstr "Фамилие"
+
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:61
+msgid "Position"
+msgstr "Должность"
+
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:62
+msgid "Phone"
+msgstr "Номер телефона"
+
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:63
+msgid "Action"
+msgstr "Действие"
+
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:84
+msgid "Edit"
+msgstr "Редактировать"
+
+#: dashboard/employee/templates/dashboard/employee/staff_list.html:87
+msgid "Delete"
+msgstr "Удалить"
+
+#: dashboard/templates/dashboard/includes/navigation.html:66
+msgid "Change your avatar"
+msgstr "Изменить картинку"
+
+#: dashboard/templates/dashboard/includes/navigation.html:69
+msgid "Logout"
+msgstr "Выйти"
 
 #: dashboard/templates/dashboard/includes/sidebar.html:44
 msgid "Users"
@@ -56,14 +131,6 @@ msgstr "Партнеры"
 msgid "Other"
 msgstr "Другое"
 
-#: dashboard/templates/dashboard/includes/sidebar.html:94
-msgid "Logout"
-msgstr "Выйти"
-
-#: dashboard/templates/dashboard/includes/sidebar.html:101
-msgid "Change your avatar"
-msgstr "Изменить картинку"
-
-#: dashboard/templates/dashboard/includes/sidebar.html:109
+#: dashboard/templates/dashboard/includes/sidebar.html:96
 msgid "Change language"
 msgstr "Сменить язык"

@@ -1,11 +1,11 @@
 {% extends 'dashboard/base.html' %}
+{% load i18n %}
 {% block content %}
     <div class="main-content-container container-fluid px-4">
         <!-- Page Header -->
         <div class="page-header row no-gutters py-4">
             <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-                <span class="text-uppercase page-subtitle">Overview</span>
-                <h3 class="page-title">Employees</h3>
+                <h3 class="page-title">{% trans "Employees" %} ({{ employee_list | length }})</h3>
             </div>
 
         </div>
@@ -16,7 +16,7 @@
             <div class="d-flex">
                 <form action="{% url 'dashboard:employee:staff_list' %}">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search employee" name="search">
+                        <input type="text" class="form-control" placeholder="{% trans "Search employee" %}" name="search">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">
                                 <i class="fa fa-search"></i>
@@ -28,20 +28,21 @@
                 <div class="dropdown show mb-2 ml-2">
                     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                       Sort by date
+                       {% trans "Sort by date" %}
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="?sort=new_created">New created</a>
-                        <a class="dropdown-item" href="?sort=old_created">Old created</a>
-                        <a class="dropdown-item" href="?sort=new_updated">New updated</a>
-                        <a class="dropdown-item" href="?sort=old_updated">Old updated</a>
+                        <a class="dropdown-item" href="?sort=new_created">{% trans "New created" %}</a>
+                        <a class="dropdown-item" href="?sort=old_created">{% trans "Old created" %}</a>
+                        <a class="dropdown-item" href="?sort=new_updated">{% trans "New updated" %}</a>
+                        <a class="dropdown-item" href="?sort=old_updated">{% trans "Old updated" %}</a>
                     </div>
                 </div>
             </div>
             <!--add button-->
-            <a class="btn btn-primary mb-2" href="{% url 'dashboard:employee:employee_create_form' %}">+ Add new
-                staff</a>
+            <a class="btn btn-primary mb-2" href="{% url 'dashboard:employee:employee_create_form' %}">
+                {% trans "+ Add new staff" %}
+            </a>
         </div>
         {#        </div>#}
         <!-- Default Light Table -->
@@ -53,13 +54,13 @@
                             <thead class="bg-light">
                             <tr>
                                 <th scope="col" class="border-0">#</th>
-                                <th scope="col" class="border-0">ID</th>
-                                <th scope="col" class="border-0">Username</th>
-                                <th scope="col" class="border-0">First Name</th>
-                                <th scope="col" class="border-0">Last Name</th>
-                                <th scope="col" class="border-0">Position</th>
-                                <th scope="col" class="border-0">Phone</th>
-                                <th scope="col" class="border-0">Action</th>
+                                <th scope="col" class="border-0">{% trans "ID" %}</th>
+                                <th scope="col" class="border-0">{% trans "Username" %}</th>
+                                <th scope="col" class="border-0">{% trans "First Name" %}</th>
+                                <th scope="col" class="border-0">{% trans "Last Name" %}</th>
+                                <th scope="col" class="border-0">{% trans "Position" %}</th>
+                                <th scope="col" class="border-0">{% trans "Phone" %}</th>
+                                <th scope="col" class="border-0">{% trans "Action" %}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -76,14 +77,14 @@
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-primary dropdown-toggle"
                                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Edit
+                                                {% trans "Edit" %}
                                             </button>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item"
-                                                   href="{% url 'dashboard:employee:employee_edit_form' employee.id %}">Edit</a>
+                                                   href="{% url 'dashboard:employee:employee_edit_form' employee.id %}">{% trans "Edit" %}</a>
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item"
-                                                   href="{% url 'dashboard:employee:employee_delete' employee.pk %}">Delete</a>
+                                                   href="{% url 'dashboard:employee:employee_delete' employee.pk %}">{% trans "Delete" %}</a>
                                             </div>
                                         </div>
                                     </td>

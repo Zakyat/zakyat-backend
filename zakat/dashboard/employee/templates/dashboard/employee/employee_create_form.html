@@ -1,11 +1,12 @@
 {% extends 'dashboard/base.html' %}
+{% load static %}
 {% block content %}
     {% csrf_token %}
     <div class="main-content-container container-fluid px-4">
         <!-- Page Header -->
         <div class="page-header row no-gutters py-4">
             <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-                <span class="text-uppercase page-subtitle"><a href="{% url 'dashboard:employee:staff_list'%}">Back to staffs page</a></span>
+                <span class="text-uppercase page-subtitle"><a href="{% url 'dashboard:employee:staff_list' %}">Back to staffs page</a></span>
                 <h3 class="page-title">Employee create page</h3>
             </div>
         </div>
@@ -26,4 +27,8 @@
 
         <!-- End Default Light Table -->
     </div>
+
+    {% block javascripts %}
+        <script src="{% static 'dashboard/employee/email_validation.js' %}"></script>
+    {% endblock javascripts %}
 {% endblock %}

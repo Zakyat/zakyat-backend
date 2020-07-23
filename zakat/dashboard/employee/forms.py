@@ -1,13 +1,24 @@
 from django import forms
 from accounts.models import Employee
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.shortcuts import get_object_or_404
+from django.contrib.contenttypes.models import ContentType
 
 
 class UserForm(forms.ModelForm):
+    content_type = ContentType.objects.get_for_model(User)
+    user_permissions = forms.ModelMultipleChoiceField(
+        queryset=Permission.objects,
+        widget=forms.CheckboxSelectMultiple,
+        required=False)
+
     class Meta:
         model = User
         fields = "__all__"
+        widgets = {
+
+        }
+
 
     def save(self, commit=True):
         user = super(UserForm, self).save(commit=True)
@@ -16,6 +27,14 @@ class UserForm(forms.ModelForm):
 
 class UserEditForm(UserForm):
     user_id = forms.IntegerField(widget=forms.HiddenInput)
+    # user = User()
+    # user.user_permissions
+    #
+    # def __int__(self, *args, **kwargs):
+    #     super(UserEditForm, self).__init__(*args, **kwargs)
+    #     content_type = ContentType.objects.get_for_model(User)
+    #     self.fields['user_permissions'].queryset = Permission.objects.filter(content_type=content_type)
+    #     self.fields['user_permissions'].widget.attrs.update({'class': 'permission-select'})
 
     def clean(self):
         cleaned_data = self.cleaned_data

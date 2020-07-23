@@ -1,4 +1,5 @@
 {% extends 'dashboard/base.html' %}
+{% load static %}
 {% block content %}
     {% csrf_token %}
     <div class="main-content-container container-fluid px-4">
@@ -27,4 +28,8 @@
 
         <!-- End Default Light Table -->
     </div>
+
+    {% block javascripts %}
+        <script src="{% static 'dashboard/employee/email_validation.js' %}"></script>
+    {% endblock javascripts %}
 {% endblock %}

@@ -31,10 +31,6 @@ class StaffListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     template_name = 'dashboard/employee/staff_list.html'
     ordering = ['-created_at']
 
-    #
-    # def get_queryset(self):
-    #     return Employee.objects.all()
-
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
         search_query = self.request.GET.get('search', '')
@@ -50,7 +46,6 @@ class StaffListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
                     Q(user__username__icontains=search_query) |
                     Q(user__id__icontains=search_query)
             )
-
             employee_list = Employee.objects.filter(qset)
         else:
             employee_list = self.get_queryset()
