@@ -20,6 +20,7 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
+
 #: dashboard/employee/templates/dashboard/employee/change_password.html:3
 msgid "User Profile"
 msgstr "Профиль пользователя"
@@ -111,6 +112,7 @@ msgid "Bio"
 msgstr "Био"
 
 #: dashboard/employee/templates/dashboard/employee/staff_list.html:8
+
 #: dashboard/templates/dashboard/includes/sidebar.html:38
 msgid "Employees"
 msgstr "Работники"
@@ -242,11 +244,12 @@ msgid "Logout"
 msgstr "Выйти"
 
 #: dashboard/templates/dashboard/includes/sidebar.html:44
+#: dashboard/users/templates/dashboard/users/users_list.html:75
 msgid "Users"
 msgstr "Пользователи"
 
 #: dashboard/templates/dashboard/includes/sidebar.html:50
-msgid "Camping"
+msgid "Campaign"
 msgstr "Сборы"
 
 #: dashboard/templates/dashboard/includes/sidebar.html:57
@@ -276,3 +279,246 @@ msgstr "Другое"
 #: dashboard/templates/dashboard/includes/sidebar.html:96
 msgid "Change language"
 msgstr "Сменить язык"
+
+#: dashboard/users/templates/dashboard/users/search_filter.html:18
+msgid "Search for user..."
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/search_filter.html:21
+msgid "results"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/search_filter.html:26
+msgid "Advanced Search"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/search_filter.html:31
+msgid "display who paid even once zakat"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/search_filter.html:35
+msgid "Display who gave sadaka more than"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/search_filter.html:38
+msgid "rubls"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/search_filter.html:42
+msgid "Search"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_block_confirm.html:16
+msgid "Are you sure you want to unblock this user?"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_block_confirm.html:18
+msgid "Are you sure you want to block this user?"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_block_confirm.html:22
+#: dashboard/users/templates/dashboard/users/user_delete_confirm.html:18
+msgid "Yes"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_block_confirm.html:23
+#: dashboard/users/templates/dashboard/users/user_delete_confirm.html:19
+msgid "Cancel"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_delete_confirm.html:15
+msgid "Are you sure you want to remove this user?"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_detail.html:4
+msgid "User Profile"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_detail.html:17
+msgid "Go back to users list"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_detail.html:21
+msgid "Unblock this user"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_detail.html:25
+msgid "Block this user"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:21
+msgid "Warning!"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:21
+msgid "This user was blocked."
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:24
+msgid "Information"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:32
+#, fuzzy
+#| msgid "Users"
+msgid "Username"
+msgstr "Пользователи"
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:42
+msgid "Name"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:49
+#: dashboard/users/templates/dashboard/users/user_info_card.html:63
+msgid "No name"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:56
+msgid "Lastname"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:70
+#: dashboard/users/templates/dashboard/users/users_list.html:89
+msgid "Email"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:77
+msgid "No email"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:84
+msgid "Phone number"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:91
+msgid "No Phone"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:98
+msgid "Citizenship"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:105
+msgid "Unknown citizenship"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:112
+#: dashboard/users/templates/dashboard/users/users_list.html:91
+msgid "Religion"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:119
+msgid "Unknown religion"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:126
+msgid "Birthdate"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:133
+msgid "Unknown birthdate"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:140
+msgid "Education"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:147
+msgid "Unknown education"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:154
+msgid "Work position"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:161
+msgid "Unknown work position"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:168
+msgid "Work place"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:175
+msgid "Unknown work place"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:182
+msgid "Marital status"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:189
+msgid "Unknown marital status"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:196
+msgid "Address"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/user_info_card.html:203
+msgid "Unknown address"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/users_list.html:9
+msgid "User Prolife"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/users_list.html:37
+msgid "No users at the moment."
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/users_list.html:45
+msgid "First"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/users_list.html:46
+msgid "Previous"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/users_list.html:50
+msgid "Page"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/users_list.html:54
+msgid "Next"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/users_list.html:55
+msgid "Last"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/users_list.html:66
+msgid "Users total count"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/users_list.html:85
+msgid "Icon"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/users_list.html:87
+msgid "First Name"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/users_list.html:88
+msgid "Last Name"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/users_list.html:90
+msgid "Phone"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/users_list.html:116
+#: dashboard/users/templates/dashboard/users/users_list.html:125
+#: dashboard/users/templates/dashboard/users/users_list.html:134
+#: dashboard/users/templates/dashboard/users/users_list.html:143
+#: dashboard/users/templates/dashboard/users/users_list.html:152
+msgid "-"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/users_list.html:164
+msgid "Create email"
+msgstr ""
+
+#: dashboard/users/templates/dashboard/users/users_list.html:188
+msgid "Send email"
+msgstr ""

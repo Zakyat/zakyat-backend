@@ -1,0 +1,71 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %} Banners {% endblock %}
+
+{% block content %}
+
+    <div class="main-content-container container-fluid px-4">
+        <div class="main-content-container container-fluid px-4">
+            <!-- Page Header -->
+            <div class="page-header row no-gutters py-4">
+                <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                    <h3 class="page-title">Баннеры</h3>
+                </div>
+
+                <div style="width: 100%;display: flex;justify-content: flex-end " >
+                    <a style="color: white" href="{% url 'dashboard:banner:banner_create' %}">
+                        <button type="submit" class="btn btn-accent">Создать баннер</button>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- End Page Header -->
+            <div class="row">
+                {% if object_list %}
+                    {% for banner in page_obj %}
+                        <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                            <div class="card card-small card-post h-100">
+                                <div class="card-post__image"
+                                     style="background-image: url('{{ banner.banner.url }}');"></div>
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <a class="text-fiord-blue"
+                                           href="{{ banner.get_absolute_url }}">{{ banner.title }}</a>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <h3>На данный момент баннеров нет.</h3><br><br><br>
+                {% endif %}
+            </div>
+
+        </div>
+        <br>
+        <div class="pagination" style="width: 100%;display: flex;justify-content: flex-end ">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+{#                    <input type="image" src="" href="?page=1">#}
+                    <a href="?page=1">Первая</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+                {% endif %}
+
+                <span class="current">
+                    Страница {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">Последняя</a>
+                {% endif %}
+                <p></p>
+            </span>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

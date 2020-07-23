@@ -54,8 +54,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button"
                        aria-haspopup="true" aria-expanded="false">
-                        {% avatar user 40 style='border-radius: 50%;' %}
-                        <span class="d-none d-md-inline-block">
+                        {%  avatar user 40 style='border-radius: 50%;' %}
+                        <span class="d-none d-md-inline-block" style="min-width: 80px;">
                           {{ request.user.username }}
                         </span>
                     </a>

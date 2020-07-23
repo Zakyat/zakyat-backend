@@ -1,0 +1,119 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% load avatar_tags %}
+{% load get_previous_url %}
+
+{% block style %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <style>
+        .example-2 .btn-tertiary {
+            color: #555;
+            padding: 0;
+            line-height: 40px;
+            width: 300px;
+            margin: auto;
+            display: block;
+            border: 2px solid #555
+        }
+
+        .example-2 .btn-tertiary:hover, .example-2 .btn-tertiary:focus {
+            color: #888;
+            border-color: #888
+        }
+
+        .example-2 .input-file {
+            width: .1px;
+            height: .1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1
+        }
+
+        .example-2 .input-file + .js-labelFile {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 0 10px;
+            cursor: pointer
+        }
+
+        .example-2 .input-file + .js-labelFile .icon:before {
+            content: "\f093"
+        }
+
+        .example-2 .input-file + .js-labelFile.has-file .icon:before {
+            content: "\f00c";
+            color: #5AAC7B
+        }
+    </style>
+{% endblock style %}
+
+{% block content %}
+    <div class="main-content-container container-fluid px-4">
+        <div class="page-header row no-gutters py-4">
+        </div>
+        <!-- Default Light Table -->
+        <div class="card card-small mb-4 pt-3">
+            <div class="card-header border-bottom text-center">
+                <div class="mb-3 mx-auto">
+                    <img class="rounded-circle" src="{% avatar_url user %}" alt="User Avatar" width="110"></div>
+                <h4 class="mb-0">
+                    {{ user.username }}
+                </h4>
+                <br>
+                <br>
+
+                <form enctype="multipart/form-data" method="POST" action="{% url 'avatar_add' %}">
+                    <div class="example-2">
+                        <div class="form-group">
+                            <input type="file" name="avatar" accept="image/*" required="" id="file" class="input-file">
+                            <label for="file" class="btn btn-tertiary js-labelFile">
+                                <i class="icon fa fa-check"></i>
+                                <span class="js-fileName">Загрузить файл</span>
+                            </label>
+                        </div>
+                    </div>
+                    <p>
+                        {% csrf_token %}
+                        <input class="btn btn-success" type="submit" value="{% trans 'Save avatar' %}">
+                    </p>
+                </form>
+
+                {% if avatars %}
+                    <form method="POST" action="{% url 'avatar_delete' %}">
+                        <input type="hidden" name="choices" value="{% get_avatar_id user %}" id="id_choices_0">
+                        <p>{% csrf_token %}
+                            <input type="submit" value="{% trans "Delete avatar" %}" class="btn btn-danger"/>
+                        </p>
+                    </form>
+                {% endif %}
+
+            </div>
+        </div>
+        <!-- End Default Light Table -->
+    </div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+    <script>
+        (function () {
+
+            'use strict';
+
+            $('.input-file').each(function () {
+                var $input = $(this),
+                    $label = $input.next('.js-labelFile'),
+                    labelVal = $label.html();
+
+                $input.on('change', function (element) {
+                    var fileName = '';
+                    if (element.target.value) fileName = element.target.value.split('\\').pop();
+                    fileName ? $label.addClass('has-file').find('.js-fileName').html(fileName) : $label.removeClass('has-file').html(labelVal);
+                });
+            });
+
+        })();
+    </script>
+{% endblock javascripts %}

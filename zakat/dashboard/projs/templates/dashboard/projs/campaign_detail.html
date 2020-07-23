@@ -1,0 +1,258 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+{% block title %}Campaigns{% endblock %}
+
+{% block content %}
+
+    <div class="main-content-container container-fluid px-4">
+        <!-- Page Header -->
+        <div class="page-header row no-gutters py-4">
+            <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                <h3 class="page-title">Campaign Page {% if campaign.closed_at %}{% endif %}</h3>
+
+            </div>
+        </div>
+        <!-- End Page Header -->
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card card-small mb-4 ">
+                    <div class="card-header border-bottom">
+                        <h4 class="mb-0">
+                            {{ campaign.title }}
+                        </h4>
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item px-4">
+                            <div class="progress-wrapper">
+                                {#                                TODO add number=campaign.collected/campaign.goal #}
+                                <strong class="text-muted d-block mb-2">collected/goal {{ campaign.calculate_ratio }}</strong>
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="74"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 74%;">
+                                        <span class="progress-value">74%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item p-4">
+                            <strong class="text-muted d-block mb-2">Description</strong>
+                            <span>{{ campaign.description }}</span>
+                        </li>
+
+                        <!-- Closing Reason text -->
+                        {% if campaign.closing_reason %}
+                            <li class="list-group-item p-4">
+                                <strong class="text-muted d-block mb-2">Closing Reason</strong>
+                                <span>{{ campaign.closing_reason }}</span>
+                            </li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <!-- Post Overview -->
+                <div class='card card-small mb-3'>
+                    <div class="card-header border-bottom">
+                        <h6 class="m-0">Info</h6>
+                    </div>
+                    <div class='card-body p-0'>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item p-3">
+
+                            <span class="d-flex mb-2">
+                      <i class="material-icons mr-1">link</i>
+                      <strong class="mr-1">Project:</strong>
+{#                                    TODO add project url to#}
+                      <a href="#">
+                          {{ campaign.project }}
+                      </a>
+                    </span>
+
+                                <span class="d-flex mb-2">
+                      <i class="material-icons mr-1">alarm_add</i>
+                      <strong class="mr-1">Created at:</strong>
+                      <strong class="text-black-50">{{ campaign.created_at }}</strong>
+                    </span>
+                                <span class="d-flex mb-2">
+                      <i class="material-icons mr-1">edit</i>
+                      <strong class="mr-1">Updated At:</strong>
+                      <strong class="text-warning">{{ campaign.updated_at }}</strong>
+                    </span>
+                                {% if campaign.closed_at %}
+                                    <span class="d-flex mb-2">
+                      <i class="material-icons mr-1">alarm_on</i>
+                      <strong class="mr-1">Closed At:</strong>
+                      <strong class="text-danger">{{ campaign.closed_at }}</strong>
+                    </span>
+
+                                {% endif %}
+
+
+                                {% if campaign.request %}
+                                    <span class="d-flex mb-2">
+                      <i class="material-icons mr-1">visibility</i>
+                      <strong class="mr-1">Request:</strong>
+{#                                    TODO add request url to #}
+                      <a href="#">
+                          {{ campaign.request }}
+                      </a>
+                    </span>
+
+                                {% endif %}
+
+                                <span class="d-flex mb-2">
+
+                      <i class="material-icons mr-1">person</i>
+{#                                    TODO add employeer url #}
+                      <strong class="mr-1">Created By:</strong>
+                        <a href="#">{{ campaign.created_by }}
+                        </a>
+                    </span>
+
+                                <span class="d-flex">
+                      <i class="material-icons mr-1">monetization_on</i>
+                      <strong class="mr-1">GOAL:</strong>
+                      <strong class="text-danger">{{ campaign.goal }} RUBLES</strong>
+                    </span>
+                                <span class="d-flex">
+                      <i class="material-icons mr-1">tag_faces</i>
+                      <strong class="mr-1">Collected:</strong>
+                      <strong class="text-success">COLLECTED {{ campaign.get_collected_money }}</strong>
+                    </span>
+                            </li>
+                            <li class="list-group-item d-flex px-3">
+                                <a class="btn btn-sm btn-secondary text-white"
+                                   href="{% url 'dashboard:projs:campaign-edit' campaign.id %}">
+                                    <i class="material-icons">edit</i> Edit Campaign</a>
+                                <a
+                                        {#                                        TODO add href to see payment history #}
+                                        href="#"
+                                        class="btn btn-sm btn-accent ml-auto text-white">
+                                    <i class="material-icons">history</i> Payment History
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <!-- / Post Overview -->
+                <!-- Post Overview -->
+            </div>
+
+            <div class="col-lg-8 mb-4">
+
+                <!-- Add New Post Form -->
+                <div class="card card-small mb-2">
+                    <div class="card-header border-bottom">
+                        <h4 class="mb-0">
+                            Close Campaign
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="{% url 'dashboard:projs:campaign-close' campaign.id %}" method="post">
+                            <input class="form-control form-control-lg mb-3"
+                                   type="text" name="text" id="id_text" required
+                                   placeholder="Text">
+
+                            <button type="submit" class=" form-control form-control-lg btn btn-danger">
+                                <i class="material-icons">close</i> Close Campaign
+                            </button>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-8">
+
+                <!-- Add New Post Form -->
+                <div class="card card-small mb-2">
+                    <div class="card-header border-bottom">
+                        <h4 class="mb-0">
+                            Payment Options
+                        </h4>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="col-lg-8">
+                <div class="card card-small mb-2">
+                    <div class="card-header border-bottom">
+                        <h4 class="mb-0">Create Payment Option
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post"
+                              action="{% url 'dashboard:projs:campaign-create-payment_option' campaign.pk %}">
+                            <input class="form-control form-control-lg mb-3" required
+                                   type="text" name="title" id="id_title"
+                                   placeholder="Title">
+
+                            <input class="form-control form-control-lg mb-3" required
+                                   type="text" name="description" id="id_description"
+                                   placeholder="Description">
+
+                            <select class="form-control form-control-lg mb-3" name="payment_type" id="id_payment_type"
+                                    required>
+                                {% with payment_type=payment_option_form.data.payment_type %}
+                                    {% for choice in payment_option_form.fields.payment_type.choices %}
+                                        <option value="{{ choice.0 }}"
+                                                {% if forloop.first %}selected{% endif %}
+                                        >{{ choice.1 }}</option>
+                                    {% endfor %}
+                                {% endwith %}
+                            </select>
+
+
+                            <button type="submit" class="form-control form-control-lg btn btn-outline-accent">
+                                <i class="material-icons">add</i>Create Payment Option
+                            </button>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            {% if payment_options %}
+
+                {% for payment_option in payment_options %}
+                    <div class="col-lg-8 mb-1 {% if forloop.last %}mb-3{% endif %}">
+                        <div class="card card-small card-post">
+                            <div class="card-body">
+                                <h5 class="card-title mb-0">{{ payment_option.title }}</h5>
+                                <span class="text-muted small d-block">
+                                    Payment Type: {{ payment_option.get_payment_type }}
+                                </span>
+                                <p class="card-text text">{{ payment_option.description }}</p>
+                                <a href="{% url 'dashboard:projs:payment_option-edit' payment_option.id %}" class="btn btn-sm btn-secondary float-right text-white">
+                                    <i class="material-icons">edit</i> Edit
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                </div>
+            {% endif %}
+        <!-- Add New Post Form -->
+
+
+    </div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+{% endblock javascripts %}

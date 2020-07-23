@@ -1,9 +1,14 @@
+import os
+
+from django import forms
 from djongo import models
 from django.contrib.auth.models import User as DjangoUser
+from django.urls import reverse
 
 from django_countries.fields import CountryField
 
 # ---- Choice enums ----
+from zakat.settings import BASE_DIR
 
 MARITAL_STATUS = (
     ("married", "Married"),
@@ -52,14 +57,15 @@ DOCUMENT_TYPES = (
 )
 
 RELATIONS = (
-    ('father',   'Father'),
-    ('mother',   'Mother'),
-    ('son',      'Son'),
+    ('father', 'Father'),
+    ('mother', 'Mother'),
+    ('son', 'Son'),
     ('daughter', 'Daughter'),
-    ('brother',  'Brother'),
-    ('sister',   'Sister'),
-    ('other',    'Other'),
+    ('brother', 'Brother'),
+    ('sister', 'Sister'),
+    ('other', 'Other'),
 )
+
 
 # ---- Models ----
 
@@ -70,22 +76,26 @@ class Work(models.Model):
     class Meta:
         abstract = True
 
+
 class CashFlow(models.Model):
     type = models.CharField(choices=CASH_FLOW_TYPES, max_length=10)
     amount = models.IntegerField()
     description = models.TextField()
-    currency = models.CharField(max_length=3, choices=CURRENCIES)
+    currency = models.CharField(max_length=3, choices=CURRENCIES, default='RUB')
 
     class Meta:
         abstract = True
+
 
 class Document(models.Model):
     type = models.CharField(choices=DOCUMENT_TYPES, max_length=10)
     title = models.CharField(max_length=128)
-    file = models.FileField(upload_to='uploads/')
+    # file = models.FileField(upload_to='media/uploads')
+    file = models.FilePathField(path=os.path.join(BASE_DIR, 'media'), recursive=True)
 
     class Meta:
         abstract = True
+
 
 class FamilyMember(models.Model):
     name = models.CharField(max_length=64)
@@ -103,14 +113,38 @@ class User(models.Model):
     citizenship = CountryField()
     religion = models.CharField(max_length=10, choices=RELIGIONS)
     birthdate = models.DateField()
-    education = models.CharField(max_length=128)    # TODO: Why??
-    work = models.EmbeddedField(model_container=Work)
+    education = models.CharField(max_length=128)  # TODO: Why??
+    work = models.EmbeddedField(model_container=Work, blank=True)
     marital_status = models.CharField(max_length=10, choices=MARITAL_STATUS)
     address = models.CharField(max_length=128)
-    cash_flow = models.ArrayField(model_container=CashFlow, default=[])
-    related_documents = models.ArrayField(model_container=Document, default=[])
-    contact_person = models.EmbeddedField(model_container=FamilyMember)
-    family_members = models.ArrayField(model_container=FamilyMember, default=[]) # ArrayField with nested FileField causes a problem
+    isBlock = models.BooleanField(default=False)
+
+    # cash_flow = models.ArrayField(model_container=CashFlow, default=[])
+    related_documents = models.ArrayField(model_container=Document, blank=True, default=[])
+
+    # contact_person = models.EmbeddedField(model_container=FamilyMember)
+    # family_members = models.ArrayField(model_container=FamilyMember, default=[]) # ArrayField with nested FileField causes a problem
+    # contact_person = models.EmbeddedField(model_container=FamilyMember)
+    # family_members = models.ArrayField(model_container=FamilyMember,
+    #                                    default=[])  # ArrayField with nested FileField causes a problem
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if self.work.place == '' or self.work.position == '':
+            work = Work(position='Unemployed', place='Nowhere')
+            self.work = work
+
+        super(User, self).save(force_insert=force_insert,
+                               force_update=force_update,
+                               using=using,
+                               update_fields=update_fields)
+
+    def get_absolute_url(self):
+        return reverse('dashboard:users:users_detail', args=[self.id])
+
+    def get_absolute_url(self):
+        return reverse('dashboard:users:users_detail', args=[self.id])
+
 
 class Employee(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)

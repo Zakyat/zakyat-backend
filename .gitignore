@@ -144,3 +144,6 @@ envpy/
 .idea/
 zakat/.idea/
 dump.rdb
+
+*.jpg
+**/migrations/
