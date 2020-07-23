@@ -7,7 +7,7 @@
             <!-- Add New Post Form -->
             <div class="card card-small mb-2">
                 <div class="card-body">
-                    <form class="add-new-post" action="{% url 'dashboard:users:users_list' %}" method="get">
+                    <form class="add-new-post" action="{% url 'dashboard:sadaka_zakat:sadaka_zakat_list' %}" method="get">
                         <div class="form-row">
                             <div class="form-group col-lg-6">
                                 <strong class="text-muted d-block mb-2">Search</strong>
@@ -17,28 +17,41 @@
                                        value="{% if query %}{{ query }}{% endif %}">
                             </div>
                             <div class="form-group col-lg-2">
-                                <strong class="text-muted d-block mb-2">{% trans 'Zakat' %}</strong>
-                                <select class="form-control form-control-lg mb-3" name="zakat_persons" id="zakat_person">
-                                    <option value="default" {% if zakat == 'default' %}selected{% endif %}>
+                                <strong class="text-muted d-block mb-2">{% trans 'Types' %}</strong>
+                                <select class="form-control form-control-lg mb-3" name="transaction_type"
+                                        id="transaction_type" onchange="set_distribute_false(this)">
+                                    <option value="default" {% if type == 'default' %}selected{% endif %}>
                                         {% trans '-------' %}
                                     </option>
-                                    <option value="paid" {% if zakat == 'paid' %}selected{% endif %}>
-                                        {% trans 'paid' %}
+                                    <option value="sadaka" {% if type == 'sadaka' %}selected{% endif %}>
+                                        {% trans 'sadaka' %}
                                     </option>
-                                    <option value="not paid" {% if zakat == 'not paid' %}selected{% endif %}>
-                                        {% trans 'not paid' %}
+                                    <option value="direct sadaka" {% if type == 'direct sadaka' %}selected{% endif %}>
+                                        {% trans 'direct sadaka' %}
+                                    </option>
+                                    <option value="zakat" {% if type == 'zakat' %}selected{% endif %}>
+                                        {% trans 'zakat' %}
                                     </option>
                                 </select>
                             </div>
                             <div class="form-group col-lg-2">
-                                <strong class="text-muted d-block mb-2">{% trans 'Sadaka Sum' %}</strong>
-                                <input class="form-control form-control-lg mb-3"
-                                       type="number" min="0" step="0,01" name="zakat_sum_r" id="zakat_sum_r"
-                                       {% if more_than_sum != -1 %}value="{{ more_than_sum }}"{% endif %}>
+                                <strong class="text-muted d-block mb-2">{% trans 'Distribute' %}</strong>
+                                <select class="form-control form-control-lg mb-3" name="distribute"
+                                        id="distribute">
+                                    <option value="default" {% if distribute == 'default' %}selected{% endif %}>
+                                        {% trans '-------' %}
+                                    </option>
+                                    <option value="true" selected>
+                                        {% trans 'true' %}
+                                    </option>
+                                    <option value="false" {% if distribute == 'false' %}selected{% endif %}>
+                                        {% trans 'false' %}
+                                    </option>
+                                </select>
                             </div>
                             <div class="item" class="form-group col-lg-2">
                                 <button type="submit" class="form-control form-control-lg btn btn-accent  text-white"
-                                style="margin-top: 27px; height: 48px; width: 140px; margin-left: 5px">
+                                        style="margin-top: 27px; height: 48px; width: 140px; margin-left: 5px">
                                     <i class="material-icons">search</i>
                                     {% trans "Search" %}
                                 </button>
@@ -80,5 +93,16 @@
             }
         });
 
+        function set_distribute_false(sel) {
+            let distribute = $('#distribute');
+            if (sel.value === 'direct sadaka'){
+                let distribute = $('#distribute');
+                distribute.val('false');
+                distribute.prop('disabled', 'disabled');
+            }
+            else {
+                distribute.prop('disabled', false);
+            }
+        }
     </script>
 {% endblock content %}

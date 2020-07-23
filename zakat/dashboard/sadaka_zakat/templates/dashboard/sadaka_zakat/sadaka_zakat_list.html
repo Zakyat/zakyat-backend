@@ -13,7 +13,7 @@
     <div class="main-content-container container-fluid px-4">
         <div class="main-content-container container-fluid px-4">
 
-            {% include "dashboard/users/search_filter.html" %}
+            {% include "dashboard/sadaka_zakat/search_filter.html" %}
             <br>
             <hr>
             <!-- End Page Header -->
@@ -47,9 +47,10 @@
                                                 <thead class="bg-light">
                                                 <tr>
                                                     <th scope="col" class="border-0">#</th>
+                                                    <th scope="col" class="border-0">{% trans "Name" %}</th>
                                                     <th scope="col" class="border-0">{% trans "Amount" %}</th>
                                                     <th scope="col" class="border-0">{% trans "UserId" %}</th>
-                                                    <th scope="col" class="border-0">{% trans "Transection" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Transction Type" %}</th>
                                                     <th scope="col" class="border-0">{% trans "Currency" %}</th>
                                                     <th scope="col" class="border-0">{% trans "Subscription" %}</th>
                                                     <th scope="col" class="border-0">{% trans "Type" %}</th>
@@ -62,6 +63,12 @@
                                                             <a class="text-fiord-blue"
                                                                href="#">
                                                                 {{ transaction.id }}
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a class="text-fiord-blue"
+                                                               href="#">
+                                                                {{ transaction.user.user.username }}
                                                             </a>
                                                         </td>
                                                         <td>
@@ -81,10 +88,10 @@
                                                             {% endif %}
                                                         </td>
                                                         <td>
-                                                            {% if transaction.campaign %}
+                                                            {% if transaction.transaction_type %}
                                                                 <a class="text-fiord-blue"
                                                                    href="#">
-                                                                    {{ transaction.campaign }}
+                                                                    {{ transaction.get_transaction_type_display }}
                                                                 </a>
                                                             {% else %}
                                                                 {% trans "-" %}
