@@ -73,3 +73,5 @@ wcwidth==0.1.7
 whitenoise==5.0.1
 zipp==0.6.0
 dnspython==1.16.0
+social-auth-app-django==4.0.0
+
