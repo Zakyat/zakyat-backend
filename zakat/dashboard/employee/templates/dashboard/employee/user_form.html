@@ -1,0 +1,98 @@
+{% load widget_tweaks %}
+{% load i18n %}
+<div class="card card-small mb-4">
+    <div class="card-header border-bottom">
+        <h6 class="m-0">{% trans "User information" %}</h6>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item p-3">
+            <div class="row">
+                <div class="col">
+
+                    {{ user_form.user_id }}
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="fePassword">{% trans "Username" %} *</label>
+                            {% render_field user_form.username class="form-control" id="fePassword" placeholder="Username" %}
+                            <span class="helptext"> {% trans "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only." %}</span>
+
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="feEmailAddress">{% trans "Email" %}</label>
+                            {% render_field user_form.email class="form-control" id="feEmailAddress" placeholder="Email" onblur="validateEmail(this);" %}
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="feFirstName">{% trans "First Name" %}</label>
+                            {% render_field user_form.first_name class="form-control" id="feFirstName" placeholder="First Name" %}
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="feLastName">{% trans "Last Name" %}</label>
+                            {% render_field user_form.last_name class="form-control" id="feLastName" placeholder="Last Name" %}
+                        </div>
+                    </div>
+
+                    {% if create_password %}
+                        <div class="form-group">
+                            <label for="feInputAddress">{% trans "Password" %} *</label>
+                            {% render_field user_form.password class="form-control" type="password" %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="feInputAddress">{% trans "Confirm password" %} *</label>
+                            {% render_field user_form.password2 class="form-control" type="password" %}
+                        </div>
+                    {% else %}
+                        <div class="mt-2 mb-2">
+                        <a class="btn btn-primary" href="{% url 'dashboard:employee:change_password' user.id %}">{% trans "Change password" %} </a>
+                        </div>
+                    {% endif %}
+
+
+
+                    <div class="form-group">
+                        <label for="feInputAddress">{% trans "Active status?" %}</label>
+                        {% render_field user_form.is_active %}
+                        <p class="helptext">{% trans "Designates whether this user should be treated as active. Unselect this instead of deleting accounts." %}
+                            </p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feInputAddress">{% trans "Super user status?" %}</label>
+                        {% render_field user_form.is_superuser %}
+                        <p class="helptext">{% trans "Designates that this user has all permissions without explicitly assigning them." %}
+                            </p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feInputAddress">{% trans "Staff status?" %}</label>
+                        {{ user_form.is_staff | attr:"checked" }}
+                        <p class="helptext"> {% trans "Designates whether the user can log into this admin site." %} </p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feInputAddress">{% trans "User permissions:" %} </label>
+                        {% render_field user_form.user_permissions %}
+                        <span class="helptext"> {% trans "Specific permissions for this user." %}  </span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="feInputAddress">Date joined::</label>
+                        {{ user_form.date_joined | attr:"form-control" }}
+                    </div>
+
+                </div>
+            </div>
+        </li>
+    </ul>
+
+    {% if user_form.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ user_form.errors }}
+        </div>
+    {% endif %}
+</div>
+

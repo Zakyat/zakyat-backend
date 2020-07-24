@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django_countries',
     'graphene_django',
     'avatar',
+    'widget_tweaks',
     'django_filters',
     # our apps
     'accounts',
