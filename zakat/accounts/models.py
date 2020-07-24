@@ -153,3 +153,6 @@ class Employee(models.Model):
     bio = models.TextField()
     position = models.CharField(max_length=32)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user.username

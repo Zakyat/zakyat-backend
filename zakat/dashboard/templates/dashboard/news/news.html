@@ -1,0 +1,87 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% block content %}
+    <div class="main-content-container container-fluid px-4">
+        <!-- Page Header -->
+        <div class="page-header row no-gutters py-4">
+            <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                <h3 class="page-title">{% trans "News" %} ({{ news_list | length }})</h3>
+            </div>
+
+        </div>
+        <!-- End Page Header -->
+
+        <!--search-->
+        <div class="d-flex justify-content-between">
+            <div class="d-flex">
+                <form>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="{% trans "Search news" %}" name="search">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--add button-->
+            <a class="btn btn-primary mb-2" href="{% url 'dashboard:employee:employee_create_form' %}">
+                {% trans "+ Create Post" %}
+            </a>
+        </div>
+        {#        </div>#}
+        <!-- Default Light Table -->
+        <div class="row">
+            <div class="col">
+                <div class="card card-small mb-4">
+                    <div class="card-body p-0 pb-3 text-center">
+                        <table class="table mb-0">
+                            <thead class="bg-light">
+                            <tr>
+                                <th scope="col" class="border-0">#</th>
+                                <th scope="col" class="border-0">{% trans "ID" %}</th>
+                                <th scope="col" class="border-0">{% trans "Title" %}</th>
+                                <th scope="col" class="border-0">{% trans "Project Name" %}</th>
+                                <th scope="col" class="border-0">{% trans "Created At" %}</th>
+                                <th scope="col" class="border-0">{% trans "Created By" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for news in news_list %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ news.id }}</td>
+                                    <td>{{ news.title }}</td>
+                                    <td>{{ news.project.title }}</td>
+                                    <td>{{ news.created_at }}</td>
+                                    <td>{{ news.created_by.user.username }}</td>
+{#                                    <td>{{ employee.position }}</td>#}
+{#                                    <td>{{ employee.phone_number }}</td>#}
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary dropdown-toggle"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                {% trans "Edit" %}
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item"
+                                                   >{% trans "Edit" %}</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item"
+                                                   >{% trans "Delete" %}</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
