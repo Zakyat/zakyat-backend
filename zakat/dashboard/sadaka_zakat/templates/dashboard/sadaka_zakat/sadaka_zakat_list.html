@@ -51,9 +51,11 @@
                                                     <th scope="col" class="border-0">{% trans "Amount" %}</th>
                                                     <th scope="col" class="border-0">{% trans "UserId" %}</th>
                                                     <th scope="col" class="border-0">{% trans "Transction Type" %}</th>
-                                                    <th scope="col" class="border-0">{% trans "Currency" %}</th>
-                                                    <th scope="col" class="border-0">{% trans "Subscription" %}</th>
                                                     <th scope="col" class="border-0">{% trans "Type" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Subscription" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Campaign ID" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Date" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Action" %}</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -66,10 +68,14 @@
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <a class="text-fiord-blue"
-                                                               href="#">
-                                                                {{ transaction.user.user.username }}
-                                                            </a>
+                                                            {% if transaction.user.user.username %}
+                                                                <a class="text-fiord-blue"
+                                                                   href="#">
+                                                                    {{ transaction.user.user.username }}
+                                                                </a>
+                                                            {% else %}
+                                                                {% trans "Unknown" %}
+                                                            {% endif %}
                                                         </td>
                                                         <td>
                                                             <a class="text-fiord-blue"
@@ -98,30 +104,49 @@
                                                             {% endif %}
                                                         </td>
                                                         <td>
-                                                            {% if transaction.transaction_type %}
-                                                                <a class="text-fiord-blue"
-                                                                   href="#">
-                                                                    {{ transaction.transaction_type }}
-                                                                </a>
-                                                            {% else %}
-                                                                {% trans "-" %}
-                                                            {% endif %}
-                                                        </td>
-                                                        <td>
-                                                            {% if transaction.currency %}
-                                                                <a class="text-fiord-blue"
-                                                                   href="#">
-                                                                    {{ transaction.currency }}
-                                                                </a>
-                                                            {% else %}
-                                                                {% trans "-" %}
-                                                            {% endif %}
-                                                        </td>
-                                                        <td>
                                                             {% if transaction.type %}
                                                                 <a class="text-fiord-blue"
                                                                    href="#">
                                                                     {{ transaction.type }}
+                                                                </a>
+                                                            {% else %}
+                                                                {% trans "-" %}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if transaction.subscription_days %}
+                                                                <a class="text-fiord-blue"
+                                                                   href="#">
+                                                                    {{ transaction.get_subscription_days_display }}
+                                                                </a>
+                                                            {% else %}
+                                                                {% trans "-" %}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if transaction.campaign %}
+                                                                <a class="text-fiord-blue"
+                                                                   href="#">
+                                                                    {{ transaction.campaign.id }}
+                                                                </a>
+                                                            {% else %}
+                                                                {% trans "-" %}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if transaction.create_at %}
+                                                                <a class="text-fiord-blue"
+                                                                   href="#">
+                                                                    {{ transaction.create_at|date:'Y-m-d H:i' }}
+                                                                </a>
+                                                            {% else %}
+                                                                {% trans "-" %}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if not transaction.campaign %}
+                                                                <a href="#" class="btn btn-accent">
+                                                                    {% trans "Distribute" %}
                                                                 </a>
                                                             {% else %}
                                                                 {% trans "-" %}
