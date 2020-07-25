@@ -54,6 +54,7 @@
                                                     <th scope="col" class="border-0">{% trans "Type" %}</th>
                                                     <th scope="col" class="border-0">{% trans "Subscription" %}</th>
                                                     <th scope="col" class="border-0">{% trans "Campaign ID" %}</th>
+                                                    <th scope="col" class="border-0">{% trans "Campaign Title" %}</th>
                                                     <th scope="col" class="border-0">{% trans "Date" %}</th>
                                                     <th scope="col" class="border-0">{% trans "Action" %}</th>
                                                 </tr>
@@ -128,6 +129,16 @@
                                                                 <a class="text-fiord-blue"
                                                                    href="#">
                                                                     {{ transaction.campaign.id }}
+                                                                </a>
+                                                            {% else %}
+                                                                {% trans "-" %}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if transaction.campaign %}
+                                                                <a class="text-fiord-blue"
+                                                                   href="#">
+                                                                    {{ transaction.campaign.title }}
                                                                 </a>
                                                             {% else %}
                                                                 {% trans "-" %}
