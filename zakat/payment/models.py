@@ -1,4 +1,5 @@
 from django.core.validators import MinValueValidator
+from django.urls import reverse
 from djongo import models
 from accounts.models import User
 from channels.layers import get_channel_layer
@@ -75,6 +76,9 @@ class Transaction(models.Model):
     def delete(self, using=None, keep_parents=False):
         super(Transaction, self).delete(using=None, keep_parents=False)
         send_transaction_notification()
+
+    def get_absolute_url(self):
+        return reverse('dashboard:sadaka_zakat:sadaka_zakat_detail', args=[self.id])
 
 
 class PaymentOptions(models.Model):
