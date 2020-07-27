@@ -26,6 +26,14 @@
       <a class="btn btn-primary" href="{% url 'auth:social:begin' 'vk-oauth2' %}">
         Login with VK
       </a>
+
+      <a class="btn btn-primary" href="{% url 'auth:social:begin' 'google-oauth2' %}">
+        Login with Google
+      </a>
+
+      <a class="btn btn-primary" href="{% url 'auth:social:begin' 'instagram' %}">
+        Login with Instagram
+      </a>
     {% endif %}
   </div>
 

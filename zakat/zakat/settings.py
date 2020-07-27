@@ -160,12 +160,27 @@ AAUTH_PASSWORD_VALIDATORS = [
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.vk.VKOAuth2',          # vk authorization backend
+    'social_core.backends.google.GoogleOAuth2',      # google authorization backend
+    'social_core.backends.instagram.InstagramOAuth2',  # instagram authorization backend
     'django.contrib.auth.backends.ModelBackend',  # class authorization backend
 )
 
-#VK API APP KEYS:
-SOCIAL_AUTH_VK_OAUTH2_KEY = '7547650'                   # os.getenv('SOCIAL_AUTH_VK_OAUTH2_KEY','')
-SOCIAL_AUTH_VK_OAUTH2_SECRET = 'jWnShHah7b0hX2GYucNj'   # os.getenv('SOCIAL_AUTH_VK_OAUTH2_SECRET','')
+#API APPs KEYS:(We need to change this keys when we'll deploy site!)
+SOCIAL_AUTH_VK_OAUTH2_KEY = '7547650'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'jWnShHah7b0hX2GYucNj'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '145625990573-nnu45c93abgsvljcn45o1oh8pc526f4h.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'kZaBBC_U_CCL3P9iqRjRDyyU'
+
+SOCIAL_AUTH_INSTAGRAM_KEY = ''
+SOCIAL_AUTH_INSTAGRAM_SECRET = ''
+
+# SOCIAL_AUTH_VK_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_VK_OAUTH2_KEY','')
+# SOCIAL_AUTH_VK_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_VK_OAUTH2_SECRET','')
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+# SOCIAL_AUTH_INSTAGRAM_KEY = os.getenv('SOCIAL_AUTH_INSTAGRAM_KEY')
+# SOCIAL_AUTH_INSTAGRAM_SECRET = os.getenv('SOCIAL_AUTH_INSTAGRAM_SECRET')
 
 
 SOCIAL_AUTH_URL_NAMESPACE = 'auth:social'
