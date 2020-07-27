@@ -1,25 +1,22 @@
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages, auth
-from django.contrib.auth import authenticate, login as auth_login
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.views.generic.list import ListView
-from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
-from django.urls import reverse_lazy
-from accounts.models import User
-from .forms import SearchForm
-from .helper import get_country_code
-from django.db.models import Q, Sum
 from django.contrib.admin.views.decorators import staff_member_required
-from payment.models import Transaction
-from django.contrib import messages, auth
-
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.db.models import Q, Sum
+from django.shortcuts import redirect, get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic.list import ListView
 
+from accounts.models import User
+from payment.models import Transaction
 from .forms import LoginForm
+from .forms import SearchForm
 from .helper import check_is_employee
+from .helper import get_country_code
 
 
 @staff_member_required
@@ -64,6 +61,7 @@ def login(request):
     # return render(request, 'dashboard/users/login.html', {'form': form})
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'users.view_user'
     model = User
@@ -120,12 +118,14 @@ class UsersList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return context
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class UserDetail(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     permission_required = 'users.view_user'
     model = User
     template_name = 'dashboard/users/user_detail.html'
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class UserCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = 'users.create_user'
     template_name = 'dashboard/users/users_form.html'
@@ -133,6 +133,7 @@ class UserCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     fields = "__all__"
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class UserDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     permission_required = 'users.delete_user'
     model = User
@@ -140,6 +141,7 @@ class UserDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     template_name = 'dashboard/users/user_delete_confirm.html'
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class UserUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = 'users.change_user'
     model = User
