@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import TransactionList, TransactionDetail
 
+
 app_name = 'sadaka_zakat'
 
 urlpatterns = [

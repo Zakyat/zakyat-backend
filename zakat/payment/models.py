@@ -67,6 +67,7 @@ class Transaction(models.Model):
     currency = models.CharField(max_length=3, choices=CURRENCIES, default='RUB')
     subscription_days = models.IntegerField(choices=SUBSCRIPTION_DAYS, default="0")
     type = models.CharField(max_length=16, choices=PAYMENT_TYPES, default=True)
+    create_at = models.DateTimeField(auto_now=True)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
