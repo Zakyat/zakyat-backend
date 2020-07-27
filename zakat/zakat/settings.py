@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'payment',
     'partners',
     'dashboard',
+    'dashboard.sadaka_zakat',
     'dashboard.users',
     'dashboard.employee',
     'dashboard.projs',
