@@ -42,13 +42,10 @@
                                                 <td>{{ forloop.counter }}</td>
                                                 <td>{{ campaign.title }}</td>
                                                 <td>{{ campaign.goal }}</td>
-                                                <td>{{ campaign.get_normal_created_at_view }}</td>
+                                                <td>{{ campaign.get_collected_money }}</td>
                                                 <td>
-                                                    {% if campaign.closed_at %}
-                                                        {{ campaign.get_normal_closed_at_view }}
-                                                    {% else %}
-                                                        -
-                                                    {% endif %}</td>
+                                                    <input type="number" min="0" step="">
+                                                </td>
                                             </tr>
 
                                         {% endfor %}

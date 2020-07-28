@@ -2,7 +2,6 @@ from django.db.models import Sum
 from django.utils.timezone import localtime
 from djongo import models
 from accounts.models import User, Employee, Document
-from payment.models import Transaction
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
@@ -134,7 +133,7 @@ class Campaign(models.Model):
 
     # TODO accomplish
     def get_collected_money(self):
-        return Transaction.objects.filter(campaign=self).aggregate(Sum('amount'))
+        return 100
 
     # TODO accomplish
     def calculate_ratio(self):
