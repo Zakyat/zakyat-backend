@@ -2,24 +2,27 @@ from django import forms
 from multiupload.fields import MultiFileField
 
 from news.models import Post, PostTag, PostImage
+from projects.models import Project
 
 class PostCreateForm(forms.ModelForm):
     class Meta:
         model = Post
-        exclude = ()
+        exclude = ('created_by', 'tags',)
 
-    images = MultiFileField(min_num=0, max_num=10, attrs={'accept': 'image/*'})
-    tags = forms.CharField(label='Tags (separate them with a comma)')
-
-    def save(self, commit=True):
-        instance = super(PostCreateForm, self).save(commit)
-        for each in self.cleaned_data['images']:
-            PostImage.objects.create(image=each, post=instance)
-
-        tags = self.cleaned_data['tags'].replace(' ', '').split(',')
-        for tag in tags:
-            PostTag.objects.create(tag=tag, post=instance)
-        return instance
+    # images = MultiFileField(min_num=0, max_num=10, attrs={'accept': 'image/*'})
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Title'}))  # TODO: i18n
+    description = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Content'}))
+    project = forms.ModelChoiceField(queryset=Project.objects.all(), widget=forms.Select(attrs={'class': 'select'}))
+    # def save(self, user):
+    #     instance = super(PostCreateForm, self).save()
+    #     instance.user = user
+    #     for each in self.cleaned_data['images']:
+    #         PostImage.objects.create(image=each, post=instance)
+    #
+    #     tags = self.cleaned_data['tags'].replace(' ', '').split(',')
+    #     for tag in tags:
+    #         PostTag.objects.create(tag=tag, post=instance)
+    #     return instance
 
 
 class PostEditForm(forms.ModelForm):

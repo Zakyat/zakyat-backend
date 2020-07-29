@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>News Dashboard</h1>
-    <button><a href="{% url 'dashboard:news_posts:post_create' %}">Create a new post</a></button>
+    <button><a href="{% url 'dashboard:news_posts:newz_create' %}">Create a new post</a></button>
     <hr>
     {% for post in object_list %}
         <div>
