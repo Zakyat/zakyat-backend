@@ -7,10 +7,9 @@ from projects.models import Project
 class PostCreateForm(forms.ModelForm):
     class Meta:
         model = Post
-        exclude = ('created_by',)
+        exclude = ('created_by', 'tags',)
 
-    images = MultiFileField(min_num=0, max_num=10, attrs={'accept': 'image/*'})
-    tags = forms.CharField(label='Tags (separate them with a comma)')
+    # images = MultiFileField(min_num=0, max_num=10, attrs={'accept': 'image/*'})
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Title'}))  # TODO: i18n
     description = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Content'}))
     project = forms.ModelChoiceField(queryset=Project.objects.all(), widget=forms.Select(attrs={'class': 'select'}))
