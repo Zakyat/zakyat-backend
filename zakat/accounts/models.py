@@ -120,7 +120,7 @@ class User(models.Model):
     isBlock = models.BooleanField(default=False)
 
     # cash_flow = models.ArrayField(model_container=CashFlow, default=[])
-    related_documents = models.ArrayField(model_container=Document, blank=True, default=[])
+    # related_documents = models.ArrayField(model_container=Document, blank=True, default=[])
 
     # contact_person = models.EmbeddedField(model_container=FamilyMember)
     # family_members = models.ArrayField(model_container=FamilyMember, default=[]) # ArrayField with nested FileField causes a problem
@@ -142,12 +142,11 @@ class User(models.Model):
     def get_absolute_url(self):
         return reverse('dashboard:users:users_detail', args=[self.id])
 
-    def get_absolute_url(self):
-        return reverse('dashboard:users:users_detail', args=[self.id])
-
 
 class Employee(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     phone_number = models.CharField(max_length=16)
     photo = models.ImageField(upload_to='uploads', default='uploads/anon.png')
     bio = models.TextField()
@@ -156,3 +155,4 @@ class Employee(models.Model):
 
     def __str__(self):
         return self.user.username
+

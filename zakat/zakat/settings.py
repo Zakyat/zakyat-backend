@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django_countries',
     'graphene_django',
     'avatar',
+    'widget_tweaks',
     'django_filters',
     # our apps
     'accounts',
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
     'payment',
     'partners',
     'dashboard',
+    'dashboard.sadaka_zakat',
     'dashboard.users',
     'dashboard.employee',
     'dashboard.projs',
