@@ -91,10 +91,10 @@ class CashFlow(models.Model):
 
 
 class Document(models.Model):
-    type = models.CharField(choices=DOCUMENT_TYPES, max_length=10)
-    title = models.CharField(max_length=128)
+    type = models.CharField(choices=DOCUMENT_TYPES, max_length=10,blank=True)
+    title = models.CharField(max_length=128,blank=True)
     # file = models.FileField(upload_to='media/uploads')
-    file = models.FilePathField(path=os.path.join(BASE_DIR, 'media'), recursive=True)
+    file = models.FilePathField(path=os.path.join(BASE_DIR, 'media'), recursive=True,blank=True)
 
     class Meta:
         abstract = True
@@ -112,7 +112,7 @@ class FamilyMember(models.Model):
 
 class User(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=16)
+    phone_number = models.CharField(max_length=16,blank=True)
     citizenship = CountryField(default='RU')
     religion = models.CharField(max_length=10, choices=RELIGIONS, default='-')
     birthdate = models.DateField(blank=True, default=datetime.strptime('1000-12-12', '%Y-%m-%d'))
