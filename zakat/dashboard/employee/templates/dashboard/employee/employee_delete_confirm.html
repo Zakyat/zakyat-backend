@@ -1,13 +1,23 @@
 {% extends 'dashboard/base.html' %}
 {% load get_previous_url %}
+{% load i18n %}
 {% block content %}
-    <form action="." method="post">
+    <div class="main-content-container container-fluid px-4">
+
+        <div class="page-header row no-gutters py-4">
+            <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                <h6>{{ employee.user.username }} | {% trans "Do you want to delete the employee ?" %}</h6>
+            </div>
+        </div>
+        <form action="." method="post">
             {% csrf_token %}
-    <div>
-        Do you want to delete the product?
+            <div>
+
+            </div>
+            <div>
+                <input type="submit" class="btn btn-danger" value="{% trans "Yes"%}"/>
+                <a class="ml-2" href="{% get_previous_url request %}">{% trans "Cancel"%}</a>
+            </div>
+        </form>
     </div>
-    <div>
-        <input type="submit" value="Yes"/> <a href="{% get_previous_url request %}">Cancel</a>
-    </div>
-    </form>
 {% endblock %}
