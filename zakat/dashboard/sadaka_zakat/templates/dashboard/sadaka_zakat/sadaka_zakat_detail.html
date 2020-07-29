@@ -3,12 +3,37 @@
 
 {% block content %}
     <div class="main-content-container container-fluid px-4 mt-3">
+        <div class="page-header row no-gutters py-4">
+            <div class="col-12 col-sm-4 text-center text-sm-left mb-0 ml-1">
+                <h3 class="page-title">{% trans 'Distribute Sadaka and Zakat' %}</h3>
 
-        {% include "dashboard/sadaka_zakat/campaign_search.html" %}
+            </div>
+        </div>
+
+        <div class="row">
+            {% include "dashboard/sadaka_zakat/campaign_search.html" %}
+
+            <div class="col-lg-4">
+                <div class='card card-small mb-3'>
+                    <div class="card-header border-bottom">
+                        <h6 class="m-0">Info</h6>
+                    </div>
+                    <div class="card-body">
+                        <span class="d-flex mb-2">
+                        <i class="material-icons mr-1">link</i>
+                        <strong class="mr-1">{% trans 'Transaction ID' %}:</strong>
+                        <a href="#">
+                          {{ transaction.id }}
+                        </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="page-header row no-gutters py-4">
             <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-                <h3 class="page-title">{% trans 'Open campigns count:' %}: {{ count }}</h3>
+                <h3 class="page-title">{% trans 'Open campigns count:' %} {{ count }}</h3>
             </div>
         </div>
 
@@ -37,14 +62,26 @@
                                         </thead>
                                         <tbody>
                                         {% for campaign in campaigns %}
-                                            <tr class="row-click"
-                                                onclick="window.location='{% url 'dashboard:projs:campaign-detail' campaign.id %}';">
-                                                <td>{{ forloop.counter }}</td>
-                                                <td>{{ campaign.title }}</td>
-                                                <td>{{ campaign.goal }}</td>
-                                                <td>{{ campaign.get_collected_money }}</td>
+                                            <tr>
+                                                <td class="row-click"
+                                                    onclick="window.location='{% url 'dashboard:projs:campaign-detail' campaign.id %}';">
+                                                    {{ forloop.counter }}
+                                                </td>
+                                                <td class="row-click"
+                                                    onclick="window.location='{% url 'dashboard:projs:campaign-detail' campaign.id %}';">
+                                                    {{ campaign.title }}
+                                                </td>
+                                                <td class="row-click"
+                                                    onclick="window.location='{% url 'dashboard:projs:campaign-detail' campaign.id %}';">
+                                                    {{ campaign.goal }}
+                                                </td>
+                                                <td class="row-click"
+                                                    onclick="window.location='{% url 'dashboard:projs:campaign-detail' campaign.id %}';">
+                                                    {{ campaign.get_collected_money }}
+                                                </td>
                                                 <td>
-                                                    <input type="number" min="0" step="">
+                                                    <input class="form-control form-control-sm"
+                                                           type="number" step="0,01" min="0">
                                                 </td>
                                             </tr>
 
