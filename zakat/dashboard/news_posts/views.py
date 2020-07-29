@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DetailView
 from django.views.generic.list import ListView
 
@@ -8,6 +8,10 @@ from dashboard.news_posts.forms import PostCreateForm, PostEditForm
 from dashboard.news_posts.mixins import EmployeePermissionMixin
 from news.models import Post
 from django.db.models import Q
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+
+
 
 class NewsListView(LoginRequiredMixin, EmployeePermissionMixin, ListView):
     login_url = 'dashboard:users:login'
@@ -59,10 +63,9 @@ class NewsCreateView(LoginRequiredMixin, EmployeePermissionMixin, CreateView):
                 news_created = news_create_form.save(commit=False)
 
                 news_created.save()
-                return HttpResponseRedirect(reverse('dashboard:employee:staff_list'))
+                return HttpResponseRedirect(reverse('dashboard:news:news_posts:newz'))
             else:
-                return render(request, 'dashboard/employee/employee_create_form.html',
-                              {'user_form': user_form, 'employee_form': employee_form})
+                return render(request, 'dashboard/newz/create.html', {'news_create_form': news_create_form})
 
 
 class NewsList(LoginRequiredMixin, EmployeePermissionMixin, ListView):
