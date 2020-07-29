@@ -30,5 +30,5 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls')),
     path('avatar/', include('avatar.urls')),
     path('news/', include('news.urls')),
-    path('auth/', include('accounts.users_auth.urls',namespace='auth')),
+    path('auth/', include('accounts.urls',namespace='auth')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

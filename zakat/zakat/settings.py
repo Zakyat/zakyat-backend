@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     'social_django',
     # our apps
     'accounts',
-    'accounts.users_auth',
     'projects',
     'news',
     'payment',
