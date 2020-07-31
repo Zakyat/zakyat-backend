@@ -11,6 +11,8 @@ class Post(models.Model):
 	project = models.ForeignKey(Project, null=True, on_delete=models.SET_NULL)
 	created_by = models.ForeignKey(Employee, null=True, on_delete=models.SET_NULL)
 	# TODO: Decide whether social links are needed to be stored here
+	def __str__(self):
+		return self.title
 
 
 class PostImage(models.Model):

@@ -124,7 +124,7 @@ class User(models.Model):
     gender = models.BooleanField(null=True, help_text='Yes means Male, No means Female')
 
     # cash_flow = models.ArrayField(model_container=CashFlow, default=[])
-    related_documents = models.ArrayField(model_container=Document, blank=True, default=[])
+    # related_documents = models.ArrayField(model_container=Document, blank=True, default=[])
 
     EMPTY_FIELDS_LIST = [
         'religion',
@@ -176,10 +176,17 @@ class User(models.Model):
         return counter == 0 or counter == len(self.EMPTY_FIELDS_LIST)
 
 
+
 class Employee(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     phone_number = models.CharField(max_length=16)
     photo = models.ImageField(upload_to='uploads', default='uploads/anon.png')
     bio = models.TextField()
     position = models.CharField(max_length=32)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user.username
+

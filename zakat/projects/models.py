@@ -75,6 +75,8 @@ class Project(models.Model):
     # property `campaigns` created with a backref
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.title
 
 
 class Campaign(models.Model):
