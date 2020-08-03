@@ -65,7 +65,7 @@
                                                 {% trans "Edit" %}
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item"
+                                                <a href="{% url 'dashboard:news_posts:newz_edit' pk=news.id %}" class="dropdown-item"
                                                    >{% trans "Edit" %}</a>
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item"

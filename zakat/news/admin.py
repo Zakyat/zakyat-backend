@@ -6,14 +6,13 @@ from .models import Post, PostImage, PostTag
 class PostImageInline(admin.StackedInline):
     model = PostImage
 
-
 class PostTagInline(admin.StackedInline):
     model = PostTag
 
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    inlines = [PostImageInline, PostTagInline]
+    inlines = [PostImageInline]
 
     class Meta:
         model = Post

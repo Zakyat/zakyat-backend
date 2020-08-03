@@ -65,7 +65,7 @@ class NewsCreateView(LoginRequiredMixin, EmployeePermissionMixin, CreateView):
                 news_created.save()
                 return HttpResponseRedirect(reverse('dashboard:news_posts:newz'))
             else:
-                return render(request, 'dashboard/news/news_create.html', {'news_create_form': news_create_form})
+                return render(request, 'dashboard/news/news_create.html', {'news_create_form': news_create_form, 'form': news_create_form})
 
 
 class NewsList(LoginRequiredMixin, EmployeePermissionMixin, ListView):

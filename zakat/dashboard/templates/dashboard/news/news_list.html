@@ -29,10 +29,6 @@
                 </ul>
             </div>
             <a href="{% url 'dashboard:news_posts:post_edit' pk=post.id %}"><button>Edit this post</button></a>
-            <form action="" method="post">
-                <input name="post_id" type="hidden" value="{{ post.id }}">
-                <input type="submit" value="Delete this post">
-            </form>
         </div>
         <hr>
     {% empty %}

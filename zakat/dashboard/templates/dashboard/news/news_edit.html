@@ -18,8 +18,9 @@
                 <form  method="post" enctype="multipart/form-data">
                   {% csrf_token %}
                   {{ form.as_p }}
-                    <input placeholder="Submit" type="submit">
+                    <input class="btn btn-block" placeholder="Submit" type="submit">
                 </form>
+                  {{ form.media }}
               </div>
             </div>
             <!-- / Add New Post Form -->

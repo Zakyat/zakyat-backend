@@ -29,5 +29,6 @@ urlpatterns = [
     path('graphql', GraphQLView.as_view(graphiql=True)),
     path('dashboard/', include('dashboard.urls')),
     path('avatar/', include('avatar.urls')),
-    path('news/', include('news.urls'))
+    path('news/', include('news.urls')),
+    path('markdownx/', include('markdownx.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
