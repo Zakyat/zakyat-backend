@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'avatar',
     'widget_tweaks',
     'django_filters',
+    'sberbank',
     # our apps
     'accounts',
     'projects',
@@ -236,3 +237,14 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD', '')
 
 # Activate Django-Heroku.
 # django_heroku.settings(locals())
+
+MERCHANTS = {
+    os.getenv('merchant_id', ''): {
+        'username': os.getenv('merchant_username', ''),
+        'password': os.getenv('merchant_password', ''),
+        'success_url': 'http://ваш.домен/sberbank/payment/success',
+        'fail_url': 'http://ваш.домен/sberbank/payment/fail',
+        'app_success_url': 'http://ваш.домен/payment/success',
+        'app_fail_url': 'http://ваш.домен/payment/fail',
+    }
+}
