@@ -28,6 +28,8 @@ SECRET_KEY = 'dwhkv)h1i)yx@p2t4a=vhh33jv1*vi7577exxwdv(tf*(1yzw9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+FORM_RENDERER = 'django.forms.renderers.DjangoTemplates'
+
 ALLOWED_HOSTS = []
 # heroku
 # ALLOWED_HOSTS = ['zakatkazan.herokuapp.com']
@@ -51,6 +53,7 @@ INSTALLED_APPS = [
     'avatar',
     'widget_tweaks',
     'django_filters',
+    'social_django',
     # our apps
     'accounts',
     'projects',
@@ -90,6 +93,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -151,6 +156,47 @@ AAUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+###
+### Social Auth Part:
+###
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.vk.VKOAuth2',          # vk authorization backend
+    'social_core.backends.google.GoogleOAuth2',      # google authorization backend
+    'social_core.backends.instagram.InstagramOAuth2',  # instagram authorization backend
+    'django.contrib.auth.backends.ModelBackend',  # class authorization backend
+)
+
+#API APPs KEYS:(We need to change this keys when we'll deploy site!)
+SOCIAL_AUTH_VK_OAUTH2_KEY = '7547650'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'jWnShHah7b0hX2GYucNj'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '145625990573-nnu45c93abgsvljcn45o1oh8pc526f4h.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'kZaBBC_U_CCL3P9iqRjRDyyU'
+
+SOCIAL_AUTH_INSTAGRAM_KEY = '3161780327269524'
+SOCIAL_AUTH_INSTAGRAM_SECRET = '54d70a16b051d4106b3396eb1283570c'
+
+# SOCIAL_AUTH_VK_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_VK_OAUTH2_KEY','')
+# SOCIAL_AUTH_VK_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_VK_OAUTH2_SECRET','')
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+# SOCIAL_AUTH_INSTAGRAM_KEY = os.getenv('SOCIAL_AUTH_INSTAGRAM_KEY')
+# SOCIAL_AUTH_INSTAGRAM_SECRET = os.getenv('SOCIAL_AUTH_INSTAGRAM_SECRET')
+
+
+SOCIAL_AUTH_URL_NAMESPACE = 'auth:social'
+
+LOGIN_URL = '/auth/login/vk-oauth2/'
+
+LOGIN_REDIRECT_URL = '/auth/test'  # change on right url
+LOGOUT_REDIRECT_URL = '/'          # change on right url
+
+###
+###
+###
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/

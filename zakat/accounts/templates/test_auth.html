@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Authentication test</title>
+
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+    integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+    crossorigin="anonymous">
+</head>
+<body>
+  <div class="jumbotron">
+    <h1>Authentication test!</h1>
+    {% if user.is_authenticated %}
+      <p>Logged as {{ user.username }}</p>
+        <p>{{ user.first_name }}<br>
+            {{ user.last_name }}
+        </p>
+
+      <a class="btn btn-primary" href="{% url 'auth:logout' %}">Logout</a>
+    {% else %}
+
+      <a class="btn btn-primary" href="{% url 'auth:social:begin' 'vk-oauth2' %}">
+        Login with VK
+      </a>
+
+      <a class="btn btn-primary" href="{% url 'auth:social:begin' 'google-oauth2' %}">
+        Login with Google
+      </a>
+
+      <a class="btn btn-primary" href="{% url 'auth:social:begin' 'instagram' %}">
+        Login with Instagram
+      </a>
+    {% endif %}
+  </div>
+
+</body>
+</html>
