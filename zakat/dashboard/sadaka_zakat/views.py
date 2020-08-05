@@ -70,4 +70,5 @@ class TransactionDetail(LoginRequiredMixin, PermissionRequiredMixin, FilterView)
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TransactionDetail, self).get_context_data(object_list=object_list, **kwargs)
         context['count'] = len(object_list)
+        context['transaction'] = Transaction.objects.get(id=self.kwargs['pk'])
         return context
