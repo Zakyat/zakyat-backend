@@ -103,6 +103,7 @@ Jinja2==2.11.2
 kombu==4.6.8
 lxml==4.4.1
 MarkupSafe==1.1.1
+martor
 more-itertools==7.2.0
 django-markdownx==3.0.1
 packaging==19.2
