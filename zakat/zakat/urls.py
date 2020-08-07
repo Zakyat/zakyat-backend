@@ -31,4 +31,5 @@ urlpatterns = [
     path('avatar/', include('avatar.urls')),
     path('news/', include('news.urls')),
     path('markdownx/', include('markdownx.urls')),
+    path('martor/', include('martor.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

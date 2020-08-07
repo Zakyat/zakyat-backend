@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'dashboard.projs',
     'dashboard.partner',
     'dashboard.banner',
+    'martor',
     'markdownx'
 ]
 

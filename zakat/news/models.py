@@ -3,7 +3,7 @@ from djongo import models
 from markdownx.models import MarkdownxField
 from projects.models import Project
 from accounts.models import Employee
-
+from martor.models import MartorField
 
 
 class PostTag(models.Model):
@@ -16,7 +16,7 @@ class PostTag(models.Model):
 class Post(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	title = models.TextField()    # TODO: i18n
-	description = MarkdownxField()    # TODO: i18n
+	description = MartorField()    # TODO: i18n
 	
 	project = models.ForeignKey(Project, null=True, on_delete=models.SET_NULL)
 	created_by = models.ForeignKey(Employee, null=True, on_delete=models.SET_NULL)

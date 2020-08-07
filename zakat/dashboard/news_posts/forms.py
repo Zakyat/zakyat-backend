@@ -1,6 +1,7 @@
 from django import forms
 # from multiupload.fields import MultiFileField
 from markdownx.fields import MarkdownxFormField
+from martor.fields import MartorFormField
 
 from news.models import Post, PostTag, PostImage
 from projects.models import Project
@@ -13,7 +14,7 @@ class PostCreateForm(forms.ModelForm):
     # images = MultiFileField(min_num=0, max_num=10, attrs={'accept': 'image/*'})
     tags = forms.ModelMultipleChoiceField(queryset=PostTag.objects.all())
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Title'}))  # TODO: i18n
-    description = MarkdownxFormField()
+    description = MartorFormField()
     project = forms.ModelChoiceField(queryset=Project.objects.all(), widget=forms.Select(attrs={'class': 'select'}))
     # def save(self, user):
     #     instance = super(PostCreateForm, self).save()
