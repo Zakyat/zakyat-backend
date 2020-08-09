@@ -5,11 +5,41 @@ from django.utils.decorators import method_decorator
 from django.views.generic import DetailView
 from django.views.generic.list import ListView
 from django_filters.views import FilterView
+from django.shortcuts import get_object_or_404, redirect, render
 
 from payment.models import Transaction
-from .forms import SearchForm
+from projects.models import Campaign
+from .forms import SearchForm, DistributeForm
 from .helper import get_amount, get_transaction_type
 from ..projs.filters import CampaignFilter
+
+
+@staff_member_required
+def distribute(request, pk):
+    if request.method == 'POST':
+        form = DistributeForm(request.POST)
+        # if form.is_valid():
+        transaction = get_object_or_404(Transaction, id=pk)
+        sum = transaction.amount
+        for k in form.fields:
+            sum -= form.fields[k] and int(form.fields[k]) or 0
+        if sum < 0:
+            return redirect('dashboard:sadaka_zakat:sadaka_zakat_detail', pk=pk)
+        for k in form.fields:
+            if form.fields[k]:
+                transaction.pk = None
+                transaction.amount = int(form.fields[k])
+                transaction.campaign = get_object_or_404(Campaign, id=k)
+                transaction.save()
+
+        if sum == 0:
+            transaction = get_object_or_404(Transaction, id=pk)
+            transaction.delete()
+        else:
+            transaction = get_object_or_404(Transaction, id=pk)
+            transaction.amount = sum
+            transaction.save()
+    return redirect('dashboard:sadaka_zakat:sadaka_zakat_list')
 
 
 @method_decorator(staff_member_required, name='dispatch')
