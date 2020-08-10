@@ -18,18 +18,30 @@ from ..projs.filters import CampaignFilter
 def distribute(request, pk):
     if request.method == 'POST':
         form = DistributeForm(request.POST)
-        # if form.is_valid():
         transaction = get_object_or_404(Transaction, id=pk)
+
+        # check if distributed sum not more than transaction.amount
         sum = transaction.amount
         for k in form.fields:
             sum -= form.fields[k] and int(form.fields[k]) or 0
         if sum < 0:
             return redirect('dashboard:sadaka_zakat:sadaka_zakat_detail', pk=pk)
+
+        # check if campaign.goal not less than distribute to it
+        campaigns = {}
+        for k in form.fields:
+            if form.fields[k]:
+                campaign = get_object_or_404(Campaign, id=k)
+                if campaign.goal < int(form.fields[k]):
+                    return redirect('dashboard:sadaka_zakat:sadaka_zakat_detail', pk=pk)
+                else:
+                    campaigns[k] = campaign
+
         for k in form.fields:
             if form.fields[k]:
                 transaction.pk = None
+                transaction.campaign = campaigns[k]
                 transaction.amount = int(form.fields[k])
-                transaction.campaign = get_object_or_404(Campaign, id=k)
                 transaction.save()
 
         if sum == 0:

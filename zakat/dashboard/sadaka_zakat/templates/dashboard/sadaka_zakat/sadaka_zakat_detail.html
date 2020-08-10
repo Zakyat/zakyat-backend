@@ -60,7 +60,8 @@
                     <h3 class="page-title">{% trans 'Open campigns count:' %} {{ count }}</h3>
                 </div>
 
-                <button type="submit" id="distribute_save" class="form-control form-control-lg btn btn-accent  text-white col-2 float-right">
+                <button type="submit" id="distribute_save"
+                        class="form-control form-control-lg btn btn-accent  text-white col-2 float-right">
                     {% trans "Save" %}
                 </button>
             </div>
@@ -98,7 +99,7 @@
                                                         onclick="window.location='{% url 'dashboard:projs:campaign-detail' campaign.id %}';">
                                                         {{ campaign.title }}
                                                     </td>
-                                                    <td class="row-click"
+                                                    <td class="row-click" id="{{ campaign.id }}"
                                                         onclick="window.location='{% url 'dashboard:projs:campaign-detail' campaign.id %}';">
                                                         {{ campaign.goal }}
                                                     </td>
@@ -108,7 +109,9 @@
                                                     </td>
                                                     <td>
                                                         <input class="form-control form-control-sm distribute"
-                                                               type="number" step="0,01" min="0" name="{{ campaign.id }}">
+                                                               onkeyup="validate_distribute(this)"
+                                                               type="number" step="0,01" min="0"
+                                                               name="{{ campaign.id }}">
                                                     </td>
                                                 </tr>
 
@@ -126,7 +129,7 @@
                         <!-- Add New Post Form -->
                         <div class="card card-small mb-2">
                             <div class="card-body text-center">
-                                <p>Sowwy, no results :(</p>
+                                <p>Sorry, no results :(</p>
                             </div>
                         </div>
 
@@ -167,6 +170,20 @@
             return result;
         }
 
+        function validate_distribute(input) {
+            let id = document.getElementById(input.name);
+            if (input.value > parseInt(id.innerHTML)) {
+                $('#distribute_save').attr('disabled', 'disabled');
+                id.style = 'background-color: #E35D75; color: white;';
+                input.style = 'border: 2px solid #E35D75;'
+                alert('Вы не можете выделить денег больше чем нужно для сборов!')
+            } else {
+                id.style = '';
+                input.style = '';
+                $('#distribute_save').removeAttr('disabled');
+            }
+        }
+
         $('.distribute').on("change keyup", function () {
             console.log('Hello here')
             let inputs = $('.distribute');
@@ -180,7 +197,6 @@
                 alert('Сумма взноса меньше, чем вы хотите распределить.');
             } else {
                 $('#transaction_sum').attr('class', 'text-success');
-                $('#distribute_save').removeAttr('disabled');
             }
         });
     </script>
