@@ -34,13 +34,13 @@ SUBSCRIPTION_DAYS = (
     (30, 'everymonth')
 )
 
-DONATION_STATUS = (
-    ('in_progressing', 'in_processing'),
-    ('distribution', 'in_the_process_of_distribution'),
-    ('mny_in_th_gthr', 'money_in_the_gathering'),
-    ('in_th_process_of_trnsf_mny', 'in_the_process_of_transferring_money'),
-    ('mny_trnsf', 'money_transferred'),
-)
+# DONATION_STATUS = (
+#     ('in_progressing', 'in_processing'),
+#     ('distribution', 'in_the_process_of_distribution'),
+#     ('mny_in_th_gthr', 'money_in_the_gathering'),
+#     ('in_th_process_of_trnsf_mny', 'in_the_process_of_transferring_money'),
+#     ('mny_trnsf', 'money_transferred'),
+# )
 
 
 # ---- Models ----
@@ -105,7 +105,7 @@ class CashPaymentInfo(models.Model):
     payer_name = models.CharField(max_length=30)
 
 
-class CampaignTransaction(models.Model):
-    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name='camping_transaction')
-    transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE, related_name='camping_transaction')
-    status = models.CharField(max_length=40, choices=DONATION_STATUS)
+# class CampaignTransaction(models.Model):
+#     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name='camping_transaction')
+#     transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE, related_name='camping_transaction')
+#     status = models.CharField(max_length=40, choices=DONATION_STATUS)

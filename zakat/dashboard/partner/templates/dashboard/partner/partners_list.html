@@ -55,9 +55,8 @@
                     <h3>На данный момент партнеров нет.</h3><br><br><br>
                 {% endif %}
             </div>
-        </div>
-        <br>
-        <div class="pagination" style="width: 100%;display: flex;justify-content: flex-end ">
+
+            <div class="pagination" style="width: 100%;display: flex;justify-content: flex-end ">
             <span class="step-links">
                 {% if page_obj.has_previous %}
 {#                    <input type="image" src="" href="?page=1">#}
@@ -75,6 +74,11 @@
                 {% endif %}
             </span>
         </div>
+
+
+        </div>
+        <br>
+
     </div>
 
 {% endblock content %}

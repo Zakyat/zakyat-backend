@@ -1,16 +1,18 @@
 import os
+from datetime import datetime
 
-from django import forms
-from djongo import models
 from django.contrib.auth.models import User as DjangoUser
+from django.core.exceptions import ValidationError
 from django.urls import reverse
-
 from django_countries.fields import CountryField
+from djongo import models
+
 
 # ---- Choice enums ----
 from zakat.settings import BASE_DIR
 
 MARITAL_STATUS = (
+    ('-', '----'),
     ("married", "Married"),
     ("divorced", "Divorced"),
     ("single", "Single"),
@@ -19,6 +21,7 @@ MARITAL_STATUS = (
 )
 
 RELIGIONS = (
+    ('-', '----'),
     ("muslim", "Muslim"),
     ("christian", "Christian"),
     ("jew", "Jewish"),
@@ -88,10 +91,10 @@ class CashFlow(models.Model):
 
 
 class Document(models.Model):
-    type = models.CharField(choices=DOCUMENT_TYPES, max_length=10)
-    title = models.CharField(max_length=128)
+    type = models.CharField(choices=DOCUMENT_TYPES, max_length=10,blank=True)
+    title = models.CharField(max_length=128,blank=True)
     # file = models.FileField(upload_to='media/uploads')
-    file = models.FilePathField(path=os.path.join(BASE_DIR, 'media'), recursive=True)
+    file = models.FilePathField(path=os.path.join(BASE_DIR, 'media'), recursive=True,blank=True)
 
     class Meta:
         abstract = True
@@ -109,18 +112,27 @@ class FamilyMember(models.Model):
 
 class User(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=16)
-    citizenship = CountryField()
-    religion = models.CharField(max_length=10, choices=RELIGIONS)
-    birthdate = models.DateField()
-    education = models.CharField(max_length=128)  # TODO: Why??
+    phone_number = models.CharField(max_length=16,blank=True)
+    citizenship = CountryField(default='RU')
+    religion = models.CharField(max_length=10, choices=RELIGIONS, default='-')
+    birthdate = models.DateField(blank=True, default=datetime.strptime('1000-12-12', '%Y-%m-%d'))
+    education = models.CharField(max_length=128, default='-')  # TODO: Why??
     work = models.EmbeddedField(model_container=Work, blank=True)
-    marital_status = models.CharField(max_length=10, choices=MARITAL_STATUS)
-    address = models.CharField(max_length=128)
+    marital_status = models.CharField(max_length=10, choices=MARITAL_STATUS, default='-')
+    address = models.CharField(max_length=128, default='-')
     isBlock = models.BooleanField(default=False)
+    gender = models.BooleanField(null=True, help_text='Yes means Male, No means Female')
 
     # cash_flow = models.ArrayField(model_container=CashFlow, default=[])
     # related_documents = models.ArrayField(model_container=Document, blank=True, default=[])
+
+    EMPTY_FIELDS_LIST = [
+        'religion',
+        'birthdate',
+        'education',
+        'marital_status',
+        'address',
+    ]
 
     # contact_person = models.EmbeddedField(model_container=FamilyMember)
     # family_members = models.ArrayField(model_container=FamilyMember, default=[]) # ArrayField with nested FileField causes a problem
@@ -130,6 +142,7 @@ class User(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
+
         if self.work.place == '' or self.work.position == '':
             work = Work(position='Unemployed', place='Nowhere')
             self.work = work
@@ -139,8 +152,29 @@ class User(models.Model):
                                using=using,
                                update_fields=update_fields)
 
+    def clean(self):
+        if not self.check_for_empty_fields():
+            raise ValidationError('Not all fields are filled!')
+
     def get_absolute_url(self):
         return reverse('dashboard:users:users_detail', args=[self.id])
+
+    def check_for_empty_fields(self):
+        default_date = datetime.strptime('1000-12-12', '%Y-%m-%d').date()
+        counter = 0
+        for field in self.EMPTY_FIELDS_LIST:
+            value = self.__getattribute__(field)
+
+            if field == 'birthdate':
+                if default_date != value:
+                    counter += 1
+            elif value != '-':
+                counter += 1
+
+            # elif value is not None and field not in ['birthdate', 'marital_status', 'religion']:
+            #     counter += 1
+        return counter == 0 or counter == len(self.EMPTY_FIELDS_LIST)
+
 
 
 class Employee(models.Model):
