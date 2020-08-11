@@ -27,8 +27,9 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('admin/', admin.site.urls),
     path('graphql', GraphQLView.as_view(graphiql=True)),
-    url('/sberbank', include('sberbank.urls')),
+    path('/sberbank', include('sberbank.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('avatar/', include('avatar.urls')),
     path('news/', include('news.urls')),
+    path('', include('payment.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
