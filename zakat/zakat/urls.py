@@ -22,6 +22,7 @@ from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns 
 
 from zakat import settings
+from .views import markdown_uploader
 
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
@@ -32,4 +33,8 @@ urlpatterns = [
     path('news/', include('news.urls')),
     path('markdownx/', include('markdownx.urls')),
     path('martor/', include('martor.urls')),
+    path(
+        r'^api/uploader/$',
+        markdown_uploader, name='markdown_uploader_page'
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
