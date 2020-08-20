@@ -11,6 +11,8 @@ from django.db.models import Q
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .services import create_vk_post
+from slugify import slugify
+
 
 class NewsListView(LoginRequiredMixin, EmployeePermissionMixin, ListView):
     login_url = 'dashboard:users:login'
@@ -61,11 +63,12 @@ class NewsCreateView(LoginRequiredMixin, EmployeePermissionMixin, CreateView):
             if news_create_form.is_valid():
                 news_created = news_create_form.save(commit=False)
                 news_created.created_by = request.user.employee
+                news_created.slug = slugify(news_created.title, to_lower=True, max_length=50)
                 news_created.save()
                 title = news_created.title
                 # TODO: generate slug for post to use it as link
                 # Cool Post! => cool_post => https://site.url/posts/cool_post
-                link = 'https://google.com'
+                link = news_created.slug
                 create_vk_post(title, link)
 
                 return HttpResponseRedirect(reverse('dashboard:news_posts:newz'))

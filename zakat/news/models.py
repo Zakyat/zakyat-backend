@@ -17,7 +17,7 @@ class Post(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	title = models.TextField()    # TODO: i18n
 	description = MartorField()    # TODO: i18n
-	
+	slug = models.SlugField(allow_unicode=True, max_length=50, default='default_slug')
 	project = models.ForeignKey(Project, null=True, on_delete=models.SET_NULL)
 	created_by = models.ForeignKey(Employee, null=True, on_delete=models.SET_NULL)
 	tags = models.ManyToManyField(PostTag)
