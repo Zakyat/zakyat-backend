@@ -10,8 +10,7 @@ from news.models import Post
 from django.db.models import Q
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-
-
+from .services import create_vk_post
 
 class NewsListView(LoginRequiredMixin, EmployeePermissionMixin, ListView):
     login_url = 'dashboard:users:login'
@@ -63,6 +62,12 @@ class NewsCreateView(LoginRequiredMixin, EmployeePermissionMixin, CreateView):
                 news_created = news_create_form.save(commit=False)
                 news_created.created_by = request.user.employee
                 news_created.save()
+                title = news_created.title
+                # TODO: generate slug for post to use it as link
+                # Cool Post! => cool_post => https://site.url/posts/cool_post
+                link = 'https://google.com'
+                create_vk_post(title, link)
+
                 return HttpResponseRedirect(reverse('dashboard:news_posts:newz'))
             else:
                 return render(request, 'dashboard/news/news_create.html', {'news_create_form': news_create_form, 'form': news_create_form})
