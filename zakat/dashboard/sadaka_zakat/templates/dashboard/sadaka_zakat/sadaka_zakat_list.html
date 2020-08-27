@@ -156,7 +156,7 @@
                                                         </td>
                                                         <td>
                                                             {% if not transaction.campaign %}
-                                                                <a href="#" class="btn btn-accent">
+                                                                <a href="{{ transaction.get_absolute_url }}" class="btn btn-accent">
                                                                     {% trans "Distribute" %}
                                                                 </a>
                                                             {% else %}
