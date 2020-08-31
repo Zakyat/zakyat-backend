@@ -38,6 +38,7 @@ class NewsListView(LoginRequiredMixin, EmployeePermissionMixin, ListView):
         context['news_list'] = news_list
         return self.render_to_response(context)
 
+
 class NewsEditView(LoginRequiredMixin, EmployeePermissionMixin, UpdateView):
     login_url = 'dashboard:users:login'
     model = Post
