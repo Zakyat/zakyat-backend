@@ -105,7 +105,7 @@ class CashFlow(models.Model):
 
 
 class Document(models.Model):
-    type = models.CharField(choices=DOCUMENT_TYPES, max_length=10, blank=True)
+    type = models.CharField(choices=DOCUMENT_TYPES, max_length=17, blank=True)
     title = models.CharField(max_length=128, blank=True)
     # file = models.FileField(upload_to='media/uploads')
     file = models.FilePathField(path=os.path.join(BASE_DIR, 'media'), recursive=True, blank=True)
