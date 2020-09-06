@@ -5,8 +5,9 @@ from django.contrib.auth.models import User as DjangoUser
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 from django_countries.fields import CountryField
-from djongo import models
+# from djongo import models
 
+from django.db import models
 
 # ---- Choice enums ----
 from zakat.settings import BASE_DIR
@@ -69,6 +70,19 @@ RELATIONS = (
     ('other', 'Other'),
 )
 
+EMPTY_FIELDS_LIST = [
+    'religion',
+    'birthdate',
+    'education',
+    'marital_status',
+    'address',
+]
+
+
+def set_default_work():
+    work = Work(position='Unemployed', place='Nowhere')
+    return work.id
+
 
 # ---- Models ----
 
@@ -76,8 +90,8 @@ class Work(models.Model):
     place = models.CharField(max_length=128)
     position = models.CharField(max_length=64)
 
-    class Meta:
-        abstract = True
+    # class Meta:
+    #     abstract = True
 
 
 class CashFlow(models.Model):
@@ -86,38 +100,40 @@ class CashFlow(models.Model):
     description = models.TextField()
     currency = models.CharField(max_length=3, choices=CURRENCIES, default='RUB')
 
-    class Meta:
-        abstract = True
+    # class Meta:
+    #     abstract = True
 
 
 class Document(models.Model):
-    type = models.CharField(choices=DOCUMENT_TYPES, max_length=10,blank=True)
-    title = models.CharField(max_length=128,blank=True)
+    type = models.CharField(choices=DOCUMENT_TYPES, max_length=17, blank=True)
+    title = models.CharField(max_length=128, blank=True)
     # file = models.FileField(upload_to='media/uploads')
-    file = models.FilePathField(path=os.path.join(BASE_DIR, 'media'), recursive=True,blank=True)
+    file = models.FilePathField(path=os.path.join(BASE_DIR, 'media'), recursive=True, blank=True)
 
-    class Meta:
-        abstract = True
+    # class Meta:
+    #     abstract = True
 
 
 class FamilyMember(models.Model):
     name = models.CharField(max_length=64)
     phone_number = models.CharField(max_length=16)
     relation = models.CharField(max_length=16, choices=RELATIONS)
-    identification = models.EmbeddedField(model_container=Document)
+    # identification = models.EmbeddedField(model_container=Document)
+    identification = models.ForeignKey(Document, on_delete=models.SET_NULL, null=True)
 
-    class Meta:
-        abstract = True
+    # class Meta:
+    #     abstract = True
 
 
 class User(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=16,blank=True)
+    phone_number = models.CharField(max_length=16, blank=True)
     citizenship = CountryField(default='RU')
     religion = models.CharField(max_length=10, choices=RELIGIONS, default='-')
     birthdate = models.DateField(blank=True, default=datetime.strptime('1000-12-12', '%Y-%m-%d'))
     education = models.CharField(max_length=128, default='-')  # TODO: Why??
-    work = models.EmbeddedField(model_container=Work, blank=True)
+    # work = models.EmbeddedField(model_container=Work, blank=True)
+    work = models.ForeignKey(Work, on_delete=models.CASCADE, null=True, default=set_default_work(), blank=True)
     marital_status = models.CharField(max_length=10, choices=MARITAL_STATUS, default='-')
     address = models.CharField(max_length=128, default='-')
     isBlock = models.BooleanField(default=False)
@@ -126,13 +142,7 @@ class User(models.Model):
     # cash_flow = models.ArrayField(model_container=CashFlow, default=[])
     # related_documents = models.ArrayField(model_container=Document, blank=True, default=[])
 
-    EMPTY_FIELDS_LIST = [
-        'religion',
-        'birthdate',
-        'education',
-        'marital_status',
-        'address',
-    ]
+
 
     # contact_person = models.EmbeddedField(model_container=FamilyMember)
     # family_members = models.ArrayField(model_container=FamilyMember, default=[]) # ArrayField with nested FileField causes a problem
@@ -140,17 +150,18 @@ class User(models.Model):
     # family_members = models.ArrayField(model_container=FamilyMember,
     #                                    default=[])  # ArrayField with nested FileField causes a problem
 
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
-
-        if self.work.place == '' or self.work.position == '':
-            work = Work(position='Unemployed', place='Nowhere')
-            self.work = work
-
-        super(User, self).save(force_insert=force_insert,
-                               force_update=force_update,
-                               using=using,
-                               update_fields=update_fields)
+    # def save(self, force_insert=False, force_update=False, using=None,
+    #          update_fields=None):
+    #
+    #     # self.set_default_work()
+    #     # if self.work is None:
+    #     #     work = Work(position='Unemployed', place='Nowhere')
+    #     #     self.work = work
+    #
+    #     super(User, self).save(force_insert=force_insert,
+    #                            force_update=force_update,
+    #                            using=using,
+    #                            update_fields=update_fields)
 
     def clean(self):
         if not self.check_for_empty_fields():
@@ -176,7 +187,6 @@ class User(models.Model):
         return counter == 0 or counter == len(self.EMPTY_FIELDS_LIST)
 
 
-
 class Employee(models.Model):
     user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -189,4 +199,3 @@ class Employee(models.Model):
 
     def __str__(self):
         return self.user.username
-

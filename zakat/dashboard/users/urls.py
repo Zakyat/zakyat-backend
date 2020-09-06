@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from .views import login, logout, UsersList, UserDetail, UserCreate, UserUpdate, UserDelete, block_user
 
 app_name = 'users'

@@ -1,4 +1,5 @@
-from djongo import models
+# from djongo import models
+from django.db import models
 
 from projects.models import Project
 from accounts.models import Employee

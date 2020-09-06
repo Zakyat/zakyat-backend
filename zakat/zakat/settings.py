@@ -10,6 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+from dotenv import load_dotenv
+load_dotenv()
+
 import os
 
 # import django_heroku
@@ -106,18 +109,38 @@ WSGI_APPLICATION = 'zakat.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# For mongo
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'zakat',
+#         'CLIENT': {
+#             'host': os.getenv('DB_HOST', 'localhost'),
+#             # 'host': os.getenv('DB_HOST', ''),
+#             'port': int(os.getenv('DB_PORT', 27017)),
+#             'username': os.getenv('DB_USERNAME', ''),
+#             'password': os.getenv('DB_PASSWORD', ''),
+#             'authSource': 'admin',
+#         }
+#     }
+# }
+
+# For SQLite
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'zakat',
-        'CLIENT': {
-            'host': os.getenv('DB_HOST', 'localhost'),
-            # 'host': os.getenv('DB_HOST', ''),
-            'port': int(os.getenv('DB_PORT', 27017)),
-            'username': os.getenv('DB_USERNAME', ''),
-            'password': os.getenv('DB_PASSWORD', ''),
-            'authSource': 'admin',
-        }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('DB_NAME', 'zakat'),
+        'USER': os.getenv('DB_USER', '') ,
+        'PASSWORD': os.getenv('DB_PASSWORD', ''),
+        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 
@@ -126,18 +149,18 @@ GRAPHENE = {
 }
 
 # Register conversion rules from Djongo-specific fields
-from graphene_django.converter import convert_django_field
-from djongo.models import EmbeddedField, ArrayField
+# from graphene_django.converter import convert_django_field
+# from djongo.models import EmbeddedField, ArrayField
 
 
-@convert_django_field.register(EmbeddedField)
-def convert_embedded_field(field, registry=None):
-    return field
+# @convert_django_field.register(EmbeddedField)
+# def convert_embedded_field(field, registry=None):
+#     return field
 
 
-@convert_django_field.register(ArrayField)
-def convert_embedded_field(field, registry=None):
-    return field
+# @convert_django_field.register(ArrayField)
+# def convert_embedded_field(field, registry=None):
+#     return field
 
 
 # Password validation
@@ -163,13 +186,13 @@ AAUTH_PASSWORD_VALIDATORS = [
 ###
 
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.vk.VKOAuth2',          # vk authorization backend
-    'social_core.backends.google.GoogleOAuth2',      # google authorization backend
+    'social_core.backends.vk.VKOAuth2',  # vk authorization backend
+    'social_core.backends.google.GoogleOAuth2',  # google authorization backend
     'social_core.backends.instagram.InstagramOAuth2',  # instagram authorization backend
     'django.contrib.auth.backends.ModelBackend',  # class authorization backend
 )
 
-#API APPs KEYS:(We need to change this keys when we'll deploy site!)
+# API APPs KEYS:(We need to change this keys when we'll deploy site!)
 SOCIAL_AUTH_VK_OAUTH2_KEY = '7547650'
 SOCIAL_AUTH_VK_OAUTH2_SECRET = 'jWnShHah7b0hX2GYucNj'
 
@@ -192,7 +215,7 @@ SOCIAL_AUTH_URL_NAMESPACE = 'auth:social'
 LOGIN_URL = '/auth/login/vk-oauth2/'
 
 LOGIN_REDIRECT_URL = '/auth/test'  # change on right url
-LOGOUT_REDIRECT_URL = '/'          # change on right url
+LOGOUT_REDIRECT_URL = '/'  # change on right url
 
 ###
 ###

@@ -234,7 +234,8 @@
                                     Payment Type: {{ payment_option.get_payment_type }}
                                 </span>
                                 <p class="card-text text">{{ payment_option.description }}</p>
-                                <a href="{% url 'dashboard:projs:payment_option-edit' payment_option.id %}" class="btn btn-sm btn-secondary float-right text-white">
+                                <a href="{% url 'dashboard:projs:payment_option-edit' payment_option.id %}"
+                                   class="btn btn-sm btn-secondary float-right text-white">
                                     <i class="material-icons">edit</i> Edit
                                 </a>
                             </div>

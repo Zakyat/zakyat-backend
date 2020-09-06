@@ -147,3 +147,4 @@ dump.rdb
 
 *.jpg
 **/migrations/
+**/.vscode/

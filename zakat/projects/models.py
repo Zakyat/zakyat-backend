@@ -1,5 +1,8 @@
+from django.db.models import Sum
 from django.utils.timezone import localtime
-from djongo import models
+# from djongo import models
+from django.db import models
+
 from accounts.models import User, Employee, Document
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
@@ -54,6 +57,7 @@ class Request(models.Model):
     needy_category = models.CharField(max_length=70, choices=NEEDY_CATEGORIES, null=True, blank=True)
     goal = models.IntegerField(default=0)
     # documents = models.ArrayField(model_container=Document, default=[])
+    documents = models.ManyToManyField(Document)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     denying_reason = models.CharField(max_length=256, null=True, blank=True)  # TODO: i18n
