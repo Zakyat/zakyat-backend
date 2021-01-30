@@ -27,7 +27,6 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('admin/', admin.site.urls),
     path('graphql', GraphQLView.as_view(graphiql=True)),
-    path('avatar/', include('avatar.urls')),
     path('news/', include('news.urls')),
     path('auth/', include('accounts.urls',namespace='auth')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

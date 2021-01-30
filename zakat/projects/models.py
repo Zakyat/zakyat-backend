@@ -4,7 +4,7 @@ from django.utils.timezone import localtime
 from django.db import models
 
 from accounts.models import User, Employee, Document
-from channels.layers import get_channel_layer
+# from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
 # ---- Field enums ----
@@ -37,16 +37,16 @@ NEEDY_CATEGORIES = (
 
 # ---- Models ----
 
-def send_request_notification():
-    unread_requests = Request.objects.filter(status='processing').count() + Request.objects.filter(
-        status='negotiation').count()
-    layer = get_channel_layer()
-    async_to_sync(layer.group_send)(
-        'notification',
-        {
-            'type': 'notify',
-            'requests': unread_requests
-        })
+# def send_request_notification():
+#     unread_requests = Request.objects.filter(status='processing').count() + Request.objects.filter(
+#         status='negotiation').count()
+#     layer = get_channel_layer()
+#     async_to_sync(layer.group_send)(
+#         'notification',
+#         {
+#             'type': 'notify',
+#             'requests': unread_requests
+#         })
 
 
 class Request(models.Model):
@@ -65,11 +65,11 @@ class Request(models.Model):
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         super(Request, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
-        send_request_notification()
+        # send_request_notification()
 
     def delete(self, using=None, keep_parents=False):
         super(Request, self).delete(using=None, keep_parents=False)
-        send_request_notification()
+        # send_request_notification()
 
 
 class Project(models.Model):

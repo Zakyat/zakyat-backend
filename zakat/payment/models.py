@@ -4,7 +4,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.urls import reverse
 from accounts.models import User
-from channels.layers import get_channel_layer
+# from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from projects.models import Campaign
 from django.contrib.auth.models import User as DjangoUser
@@ -49,14 +49,14 @@ SUBSCRIPTION_DAYS = (
 # ---- Models ----
 
 
-def send_transaction_notification():
-    layer = get_channel_layer()
-    async_to_sync(layer.group_send)(
-        'notification',
-        {
-            'type': 'notify',
-            'transaction': Transaction.objects.filter(campaign=None).count()
-        })
+# def send_transaction_notification():
+#     layer = get_channel_layer()
+#     async_to_sync(layer.group_send)(
+#         'notification',
+#         {
+#             'type': 'notify',
+#             'transaction': Transaction.objects.filter(campaign=None).count()
+#         })
 
 
 class Transaction(models.Model):
@@ -74,11 +74,11 @@ class Transaction(models.Model):
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         super(Transaction, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
-        send_transaction_notification()
+        # send_transaction_notification()
 
     def delete(self, using=None, keep_parents=False):
         super(Transaction, self).delete(using=None, keep_parents=False)
-        send_transaction_notification()
+        # send_transaction_notification()
 
     def get_absolute_url(self):
         return reverse('dashboard:sadaka_zakat:sadaka_zakat_detail', args=[self.id])
