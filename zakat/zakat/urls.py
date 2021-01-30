@@ -19,7 +19,7 @@ from django.urls import path, include
 from graphene_django.views import GraphQLView
 from django.conf.urls.static import static
 from django.conf import settings
-from django.conf.urls.i18n import i18n_patterns 
+from django.conf.urls.i18n import i18n_patterns
 
 from zakat import settings
 
@@ -27,7 +27,6 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('admin/', admin.site.urls),
     path('graphql', GraphQLView.as_view(graphiql=True)),
-    path('dashboard/', include('dashboard.urls')),
     path('avatar/', include('avatar.urls')),
     path('news/', include('news.urls')),
     path('auth/', include('accounts.urls',namespace='auth')),

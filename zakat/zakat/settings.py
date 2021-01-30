@@ -50,26 +50,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     # 3rd-party
-    'channels',
     'django_countries',
     'graphene_django',
     'avatar',
     'widget_tweaks',
     'django_filters',
-    'social_django',
     # our apps
     'accounts',
     'projects',
     'news',
     'payment',
     'partners',
-    'dashboard',
-    'dashboard.sadaka_zakat',
-    'dashboard.users',
-    'dashboard.employee',
-    'dashboard.projs',
-    'dashboard.partner',
-    'dashboard.banner',
 ]
 
 MIDDLEWARE = [
@@ -88,7 +79,7 @@ ROOT_URLCONF = 'zakat.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['dashboard/templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,23 +116,23 @@ WSGI_APPLICATION = 'zakat.wsgi.application'
 # }
 
 # For SQLite
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('DB_NAME', 'zakat'),
-        'USER': os.getenv('DB_USER', '') ,
-        'PASSWORD': os.getenv('DB_PASSWORD', ''),
-        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
-        'PORT': os.getenv('DB_PORT', '5432'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.getenv('DB_NAME', 'zakat'),
+#         'USER': os.getenv('DB_USER', '') ,
+#         'PASSWORD': os.getenv('DB_PASSWORD', ''),
+#         'HOST': os.getenv('DB_HOST', '127.0.0.1'),
+#         'PORT': os.getenv('DB_PORT', '5432'),
+#     }
+# }
 
 GRAPHENE = {
     'SCHEMA': 'zakat.schema.schema'

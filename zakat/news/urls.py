@@ -19,5 +19,5 @@ from . import views
 app_name = 'news'
 
 urlpatterns = [
-    path('', views.NewsView.as_view(), name='news')
+
 ]
